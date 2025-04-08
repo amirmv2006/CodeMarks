@@ -9,25 +9,34 @@
     <name>CodeMarks</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="amirv.dev@gmail.com" url="https://github.com/amirv">Amir Vosoughi</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    CodeMarks is a plugin that allows you to create and manage bookmarks through code comments.<br>
+    Simply add a comment with "@bookmark " prefix and it will automatically create a bookmark at that location.<br>
+    Features:
+    <ul>
+        <li>Automatic bookmark creation from comments</li>
+        <li>Real-time synchronization with code changes</li>
+        <li>Quick bookmark addition through context menu or shortcut</li>
+    </ul>
   ]]></description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <projectService serviceImplementation="ir.amv.os.codemarks.services.CodeMarkService"/>
-        <postStartupActivity implementation="ir.amv.os.codemarks.components.CodeMarkStartupActivity"/>
+        <projectService serviceInterface="ir.amv.os.codemarks.services.CodeMarkService"
+                       serviceImplementation="ir.amv.os.codemarks.services.CodeMarkServiceImpl"/>
+        <projectActivity implementation="ir.amv.os.codemarks.components.CodeMarkStartupActivity"/>
     </extensions>
 
     <actions>

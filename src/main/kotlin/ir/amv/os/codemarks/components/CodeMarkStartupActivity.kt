@@ -1,0 +1,45 @@
+package ir.amv.os.codemarks.components
+
+import com.intellij.openapi.diagnostic.Logger
+import com.intellij.openapi.project.DumbAware
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.startup.ProjectActivity
+import com.intellij.openapi.vfs.VirtualFileManager
+import com.intellij.openapi.vfs.newvfs.BulkFileListener
+import com.intellij.openapi.vfs.newvfs.events.VFileEvent
+import ir.amv.os.codemarks.services.CodeMarkService
+import com.intellij.openapi.components.service
+
+class CodeMarkStartupActivity : ProjectActivity, DumbAware {
+    companion object {
+        private val LOG = Logger.getInstance(CodeMarkStartupActivity::class.java)
+    }
+
+    override suspend fun execute(project: Project) {
+        LOG.info("CodeMarkStartupActivity executing for project: ${project.name}")
+        val codeMarkService = project.service<CodeMarkService>()
+        
+        // Initial scan
+        LOG.info("Starting initial CodeMarks scan")
+        codeMarkService.scanAndSync()
+        LOG.info("Initial CodeMarks scan completed")
+
+        // Listen for file changes
+        LOG.info("Setting up file change listener")
+        project.messageBus.connect(project).subscribe(
+            VirtualFileManager.VFS_CHANGES,
+            object : BulkFileListener {
+                override fun after(events: List<VFileEvent>) {
+                    for (event in events) {
+                        val file = event.file
+                        if (file != null) {
+                            LOG.info("File change detected for ${file.path}, rescanning CodeMarks")
+                            codeMarkService.scanAndSync()
+                        }
+                    }
+                }
+            }
+        )
+        LOG.info("CodeMarkStartupActivity setup completed")
+    }
+} 
