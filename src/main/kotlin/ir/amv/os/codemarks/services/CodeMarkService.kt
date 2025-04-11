@@ -7,7 +7,10 @@ import com.intellij.openapi.application.invokeLater
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.editor.Document
+import com.intellij.openapi.editor.event.DocumentEvent
+import com.intellij.openapi.editor.event.DocumentListener
 import com.intellij.openapi.fileEditor.FileDocumentManager
+import com.intellij.openapi.fileEditor.FileDocumentManagerListener
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.vfs.VirtualFile
@@ -19,6 +22,10 @@ import java.util.regex.Pattern
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.application.ModalityState
+import com.intellij.util.messages.Topic
+import com.intellij.openapi.roots.ProjectRootManager
+import com.intellij.openapi.application.ReadAction
+import com.intellij.openapi.application.WriteAction
 
 interface CodeMarkService {
     fun scanAndSync()
@@ -47,7 +54,14 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
             }
         })
 
-        fileDocumentManager.addFileDocumentListener(object : com.intellij.openapi.fileEditor.FileDocumentManagerListener {
+        val connection = project.messageBus.connect()
+        connection.subscribe(Topic.create("com.intellij.openapi.editor.event.DocumentListener", DocumentListener::class.java), object : DocumentListener {
+            override fun documentChanged(event: DocumentEvent) {
+                scheduleSync()
+            }
+        })
+
+        connection.subscribe(Topic.create("com.intellij.openapi.fileEditor.FileDocumentManagerListener", FileDocumentManagerListener::class.java), object : FileDocumentManagerListener {
             override fun beforeDocumentSaving(document: Document) {
                 LOG.warn("beforeDocumentSaving: ${fileDocumentManager.getFile(document)?.path}")
                 scheduleSync()
@@ -63,10 +77,8 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     private fun scheduleSync() {
         alarm.cancelAllRequests()
         alarm.addRequest({ 
-            ApplicationManager.getApplication().invokeLater({
-                WriteCommandAction.runWriteCommandAction(project) {
-                    scanAndSync()
-                }
+            ApplicationManager.getApplication().invokeAndWait({
+                doScanAndSync()
             }, ModalityState.defaultModalityState())
         }, 100)
     }
@@ -78,26 +90,42 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     override fun scanAndSync() {
         if (!ApplicationManager.getApplication().isDispatchThread) {
             ApplicationManager.getApplication().invokeLater({ 
-                WriteCommandAction.runWriteCommandAction(project) {
-                    scanAndSync()
-                }
+                doScanAndSync()
             }, ModalityState.defaultModalityState())
             return
         }
+        doScanAndSync()
+    }
 
+    private fun doScanAndSync() {
         LOG.info("Scanning for bookmarks")
-        val existingBookmarks = bookmarkManager.validBookmarks
-        val existingBookmarkFiles = existingBookmarks.map { it.file }.toSet()
+        
+        // Read existing bookmarks
+        val existingBookmarks = ReadAction.compute<List<com.intellij.ide.bookmarks.Bookmark>, RuntimeException> {
+            bookmarkManager.validBookmarks
+        }
 
-        // Remove all existing bookmarks
-        existingBookmarks.forEach { bookmarkManager.removeBookmark(it) }
+        // Remove existing bookmarks
+        WriteAction.runAndWait<RuntimeException> {
+            existingBookmarks.forEach { bookmarkManager.removeBookmark(it) }
+        }
 
         // Scan project files for bookmarks
-        scanDirectory(project.baseDir)
+        val contentRoots = ReadAction.compute<Array<VirtualFile>, RuntimeException> {
+            ProjectRootManager.getInstance(project).contentRoots
+        }
+
+        contentRoots.forEach { root ->
+            scanDirectory(root)
+        }
     }
 
     private fun scanDirectory(dir: VirtualFile) {
-        dir.children?.forEach { file ->
+        val children = ReadAction.compute<Array<VirtualFile>, RuntimeException> {
+            dir.children
+        } ?: return
+
+        children.forEach { file ->
             when {
                 file.isDirectory -> scanDirectory(file)
                 isSourceFile(file) -> scanFile(file)
@@ -106,20 +134,29 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     }
 
     private fun scanFile(file: VirtualFile) {
-        val document = fileDocumentManager.getDocument(file) ?: return
-        val text = document.text
+        val document = ReadAction.compute<Document?, RuntimeException> {
+            fileDocumentManager.getDocument(file)
+        } ?: return
+
+        val text = ReadAction.compute<String, RuntimeException> {
+            document.text
+        }
 
         text.lines().forEachIndexed { index, line ->
             val matcher = BOOKMARK_PATTERN.matcher(line)
             if (matcher.find()) {
                 val description = matcher.group(1).trim()
                 LOG.info("Found bookmark at ${file.path}:${index + 1} with description: $description")
-                bookmarkManager.addFileBookmark(file, index, description)
+                WriteAction.runAndWait<RuntimeException> {
+                    val bookmark = bookmarkManager.addTextBookmark(file, index, description)
+                    bookmark?.description = description
+                }
             }
         }
     }
 
     override fun dispose() {
-        // No cleanup needed
+        alarm.cancelAllRequests()
+        Disposer.dispose(alarm)
     }
 } 

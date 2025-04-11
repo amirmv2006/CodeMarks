@@ -9,6 +9,11 @@ import com.intellij.openapi.vfs.newvfs.BulkFileListener
 import com.intellij.openapi.vfs.newvfs.events.VFileEvent
 import ir.amv.os.codemarks.services.CodeMarkService
 import com.intellij.openapi.components.service
+import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.application.ModalityState
+import com.intellij.openapi.command.WriteCommandAction
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class CodeMarkStartupActivity : ProjectActivity, DumbAware {
     companion object {
@@ -19,27 +24,37 @@ class CodeMarkStartupActivity : ProjectActivity, DumbAware {
         LOG.info("CodeMarkStartupActivity executing for project: ${project.name}")
         val codeMarkService = project.service<CodeMarkService>()
         
-        // Initial scan
-        LOG.info("Starting initial CodeMarks scan")
-        codeMarkService.scanAndSync()
-        LOG.info("Initial CodeMarks scan completed")
+        withContext(Dispatchers.Default) {
+            // Initial scan
+            LOG.info("Starting initial CodeMarks scan")
+            ApplicationManager.getApplication().invokeAndWait({
+                WriteCommandAction.runWriteCommandAction(project) {
+                    codeMarkService.scanAndSync()
+                }
+            }, ModalityState.defaultModalityState())
+            LOG.info("Initial CodeMarks scan completed")
 
-        // Listen for file changes
-        LOG.info("Setting up file change listener")
-        project.messageBus.connect(project).subscribe(
-            VirtualFileManager.VFS_CHANGES,
-            object : BulkFileListener {
-                override fun after(events: List<VFileEvent>) {
-                    for (event in events) {
-                        val file = event.file
-                        if (file != null) {
-                            LOG.info("File change detected for ${file.path}, rescanning CodeMarks")
-                            codeMarkService.scanAndSync()
+            // Listen for file changes
+            LOG.info("Setting up file change listener")
+            project.messageBus.connect(project).subscribe(
+                VirtualFileManager.VFS_CHANGES,
+                object : BulkFileListener {
+                    override fun after(events: List<VFileEvent>) {
+                        for (event in events) {
+                            val file = event.file
+                            if (file != null) {
+                                LOG.info("File change detected for ${file.path}, rescanning CodeMarks")
+                                ApplicationManager.getApplication().invokeLater({
+                                    WriteCommandAction.runWriteCommandAction(project) {
+                                        codeMarkService.scanAndSync()
+                                    }
+                                }, ModalityState.defaultModalityState())
+                            }
                         }
                     }
                 }
-            }
-        )
-        LOG.info("CodeMarkStartupActivity setup completed")
+            )
+            LOG.info("CodeMarkStartupActivity setup completed")
+        }
     }
 } 

@@ -13,6 +13,10 @@ repositories {
 
 dependencies {
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.2")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.25")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.25")
 }
 
 // Configure Gradle IntelliJ Plugin
@@ -21,7 +25,10 @@ intellij {
     version.set("2023.3.6")
     type.set("IC") // Target IDE Platform
 
-    plugins.set(listOf("com.intellij.java"))
+    plugins.set(listOf(
+        "com.intellij.java",
+        "org.jetbrains.kotlin"
+    ))
 }
 
 tasks {

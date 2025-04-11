@@ -18,6 +18,16 @@ class CodeMarkServiceTest : BasePlatformTestCase() {
         super.setUp()
         service = CodeMarkService.getInstance(project)
         bookmarkManager = BookmarkManager.getInstance(project)
+        bookmarkManager.validBookmarks.forEach { bookmarkManager.removeBookmark(it) }
+    }
+
+    override fun tearDown() {
+        ApplicationManager.getApplication().invokeAndWait {
+            WriteCommandAction.runWriteCommandAction(project) {
+                bookmarkManager.validBookmarks.forEach { bookmarkManager.removeBookmark(it) }
+            }
+        }
+        super.tearDown()
     }
 
     @Test
@@ -31,13 +41,12 @@ class CodeMarkServiceTest : BasePlatformTestCase() {
             }
         """.trimIndent())
 
+        WriteCommandAction.runWriteCommandAction(project) {
+            FileDocumentManager.getInstance().saveDocument(myFixture.editor.document)
+        }
+
         ApplicationManager.getApplication().invokeAndWait({
-            WriteCommandAction.runWriteCommandAction(project) {
-                FileDocumentManager.getInstance().saveDocument(myFixture.editor.document)
-            }
             service.scanAndSync()
-            // Wait for alarm to process and bookmark to be created
-            Thread.sleep(500)
         }, ModalityState.defaultModalityState())
 
         val bookmarks = bookmarkManager.validBookmarks
