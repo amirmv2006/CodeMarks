@@ -24,11 +24,11 @@ class AddBookmarkAction : AnAction() {
             val bookmarksManager = BookmarksManager.getInstance(project)
             val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
             bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
+            bookmarkState.description = "CodeMarks: Bookmark"
             bookmarkState.attributes.putAll(mapOf(
                 "file" to editor.virtualFile.path,
                 "url" to editor.virtualFile.url,
-                "line" to (line + 1).toString(),
-                "description" to "CodeMarks: Bookmark"
+                "line" to (line + 1).toString()
             ))
             val bookmark = bookmarksManager?.createBookmark(bookmarkState)
             if (bookmark != null) {

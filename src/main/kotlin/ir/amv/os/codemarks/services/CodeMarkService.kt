@@ -163,11 +163,11 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 try {
                     val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
                     bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
+                    bookmarkState.description = "CodeMarks: $description"
                     bookmarkState.attributes.putAll(mapOf(
                         "file" to file.path,
                         "url" to file.url,
-                        "line" to (index + 1).toString(),
-                        "description" to "CodeMarks: $description"
+                        "line" to (index + 1).toString()
                     ))
                     val bookmark = bookmarksManager?.createBookmark(bookmarkState)
                     if (bookmark != null) {
