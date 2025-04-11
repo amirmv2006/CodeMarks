@@ -129,15 +129,9 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
             }
         }
 
-        // Scan project root first
-        val projectRoot = project.basePath?.let { VirtualFileManager.getInstance().findFileByNioPath(java.nio.file.Paths.get(it)) }
-        if (projectRoot != null && projectRoot.isValid) {
-            scanDirectory(projectRoot)
-        }
-
-        // Then scan source roots
-        val sourceRoots = ProjectRootManager.getInstance(project).contentSourceRoots
-        for (root in sourceRoots) {
+        // Scan all content roots
+        val contentRoots = ProjectRootManager.getInstance(project).contentRoots
+        for (root in contentRoots) {
             if (!root.isValid) continue
             scanDirectory(root)
         }
