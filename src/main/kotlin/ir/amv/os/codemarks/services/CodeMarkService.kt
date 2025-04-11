@@ -43,6 +43,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         private val LOG = Logger.getInstance(CodeMarkServiceImpl::class.java)
         private val SUPPORTED_FILE_EXTENSIONS = setOf("java", "kt", "scala", "groovy", "xml", "gradle")
         private val BOOKMARK_PATTERN = Pattern.compile("//\\s*CodeMarks:\\s*(.*)", Pattern.CASE_INSENSITIVE)
+        private const val CODEMARKS_GROUP_NAME = "CodeMarks"
     }
 
     private val alarm = Alarm(Alarm.ThreadToUse.POOLED_THREAD, this)
@@ -62,13 +63,13 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         })
 
         val connection = project.messageBus.connect()
-        connection.subscribe(Topic.create("com.intellij.openapi.editor.event.DocumentListener", DocumentListener::class.java), object : DocumentListener {
+        connection.subscribe(Topic.create("DocumentListener", DocumentListener::class.java, Topic.BroadcastDirection.NONE), object : DocumentListener {
             override fun documentChanged(event: DocumentEvent) {
                 scheduleSync()
             }
         })
 
-        connection.subscribe(Topic.create("com.intellij.openapi.fileEditor.FileDocumentManagerListener", FileDocumentManagerListener::class.java), object : FileDocumentManagerListener {
+        connection.subscribe(Topic.create("FileDocumentManagerListener", FileDocumentManagerListener::class.java, Topic.BroadcastDirection.NONE), object : FileDocumentManagerListener {
             override fun beforeDocumentSaving(document: Document) {
                 LOG.warn("beforeDocumentSaving: ${fileDocumentManager.getFile(document)?.path}")
                 scheduleSync()
@@ -102,6 +103,13 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
             return
         }
         doScanAndSync()
+    }
+
+    private fun getOrCreateCodeMarksGroup(): com.intellij.ide.bookmark.BookmarkGroup? {
+        val existingGroup = bookmarksManager?.groups?.find { it.name == CODEMARKS_GROUP_NAME }
+        if (existingGroup != null) return existingGroup
+        
+        return bookmarksManager?.addGroup(CODEMARKS_GROUP_NAME, true)
     }
 
     private fun doScanAndSync() {
@@ -170,11 +178,8 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     ))
                     val bookmark = bookmarksManager?.createBookmark(bookmarkState)
                     if (bookmark != null) {
-                        val groups = bookmarksManager?.findGroupsToAdd(bookmark)
-                        if (!groups.isNullOrEmpty()) {
-                            val group = groups.first()
-                            group.add(bookmark, BookmarkType.DEFAULT, "CodeMarks: $description")
-                        }
+                        val group = getOrCreateCodeMarksGroup()
+                        group?.add(bookmark, BookmarkType.DEFAULT, "CodeMarks: $description")
                     }
                 } catch (e: Exception) {
                     LOG.error("Failed to add bookmark at ${file.path}:${index + 1}", e)

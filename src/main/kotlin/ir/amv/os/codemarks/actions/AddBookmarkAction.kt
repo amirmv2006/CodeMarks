@@ -18,6 +18,14 @@ class AddBookmarkAction : AnAction() {
         addBookmark(editor, project)
     }
 
+    private fun getOrCreateCodeMarksGroup(project: Project): com.intellij.ide.bookmark.BookmarkGroup? {
+        val bookmarksManager = BookmarksManager.getInstance(project)
+        val existingGroup = bookmarksManager?.groups?.find { it.name == CODEMARKS_GROUP_NAME }
+        if (existingGroup != null) return existingGroup
+        
+        return bookmarksManager?.addGroup(CODEMARKS_GROUP_NAME, true)
+    }
+
     private fun addBookmark(editor: Editor, project: Project) {
         WriteCommandAction.runWriteCommandAction(project) {
             val line = editor.caretModel.logicalPosition.line
@@ -31,11 +39,8 @@ class AddBookmarkAction : AnAction() {
             ))
             val bookmark = bookmarksManager?.createBookmark(bookmarkState)
             if (bookmark != null) {
-                val groups = bookmarksManager?.findGroupsToAdd(bookmark)
-                if (!groups.isNullOrEmpty()) {
-                    val group = groups.first()
-                    group.add(bookmark, BookmarkType.DEFAULT, "CodeMarks: Bookmark")
-                }
+                val group = getOrCreateCodeMarksGroup(project)
+                group?.add(bookmark, BookmarkType.DEFAULT, "CodeMarks: Bookmark")
             }
             
             // Trigger a rescan to ensure bookmark is properly synced
@@ -47,5 +52,9 @@ class AddBookmarkAction : AnAction() {
         val project = e.project
         val editor = e.getData(com.intellij.openapi.actionSystem.CommonDataKeys.EDITOR)
         e.presentation.isEnabledAndVisible = project != null && editor != null
+    }
+
+    companion object {
+        private const val CODEMARKS_GROUP_NAME = "CodeMarks"
     }
 } 
