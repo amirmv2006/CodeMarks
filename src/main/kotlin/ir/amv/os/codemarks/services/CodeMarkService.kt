@@ -42,7 +42,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     companion object {
         private val LOG = Logger.getInstance(CodeMarkServiceImpl::class.java)
         private val SUPPORTED_FILE_EXTENSIONS = setOf("java", "kt", "scala", "groovy", "xml", "gradle")
-        private val BOOKMARK_PATTERN = Pattern.compile("//\\s*CodeMarks:\\s*(.*)", Pattern.CASE_INSENSITIVE)
+        private val BOOKMARK_PATTERN = Pattern.compile("CodeMarks:\\s*(.*)", Pattern.CASE_INSENSITIVE)
         private const val CODEMARKS_GROUP_NAME = "CodeMarks"
     }
 
