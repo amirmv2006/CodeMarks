@@ -105,7 +105,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         val existingGroup = bookmarksManager?.groups?.find { it.name == groupName }
         if (existingGroup != null) return existingGroup
         
-        return bookmarksManager?.addGroup(groupName, true)
+        return bookmarksManager?.addGroup(groupName, false)
     }
 
     private fun doScanAndSync() {
