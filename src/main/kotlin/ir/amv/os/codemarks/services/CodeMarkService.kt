@@ -175,6 +175,21 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                         attributes["line"] == index.toString()
                     }
 
+                    // First, check if this bookmark exists in any other group
+                    val bookmarkInOtherGroup = if (existingBookmark == null) {
+                        bookmarksManager?.bookmarks?.find { bookmark ->
+                            val attributes = bookmark.attributes
+                            attributes["url"] == file.url && 
+                            attributes["line"] == index.toString()
+                        }
+                    } else null
+
+                    // If found in another group, remove it
+                    if (bookmarkInOtherGroup != null) {
+                        bookmarksManager?.remove(bookmarkInOtherGroup)
+                    }
+
+                    // Now handle the description comparison if bookmark exists in our group
                     if (existingBookmark != null) {
                         val existingDescription = group?.getDescription(existingBookmark)?.let { desc ->
                             desc.substringAfter("CodeMarks").let { 
