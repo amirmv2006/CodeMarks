@@ -41,7 +41,6 @@ interface CodeMarkService {
 class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Disposable {
     companion object {
         private val LOG = Logger.getInstance(CodeMarkServiceImpl::class.java)
-        private val SUPPORTED_FILE_EXTENSIONS = setOf("java", "kt", "scala", "groovy", "xml", "gradle")
         private val BOOKMARK_PATTERN = Pattern.compile("CodeMarks:\\s*(.*)", Pattern.CASE_INSENSITIVE)
         private const val CODEMARKS_GROUP_NAME = "CodeMarks"
     }
@@ -91,10 +90,6 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         }, 100)
     }
 
-    private fun isSourceFile(file: VirtualFile): Boolean {
-        return file.extension in SUPPORTED_FILE_EXTENSIONS
-    }
-
     override fun scanAndSync() {
         if (!ApplicationManager.getApplication().isDispatchThread) {
             ApplicationManager.getApplication().invokeLater({
@@ -134,6 +129,13 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
             }
         }
 
+        // Scan project root first
+        val projectRoot = project.basePath?.let { VirtualFileManager.getInstance().findFileByNioPath(java.nio.file.Paths.get(it)) }
+        if (projectRoot != null && projectRoot.isValid) {
+            scanDirectory(projectRoot)
+        }
+
+        // Then scan source roots
         val sourceRoots = ProjectRootManager.getInstance(project).contentSourceRoots
         for (root in sourceRoots) {
             if (!root.isValid) continue
@@ -149,7 +151,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         children.forEach { file ->
             when {
                 file.isDirectory -> scanDirectory(file)
-                isSourceFile(file) -> scanFile(file)
+                else -> scanFile(file)
             }
         }
     }
