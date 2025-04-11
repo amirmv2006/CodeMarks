@@ -36,7 +36,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceInterface="ir.amv.os.codemarks.services.CodeMarkService"
                        serviceImplementation="ir.amv.os.codemarks.services.CodeMarkServiceImpl"/>
-        <projectActivity implementation="ir.amv.os.codemarks.components.CodeMarkStartupActivity"/>
+        <postStartupActivity implementation="ir.amv.os.codemarks.components.CodeMarkStartupActivity"/>
     </extensions>
 
     <actions>

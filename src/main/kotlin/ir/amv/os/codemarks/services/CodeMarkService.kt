@@ -31,6 +31,7 @@ interface CodeMarkService {
     fun scanAndSync()
 
     companion object {
+        @JvmStatic
         fun getInstance(project: Project): CodeMarkService = project.service<CodeMarkService>()
     }
 }
@@ -48,6 +49,11 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     private val fileDocumentManager = FileDocumentManager.getInstance()
 
     init {
+        LOG.info("Initializing CodeMarkService for project: ${project.name}")
+        setupListeners()
+    }
+
+    private fun setupListeners() {
         project.messageBus.connect().subscribe(VirtualFileManager.VFS_CHANGES, object : BulkFileListener {
             override fun after(events: List<VFileEvent>) {
                 scheduleSync()
@@ -98,25 +104,21 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     }
 
     private fun doScanAndSync() {
-        LOG.info("Scanning for bookmarks")
-        
-        // Read existing bookmarks
-        val existingBookmarks = ReadAction.compute<List<com.intellij.ide.bookmarks.Bookmark>, RuntimeException> {
-            bookmarkManager.validBookmarks
+        if (!project.isInitialized || project.isDisposed) {
+            LOG.warn("Project not initialized or disposed")
+            return
         }
 
-        // Remove existing bookmarks
-        WriteAction.runAndWait<RuntimeException> {
-            existingBookmarks.forEach { bookmarkManager.removeBookmark(it) }
-        }
-
-        // Scan project files for bookmarks
-        val contentRoots = ReadAction.compute<Array<VirtualFile>, RuntimeException> {
-            ProjectRootManager.getInstance(project).contentRoots
-        }
-
-        contentRoots.forEach { root ->
-            scanDirectory(root)
+        WriteCommandAction.runWriteCommandAction(project) {
+            try {
+                val sourceRoots = ProjectRootManager.getInstance(project).contentSourceRoots
+                for (root in sourceRoots) {
+                    if (!root.isValid) continue
+                    scanDirectory(root)
+                }
+            } catch (e: Exception) {
+                LOG.error("Error during scan and sync", e)
+            }
         }
     }
 

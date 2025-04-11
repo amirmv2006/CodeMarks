@@ -8,6 +8,7 @@ import com.intellij.openapi.vfs.VirtualFileManager
 import com.intellij.openapi.vfs.newvfs.BulkFileListener
 import com.intellij.openapi.vfs.newvfs.events.VFileEvent
 import ir.amv.os.codemarks.services.CodeMarkService
+import ir.amv.os.codemarks.services.CodeMarkServiceImpl
 import com.intellij.openapi.components.service
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.ModalityState
@@ -22,7 +23,7 @@ class CodeMarkStartupActivity : ProjectActivity, DumbAware {
 
     override suspend fun execute(project: Project) {
         LOG.info("CodeMarkStartupActivity executing for project: ${project.name}")
-        val codeMarkService = project.service<CodeMarkService>()
+        val codeMarkService = CodeMarkService.getInstance(project)
         
         withContext(Dispatchers.Default) {
             // Initial scan
