@@ -29,7 +29,6 @@
         <li><b>Automatic Bookmarking</b>: Add bookmarks through code comments</li>
         <li><b>Group Management</b>: Organize bookmarks into groups for better organization</li>
         <li><b>Real-time Sync</b>: Bookmarks stay in sync with code changes</li>
-        <li><b>Quick Access</b>: Add bookmarks via context menu or keyboard shortcut (Shift+Ctrl+Alt+B)</li>
         <li><b>IDE Integration</b>: Seamlessly integrated with IntelliJ's bookmark system</li>
     </ul>
 
@@ -37,8 +36,6 @@
     <ol>
         <li><b>Adding Bookmarks</b>:
             <ul>
-                <li>Right-click in the editor and select "Add CodeMark Bookmark"</li>
-                <li>Use the keyboard shortcut Shift+Ctrl+Alt+B</li>
                 <li>Add a comment with CodeMarks: prefix</li>
             </ul>
         </li>
@@ -80,14 +77,4 @@
                        serviceImplementation="ir.amv.os.codemarks.services.CodeMarkServiceImpl"/>
         <postStartupActivity implementation="ir.amv.os.codemarks.components.CodeMarkStartupActivity"/>
     </extensions>
-
-    <actions>
-        <action id="CodeMarks.AddBookmark" 
-                class="ir.amv.os.codemarks.actions.AddBookmarkAction" 
-                text="Add CodeMark Bookmark" 
-                description="Add a new bookmark at the current line">
-            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt B"/>
-        </action>
-    </actions>
 </idea-plugin>
