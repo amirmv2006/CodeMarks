@@ -169,17 +169,23 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 val description = matcher.group(1).trim()
                 LOG.info("Found bookmark at ${file.path}:${index + 1} with description: $description")
                 try {
-                    // Check if a bookmark already exists at this line
-                    val existingBookmark = bookmarksManager?.bookmarks?.find { bookmark ->
+                    // Get our group and check if a bookmark already exists at this line
+                    val group = getOrCreateCodeMarksGroup()
+                    val existingBookmark = group?.getBookmarks()?.find { bookmark ->
                         val attributes = bookmark.attributes
                         attributes["url"] == file.url && 
-                        attributes["line"] == index.toString() &&
-                        attributes["description"] == description
+                        attributes["line"] == index.toString()
                     }
 
                     if (existingBookmark != null) {
-                        // Bookmark exists with the same description, skip
-                        return@forEachIndexed
+                        val existingDescription = group?.getDescription(existingBookmark)?.substringAfter("CodeMarks:")?.trim()
+                        if (existingDescription == description) {
+                            // Bookmark exists with the same description, skip
+                            return@forEachIndexed
+                        } else {
+                            // Bookmark exists but with different description, remove it
+                            group?.remove(existingBookmark)
+                        }
                     }
 
                     // Create new bookmark
@@ -193,7 +199,6 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     ))
                     val bookmark = bookmarksManager?.createBookmark(bookmarkState)
                     if (bookmark != null) {
-                        val group = getOrCreateCodeMarksGroup()
                         group?.add(bookmark, BookmarkType.DEFAULT, "CodeMarks: $description")
                     }
                 } catch (e: Exception) {
