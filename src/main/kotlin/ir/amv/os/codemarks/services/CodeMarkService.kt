@@ -219,6 +219,13 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     if (bookmark != null) {
                         val groupName = if (suffix != null) "$CODEMARKS_GROUP_NAME $suffix" else CODEMARKS_GROUP_NAME
                         group?.add(bookmark, BookmarkType.DEFAULT, "$groupName: $description")
+                        
+                        // Clean up empty CodeMarks groups
+                        bookmarksManager?.groups?.forEach { g ->
+                            if (g.name.startsWith(CODEMARKS_GROUP_NAME) && g.getBookmarks().isEmpty()) {
+                                g.remove()
+                            }
+                        }
                     }
                 } catch (e: Exception) {
                     LOG.error("Failed to add bookmark at ${file.path}:${index + 1}", e)
