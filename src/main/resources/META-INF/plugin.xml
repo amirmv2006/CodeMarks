@@ -15,13 +15,55 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    CodeMarks is a plugin that allows you to create and manage bookmarks through code comments.<br>
-    Simply add a comment with "@bookmark " prefix and it will automatically create a bookmark at that location.<br>
-    Features:
+    <h2>CodeMarks - Code Bookmarking Made Simple</h2>
+    
+    <h3>Quick Start</h3>
+    Add bookmarks directly in your code using comments:
     <ul>
-        <li>Automatic bookmark creation from comments</li>
-        <li>Real-time synchronization with code changes</li>
-        <li>Quick bookmark addition through context menu or shortcut</li>
+        <li>Basic bookmark: <code>// CodeMarks: BOOKMARK_DESCRIPTION</code></li>
+        <li>Grouped bookmark: <code>// CodeMarks[GroupName]: BOOKMARK_DESCRIPTION</code></li>
+    </ul>
+
+    <h3>Features</h3>
+    <ul>
+        <li><b>Automatic Bookmarking</b>: Add bookmarks through code comments</li>
+        <li><b>Group Management</b>: Organize bookmarks into groups for better organization</li>
+        <li><b>Real-time Sync</b>: Bookmarks stay in sync with code changes</li>
+        <li><b>Quick Access</b>: Add bookmarks via context menu or keyboard shortcut (Shift+Ctrl+Alt+B)</li>
+        <li><b>IDE Integration</b>: Seamlessly integrated with IntelliJ's bookmark system</li>
+    </ul>
+
+    <h3>Usage</h3>
+    <ol>
+        <li><b>Adding Bookmarks</b>:
+            <ul>
+                <li>Right-click in the editor and select "Add CodeMark Bookmark"</li>
+                <li>Use the keyboard shortcut Shift+Ctrl+Alt+B</li>
+                <li>Add a comment with CodeMarks: prefix</li>
+            </ul>
+        </li>
+        <li><b>Grouping Bookmarks</b>:
+            <ul>
+                <li>Use the format: <code>// CodeMarks[GroupName]: Description</code></li>
+                <li>Group names are case-sensitive</li>
+                <li>Bookmarks without groups appear in the default group</li>
+            </ul>
+        </li>
+        <li><b>Managing Bookmarks</b>:
+            <ul>
+                <li>View all bookmarks in the Bookmarks tool window</li>
+                <li>Navigate between bookmarks using the tool window</li>
+                <li>Bookmarks are automatically updated when code changes</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h3>Tips</h3>
+    <ul>
+        <li>Use descriptive names for bookmarks and groups</li>
+        <li>Group related bookmarks together for better organization</li>
+        <li>Bookmarks persist across IDE restarts</li>
+        <li>Bookmarks are project-specific</li>
     </ul>
   ]]></description>
 

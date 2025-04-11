@@ -1,0 +1,521 @@
+JetBrains Marketplace Developer Agreement
+Version 2.1, effective as of April 25, 2024
+
+Welcome to JetBrains Marketplace!
+
+This JetBrains Marketplace Developer Agreement constitutes a legally binding document, and it is important that You read it carefully.
+
+You understand that by accepting this JetBrains Marketplace Agreement (by clicking the “I agree” or a similar button or by uploading a Plugin to JetBrains Marketplace for the first time), You enter into a legal agreement and agree to certain legal conditions for Yourself or for the legal entity that You represent.
+
+By accepting this JetBrains Marketplace Developer Agreement, You confirm that You understand it, agree to it, and are at least 13 years of age.
+
+Summary: The acceptance of this JetBrains Marketplace Developer Agreement creates an important legal agreement between You and JetBrains. There are legal consequences to accepting this JetBrains Marketplace Developer Agreement.
+
+1. Introduction
+This JetBrains Marketplace Developer Agreement ("Agreement") describes all aspects of uploading Your Plugin(s) and making them available on JetBrains Marketplace.
+
+The acceptance of this Agreement creates a legal agreement between (i) JetBrains s.r.o., a company registered in the Commercial Register of the Prague Municipal Court, Section C, File 86211, ID No. 265 02 275 with its registered office at Na Hřebenech II 1718/8, Prague, 14000, Czech Republic ("JetBrains“, ”We“, or ”Us“) and (ii) You, either a legal entity or a natural person (”Developer" or "You").
+
+If You accept this Agreement on behalf of a legal entity, You confirm (‘represent and warrant’) that You are authorized to enter into agreements on behalf of that legal entity. If this Agreement is accepted using an email address provided by a legal entity, We will regard (‘deem’) You as authorized to represent that legal entity. You must be able to enter into contracts (‘have capacity’).
+
+2. Definitions
+The capitalized words used in this Agreement have the following meanings:
+
+"Affiliate" means, with respect to any party, any entity that directly or indirectly, through one or more intermediaries, controls, is controlled by, or is under common control of that party. “Control” for such purposes means the possession, direct or indirect, of the power to direct or affect the direction of the management and policies of a person or entity, whether through the ownership of voting securities, by contract, or otherwise. You are responsible for the compliance of Your Affiliate with this Agreement.
+
+"Agreement" means this JetBrains Marketplace Developer Agreement between JetBrains and You containing the terms and conditions under which You authorize JetBrains to market Your Plugins to Customers on JetBrains Marketplace.
+
+"Content" means Plugins and Plugin Information.
+
+"Customer" means an individual or entity that uses JetBrains Marketplace to acquire Plugins.
+
+"Developer Fee" means the amount specified in Section 5.2 of this Agreement paid to You by JetBrains for each Paid Plugin (as defined below) sold by JetBrains or JetBrains Resellers (as defined below).
+
+"Externally Paid Plugins" means Plugins created by You for which the fees are not processed through JetBrains Marketplace but are instead paid directly to You.
+
+"Free Plugin" means a Plugin that is available to Customers for free.
+
+"Initial Availability Date" is the date when You first upload Your Plugin to JetBrains Marketplace.
+
+"JetBrains Product" means any software program or service made available by JetBrains.
+
+"JetBrains Marketplace Account" means an account that is created by You either (i) athttps://hub.jetbrains.com or (ii) at https://account.jetbrains.com, and through which You have access to JetBrains Marketplace.
+
+"JetBrains Marketplace Approval Guidelines" are the Guidelines governing the requirements for Plugins to be made available within JetBrains Marketplace, available at https://plugins.jetbrains.com/docs/marketplace/jetbrains-marketplace-approval-guidelines.html.
+
+"JetBrains Marketplace" means any platform operated by JetBrains or a JetBrains Affiliate on which JetBrains or a JetBrains Affiliate markets Plugins for JetBrains Products, including the websitehttps://plugins.jetbrains.com and/or any other website or platform, whether named JetBrains Marketplace or otherwise. JetBrains Marketplace provides the functionality of downloading, distributing, listing, and managing Plugins, such as Paid Plugins, Externally Paid Plugins, and Free Plugins.
+
+"Paid Plugin" means a Plugin that is provided to Customers for a fee paid to JetBrains.
+
+"Personal Data" means any information relating to an identified or identifiable natural person.
+
+"Plugin" means any plugin, extension, application, integration, widget, or other software designed to work with JetBrains Products that You make available on JetBrains Marketplace or that You otherwise deliver to JetBrains for this purpose in accordance with this Agreement, including any Updates (as defined below).
+
+"Plugin Information"  means (a) Plugin title, Initial Availability Date, tags or category, name(s) of Developer(s), List Prices (if applicable), description, icon, logo or banner images, and any other information related to Plugins that JetBrains requires; (b) the metadata, graphics, artwork, images, trademarks, trade names, logos, and other descriptive or identifying information and materials associated with You or a particular Plugin that You wish to appear on JetBrains Marketplace in connection with Your Plugin; (c) any Developer EULA (defined below); and (d) in the case of cloud-hosted Plugins, an XML/JSON descriptor of the Plugin ("XML/JSON Code").
+
+3. Uploading Plugins
+3.1. If You want to make a Plugin available on JetBrains Marketplace, You must indicate whether You are a trader or a non-trader within the meaning of European Economic Area (EEA) consumer protection laws.
+
+3.2. If You want to make a Plugin available on JetBrains Marketplace, You must upload it while You are logged into Your JetBrains Marketplace Account, unless expressly instructed otherwise by JetBrains. When uploading a Plugin, You must select from the available options the terms under which the Plugin shall be marketed to Customers. In particular:
+
+(a) You must select whether Your Plugin shall be provided to Customers as a Free Plugin, a Paid Plugin, or an Externally Paid Plugin (if such option is available); and
+
+(b) In relation to a Paid Plugin, You must:
+
+(i) specify the List Price for the Plugin (as defined and described below);
+
+(ii) specify whether the Plugin may be sold via JetBrains Resellers (as defined and described below);
+
+(iii) specify whether the Plugin should be opted-out from JetBrains Community Support Programs as described at https://www.jetbrains.com/community/user-groups/ (Classroom, User Groups, Students, etc.);
+
+(iv) specify whether the Plugin should be opted-out from any Special Offers (as defined and described below) or any other discounts such as the continuity discount.
+
+(v) select an applicable licensing model;
+
+(vi) specify whether the Plugin should be opted-out from JetBrains marketing offers directed at Customers;
+
+(vii) select from other options offered by JetBrains;
+
+(viii) specify whether the Plugin should be sold on an annual, monthly, or other license basis; and
+
+(c) It is in the sole discretion of JetBrains to decide which options are available for selection and whether or not You are able to amend Your selection after You have made the Plugin available on JetBrains Marketplace. If You are not able to or do not wish to select from the available options, You must not upload the Plugin. Once You have uploaded the Plugin, the additional terms offered by JetBrains which You selected at the upload or, if made available at JetBrains’ discretion, which You later update based on an offer from JetBrains, will effectively amend this Agreement for such uploaded Plugin.
+
+3.3. JetBrains will review the Plugin before it is made publicly available on JetBrains Marketplace.
+
+3.4. JetBrains reserves the right, at its discretion, to provide additional options to those specified above. JetBrains reserves the right, at its sole discretion, to remove a Plugin from, or not list a Plugin on, JetBrains Marketplace if the requirements in Section 3.2 (b) are not met.
+
+4. Sale of Plugins
+4.1. By making Your Plugin available on JetBrains Marketplace in accordance with this Agreement, You authorize JetBrains and JetBrains Affiliates to market such Plugin to Customers via JetBrains Marketplace and to charge Customers for downloading or otherwise using Paid Plugins.
+
+4.2. When uploading a Paid Plugin, You must set the price for which JetBrains may sell the Paid Plugin, including the pricing model (such as subscription, one-off payment, or other applicable pricing model) ("List Price“). Sale of Paid Plugins is subject to various discounts and promotions such as classroom, usergroups, open source, student, educational, and other offers (”Special Offers“) by default, unless the Developer opts out of such Special Offers for a particular Plugin. You may determine the pricing for renewals, upgrades that add more licenses/users, new versions, and other support and maintenance of Paid Plugins (”Follow-on Sales"). JetBrains may provide You with standard formulas and policies via JetBrains Marketplace.
+
+4.3. Unless You select to opt-out (if such option is available), then by making Your Plugin available on JetBrains Marketplace in accordance with this Agreement, (i) You authorize JetBrains to sell, market, and make Plugin and Follow-on Sales available also to third parties reselling JetBrains Products based on an agreement with JetBrains, which includes JetBrains Affiliates (referred to collectively as "JetBrains Resellers“), at a discount (”Reseller Discount") from the List Price (if it is a Paid Plugin) for the purpose of making Plugin and Follow-on Sales available to JetBrains Resellers’ customers; the amount of such Reseller Discount is determined by JetBrains at its sole discretion and (ii) You authorize JetBrains Resellers to market and make such Plugin and Follow-on Sales available to their customers and to charge such customers for downloading or otherwise using a Paid Plugin.
+
+4.4. JetBrains will (a) charge to the Customer the List Price, subject to applicable Special Offers, (b) charge to the Customer the price for Follow-on Sales, subject to applicable Special Offers, and, if applicable, (c) charge to the Reseller the List Price, subject to applicable Special Offers and Reseller Discount, and also, if applicable, (d) charge to the Reseller the price for Follow-on Sale, subject to applicable Special Offers and Reseller Discount, for Paid Plugins made available to the Reseller (each being a "Sale Price"). The Sale Price does not include VAT, withholding tax, or any other taxes. Except in the case of Externally Paid Plugins, You must not charge any fees to Customers or JetBrains Resellers for Plugins which have been made available to them in accordance with this Agreement.
+
+4.5. Sale of Externally Paid Plugins must occur outside of JetBrains Marketplace and is the responsibility of the Developer. JetBrains has no responsibility for the sale of Externally Paid Plugins.
+
+4.6. The Developer hereby authorizes JetBrains to issue license certificates on behalf of the Developer for any Plugins sold through JetBrains Marketplace.
+
+5. Your Remuneration for Paid Plugins
+5.1. As Your remuneration for making a Paid Plugin available to Customers on JetBrains Marketplace and for making a Paid Plugin available via JetBrains Resellers (if applicable), JetBrains will pay You a Developer Fee for each Paid Plugin sold, unless You selected another formula or amount when uploading the Paid Plugin or at a later time (if such option is available) and unless agreed otherwise between the parties in writing.
+
+5.2. The Developer Fee is:
+
+(a) eighty-five percent (85%) of the List Price (excluding any taxes) for Paid Plugins sold on or after July 1, 2020; or
+
+(b) an amount calculated as a percentage notified to You by JetBrains; such Developer Fee shall never be lower than seventy-five percent (75%) of the List Price (excluding any taxes) and shall apply exclusively to Paid Plugins sold after the date stated in the notification, which shall be at least one month after the date such notification is sent.
+
+5.3. The Paid Plugin is sold when a Customer or, for Plugins sold via a JetBrains Reseller, a JetBrains Reseller makes a final payment to JetBrains for the Paid Plugin made available to them. Depending on the selected pricing model, this may be a one-off payment for the download, or payment for each subscription period, or other arrangement. Final payment means that the Customer, a JetBrains Reseller, a third party paying on either of their behalf, or the applicable financial institution fully settles the payment to JetBrains for the applicable download or other use of the Paid Plugin as determined by JetBrains. If JetBrains refunds a List Price or its portion to a Customer or to a JetBrains Reseller, subject to the refund scheme under the applicable terms of use or reseller agreement (which You permit JetBrains to set entirely in its own discretion without consulting You), You agree that You will not receive any Developer Fee on the refunded portion of the List Price.
+
+5.4. Subject to the terms of this Agreement, up to thirty (30) days after the end of each calendar month in which any Paid Plugin has been sold, JetBrains will provide You with a report detailing (a) sales of Paid Plugins and (b) the corresponding Developer Fee. All payments will be made in US dollars or euros, at JetBrains’ sole discretion, unless otherwise agreed with JetBrains. JetBrains will pay the Developer Fee within thirty (30) days from issuance of the invoice by JetBrains in accordance with Section 7 of this Agreement. You agree to provide JetBrains with, and promptly notify JetBrains of any change of, details of a valid bank account in Your name and a valid email address for the purposes of resolving any possible issues with payment processing.
+
+5.5. JetBrains is entitled to accrue and withhold payments, without interest, until the total amount due to You (net of any tax withholding, as further described below) is at least USD 200.00 or EUR 200.00, depending on the relevant currency. Even if the amount due does not reach USD 200.00 or EUR 200.00, depending on the relevant currency as of December 31 of each calendar year, JetBrains will pay You the Developer Fee for Plugins sold until that date, and such payment shall be made within thirty (30) days of issuance of invoice by JetBrains in accordance with Section 7 of this Agreement. If JetBrains pays You a Developer Fee and later issues a refund or credit to a Customer, a JetBrains Reseller, or a third party paying on either of their behalf for such sale (or receives a chargeback related to the sale), JetBrains may offset the amount of the Developer Fee that JetBrains previously paid to You against a future Developer Fee or other amounts that would otherwise be payable to You under this Agreement, or require You to remit that amount to JetBrains. JetBrains may also withhold and offset sums You owe to JetBrains against amounts that are payable to You. You agree that any fees charged by Your bank in connection with wire transfers pursuant to this section are borne solely by You.
+
+5.6. When this Agreement terminates, JetBrains may withhold all Developer Fees due for a period of sixty (60) days from the date they would otherwise be payable, in order to ensure JetBrains’ ability to offset refunds of any Customer, JetBrains Reseller, or third party paying on either of their behalf or make any other offsets to which JetBrains is entitled. Except for commissions charged by the recipient’s payment system, bank fees associated with payment of the Developer Fee are borne by JetBrains. JetBrains uses conversion rates set by the Czech National Bank for every relevant month.
+
+5.7. In the event of obsolete, incorrect, or incomplete bank account details, You shall notify JetBrains without undue delay. If any part of the Developer Fee payment to You is unsuccessful and the amount of Developer Fee to be paid is not credited to Your account due to obsolete, incorrect, or incomplete bank account details, JetBrains will promptly inform You through the email address You provided in accordance with Section 5.4. of this Agreement. If You do not rectify the bank account details within 30 days of the dispatch of the notification, JetBrains shall notify You again through the aforementioned means or any other channels of contact You have provided to JetBrains, if appropriate. If after the lapse of additional sixty (60) days from the the dispatch of the second notification, the bank account details are not rectified, then as of this moment You will be deemed to have waived Your right to such payment in full (the Developer Fee) and the amount which was to be paid shall become property of JetBrains.
+
+6. Taxes
+6.1. You are solely responsible for any income tax or other taxes due and payable resulting from JetBrains’ payments of Developer Fees to You. JetBrains is a tax resident in the Czech Republic, a member state of the European Union. Unless otherwise stated, the amounts due to You hereunder are exclusive of any taxes that may apply to such payments. JetBrains maintains the right to deduct or withhold any applicable withholding taxes payable by You from amounts due from JetBrains, and the amounts due, as reduced by such deductions or withholdings, will constitute the full payment to You.
+
+6.2. The VAT supply date within the year is the last date of each calendar month in which the total amount due is at least USD 200.00 or EUR 200.00, depending on the relevant currency. At year end, the supply date is always December 31 of each year even if the total amount due is below USD 200.00 or EUR 200.00, depending on the relevant currency.
+
+6.3. You must provide JetBrains with any VAT-related information as requested via JetBrains Marketplace, and You must inform JetBrains of any changes to such information without undue delay.
+
+7. Self-billing Agreement
+The Sections 7.1 through 7.5 apply if You are an EU-based company or entrepreneur (VAT payer or identified person to VAT)
+
+7.1. You authorize JetBrains to issue invoices on Your behalf and, thus, it is agreed that JetBrains will issue self-billed invoices for all supplies made to JetBrains by You until the termination of this Agreement, and that You will accept such invoices. The “self-billing” invoice will be issued within fifteen (15) days of the VAT date of supply.
+
+7.2. You agree to (a) review the invoice sample as per Section 7.3 to make sure it is in accordance with Your local legal and tax requirements and inform JetBrains in the event of any discrepancies as all future invoices will contain the same details, (b) accept delivery of the received invoice as per Section 7.1, and (c) not raise sales invoices for the transactions covered by this Agreement.
+
+7.3. The self-billed invoices will show the Developer’s name, address, and VAT registration number and other details in accordance with Article 226 of VAT Directive 2006/112/ES which constitute a full VAT invoice. A sample invoice is provided below. You are obliged to inform Us if You require any further information to be added to the invoice.
+
+Invoice sample for companies or entrepreneurs not based in the Czech Republic (US dollars are listed as an example):
+
+
+
+7.4. If Your VAT registration number changes, or You deregister from VAT, or You transfer Your business or its part as a going concern, You must inform Us promptly. You are also obliged to notify us immediately in the event of any changes to Your bank account details.
+
+7.5. If the issuing of self-billed invoices is at any point outsourced to a third party, JetBrains will inform You without delay.
+
+The following Section 7.6 applies if You are an EU-based non-entrepreneur, non-EU developer, non-EU non-entrepreneur, or Czech Republic–based non-VAT payer.
+
+7.6. It is agreed that JetBrains will issue self-billed invoices for all supplies made to JetBrains by You for the period of validity of this Agreement and You will accept such invoices. You agree that You will not raise sales invoices for the transactions covered by this Agreement.
+
+8. Plugin Information and Compliance
+8.1. When making a Plugin available on JetBrains Marketplace, You must provide Plugin Information as defined in Section 2 of this Agreement.
+
+8.2. You are required to deliver the Plugin and Plugin Information to JetBrains for testing and verification purposes and approval by JetBrains, by uploading it to JetBrains Marketplace. JetBrains will host the Plugin if You choose not to host it Yourself. You must also deliver the XML/JSON Code and the rest of the Plugin Information to JetBrains pursuant to Section 8.1.
+
+8.3. You are responsible for providing accurate Plugin Information. If any Plugin Information is inaccurate or needs to be updated or modified, You will promptly provide JetBrains with corrections, updates, or modifications.
+
+8.4. You will ensure that all Content complies with this Agreement, including the JetBrains Marketplace Approval Guidelines available at https://plugins.jetbrains.com/docs/marketplace/jetbrains-marketplace-approval-guidelines.html and the JetBrains Marketplace Content Moderation policy available at https://www.jetbrains.com/legal/docs/terms/marketplace-content-moderation/. The Marketplace Approval Guidelines may include (or reference) terms and conditions for the creation or operation of Plugins, such as policies for the development of Plugins for particular JetBrains products, JetBrains SDK usage terms, API call limitations, or other integration requirements. You must comply with all such terms. The express terms and conditions of this Agreement will prevail in the event of any direct conflict with the Marketplace Approval Guidelines or such included (or referenced) terms, but only with respect to the subject matter of this Agreement. If the Marketplace Approval Guidelines are updated by JetBrains, You will ensure that all Your Content complies with the updated Marketplace Approval Guidelines within thirty (30) days of their publication. JetBrains reserves the right to immediately remove any non-compliant Plugins at no liability to JetBrains.
+
+9. License to JetBrains
+9.1. By making Your Plugin(s) available on JetBrains Marketplace in accordance with this Agreement, You grant JetBrains the license:
+
+(a) to market and make available, and to use in any way necessary to market and make available, Your Plugin(s) and Plugin Information via JetBrains Marketplace to Customers;
+
+(b) unless opted-out (if opt-out is available), to market and make available, and to use in any way necessary to market and make available, Your Plugin(s) via JetBrains Resellers;
+
+(c) to communicate to Customers with regards to their purchases, downloads, or usage of Your Plugin(s) available via JetBrains Marketplace (e.g. reminders, update notifications, marketing information, and more);
+
+(d) to charge any Customer for Your Paid Plugin(s) and/or Follow-on Sales downloaded or otherwise made available to Customers on JetBrains Marketplace;
+
+(e) unless opted-out (if opt-out is available), to charge any JetBrains Resellers for Your Paid Plugin(s) and/or Follow-on Sales made available to the Reseller;
+
+(f) to use in any way, including reproducing and using excerpts of Your Plugin Information in any format. Your Plugin Information may be used for the purpose of promoting and marketing (i) JetBrains Marketplace and (ii) Your Plugins; and
+
+(g) to use Your Content for testing and evaluation purposes, but only in connection with marketing Your Plugin and making it available via JetBrains Marketplace and exercising and enforcing the rights and obligations under this Agreement.
+
+9.2. By making Your Plugin available on JetBrains Marketplace in accordance with this Agreement, You grant JetBrains sublicenses to any license You have regarding Your Plugin or Plugin Information, if such sublicenses are necessary for the performance of this Agreement, especially for the performance of activities specified in Section 9.1 of this Agreement.
+
+9.3. Unless opted-out (if opt-out is available), by making Your Plugin(s) available on JetBrains Marketplace in accordance with this Agreement, You grant any Reseller the license:
+
+(a) to market and make available, and to use in any way necessary to market and make available, Your Plugin(s) to the Reseller’s customers;
+
+(b) to charge any Reseller’s customers for Your Paid Plugin(s) downloaded or otherwise made available to the Reseller’s customer;
+
+(c) to use in any way, including reproduction and using excerpts of Your Plugin Information in any format. Your Plugin Information may be used for the purpose of promoting and marketing Your Plugins.
+
+9.4. Unless opted-out (if available), by making Your Plugin available on JetBrains Marketplace in accordance with this Agreement, You grant any JetBrains Reseller sublicenses to any license You have regarding Your Plugin or Plugin Information, if such sublicenses are necessary for the performance of this Agreement and of activities of Resellers specified in this Agreement, especially for the performance of activities specified in Section 9.3 of this Agreement.
+
+9.5. The above licenses are granted:
+
+(a) for the Term (as defined in the Section titled ‘Term and Termination’) and for exercising and enforcing the rights and obligations under this Agreement which survive the Term until the termination of any such rights and obligations under this Agreement;
+
+(b) as nonexclusive, worldwide, and royalty‐free (subject to the payment of Developer Fee in accordance with this Agreement) licenses;
+
+(c) as licenses assignable by JetBrains, which means JetBrains will be allowed to sublicense any rights licensed to it and to assign the license to a third party.
+
+10. Licensing to Customers
+10.1. You, not JetBrains or the Reseller, license Your Plugins and Plugin Information to Customers and, if applicable, to JetBrains Resellers’ customers. You must provide Your own end user license agreement ("Developer EULA") with any Plugin You make available via JetBrains Marketplace. However, Your Developer EULA must comply with the terms and conditions of this Agreement and applicable laws, must not impose liability on JetBrains or its Affiliates or Resellers greater than as set out in this Agreement, and must not make JetBrains part of the Developer EULA. In the event of any conflict between the Developer EULA and this Agreement, this Agreement takes precedence.
+
+10.2. The Standard EULA cannot be used instead of Your Developer EULA unless You make the necessary modifications to adjust it to Your needs. The Developer EULA must specify, among other things, that You are the licensor of Your Plugins and that JetBrains is not a party to the Developer EULA and is not responsible for or liable to Customers or Resellers’ customers in any way.
+
+10.3. You agree that JetBrains does not and will not have any responsibility or liability related to compliance or non‐compliance by You or any end user under a Developer EULA, and You will indemnify JetBrains from any damage arising from breach of Your obligations stipulated in this section. You are responsible for ensuring that the Developer EULA is compatible with this Agreement and with the requirements it sets for Plugins and You are solely liable for any damages arising from not complying with this obligation.
+
+11. Updates
+You will make available on JetBrains Marketplace any enhancements, upgrades, updates, bug fixes, patches, new versions, and other modifications and amendments to Your Paid Plugins and Plugin Information ("Updates") as soon as they are released.
+
+12. Technical Support
+You will use commercially reasonable efforts to provide web-based and/or email support related to the functioning of Your Paid Plugins ("Technical Support") to Customers for Your Paid Plugins during normal business hours at Your location. You will provide to JetBrains a current email address to which JetBrains may direct inquiries from Customers regarding Your Paid Plugins. You are solely responsible for providing all Technical Support for Your Paid Plugins, and for providing Customers of Your Paid Plugins with all the information necessary for their use of Your Paid Plugins. At a minimum, You agree to respond within two (2) business days to any Technical Support request that JetBrains identifies as critical, and in all other cases within five (5) business days of a Technical Support request from Customer or JetBrains. Should You fail to provide Technical Support to the Customers as required by this section, and fail to remedy the situation within a reasonable time to JetBrains’ satisfaction, JetBrains is entitled to terminate this Agreement with immediate effect via notice delivered by email.
+
+13. JetBrains Content
+You may not reverse-engineer, disassemble, or decompile any binary code used in connection with JetBrains Marketplace, including any software, JetBrains Product, APIs, documentation, and related materials ("JetBrains Content"), to which JetBrains provides You access. You will not take any action that interferes with, damages, or accesses or uses in any unauthorized manner, the hardware, software, networks, technologies, or other properties or services of JetBrains or of any end user or other third party. You agree not to make any representations, guarantees, or warranties:
+
+(a) that violate any laws or regulations, including any false advertising or consumer protection laws;
+
+(b) with respect to JetBrains, JetBrains Marketplace, or JetBrains Products; or
+
+(c) by JetBrains or on behalf of JetBrains.
+
+In all activities under this Agreement, You agree to conduct Yourself in a professional manner and not to devalue JetBrains, JetBrains Affiliates, or JetBrains Marketplace. JetBrains retains ownership to all JetBrains Content.
+
+14. Reviews and Comments
+JetBrains Marketplace allows You to post reviews of Plugins and post comments on Plugins for JetBrains Products. Any review by You of a Plugin for a JetBrains Product must be made in good faith after reasonable evaluation of the full version of that Plugin. If You post a review of Your own Plugin, You must disclose Your identity and the fact that the Plugin being reviewed is Your own Plugin. If You post a review of a competitor’s Plugin for a JetBrains Product, You must disclose Your identity and the fact that You publish a competitive Plugin for a JetBrains Product.
+
+You must not solicit ratings and reviews of Your Plugin in a manipulative way, for example, by incentivizing JetBrains Marketplace users to write a positive review in exchange for a discount or by offering a plugin for free in exchange for a five-star rating.
+
+All reviews or other posts must comply with the JetBrains Marketplace Content Moderation Policy available at https://www.jetbrains.com/legal/docs/terms/marketplace-content-moderation/, and JetBrains may, in its sole discretion, take down reviews or other posts or block reviewers if the JetBrains Marketplace Content Moderation Policy is violated or the obligations arising from this section are not fulfilled.
+
+15. Control over JetBrains Marketplace
+JetBrains maintains sole discretion to determine all features and operations of JetBrains Marketplace. You acknowledge that JetBrains has no obligation to promote or make available any Plugin for a JetBrains Product, or to continue to do so. With respect to Paid Plugins only, JetBrains is responsible for and has sole discretion with regard to processing payments, collecting payments, addressing requests for refunds, and providing customer service related to JetBrains’ obligations, and has full discretion to select a provider of payment services to process such payments. JetBrains may determine, in its sole discretion, to make available or list any Plugin for a JetBrains Product through JetBrains Marketplace. JetBrains may stop any transaction, or take other actions as needed to restrict access to or availability of any Content that does not comply with this Agreement or that otherwise might adversely affect end users. Inclusion of a Plugin on JetBrains Marketplace does not relieve You of responsibility to ensure that Your Plugin complies with this Agreement and any applicable laws and regulations.
+
+16. Personal Data
+16.1. In the course of creating a JetBrains Marketplace Account and registering You as a Developer on JetBrains Marketplace and as part of the performance of this Agreement, JetBrains and JetBrains Affiliates will process Your Personal Data, in particular, Your contact and identification details, bank account details and information about Your Plugins and payments to You, for the following purposes:
+
+(a) To provide You with JetBrains Marketplace and related information;
+
+(b) To protect JetBrains from piracy and unlawful use of JetBrains Marketplace;
+
+(c) To improve JetBrains’ offerings based on usage;
+
+(d) For JetBrains’ internal records and to protect the rights and interests of JetBrains and other users;
+
+(e) To promote and market JetBrains software and services; and
+
+(f) To fulfill legal duties stipulated by accounting, taxation, and other laws.
+
+(g) You may object to the processing of Your Personal Data for the purposes set out in letters (b), (c), (d) and (e) of this section at any time. Additional information about personal data processing for the above-mentioned purposes, and additional information about Your rights, can be found in the Privacy Notice at https://jetbrains.com/company/privacy.html.
+
+16.2. For the above purposes, JetBrains may process information including but not limited to Your name, email address, username, physical address, telephone number, payment data, company name, tax identification number where applicable, sales information, any communication and information about the use of JetBrains Marketplace. To receive JetBrains Marketplace, You explicitly fill in Your Personal Data when setting up a JetBrains Marketplace Account for JetBrains Marketplace.
+
+16.3. JetBrains products and services often give You the option to provide feedback, such as suggestions, compliments, comments or problems encountered. JetBrains invites You to provide such feedback as well as to post comments on JetBrains website, blogs, and discussion forums.
+
+16.4. In the case of transfer of Personal Data to third parties, JetBrains is responsible for the handling of Your Personal Data by such third parties. The transfer is made to assist such third parties in providing its services to You or in its operations; to do so, JetBrains may send Your Personal Data to a third party. Personal Data collected from You is transferred to:
+
+(a) A third-party payment provider to process payment transactions as specified here https://www.jetbrains.com/legal/privacy/third-parties.html, as applicable;
+
+(b) A third-party cloud accounting service and other services as specified here https://www.jetbrains.com/legal/privacy/third-parties.html, as applicable;
+
+(c) JetBrains Resellers who are handling purchases of JetBrains products in a certain region. Information about the reseller obtaining Your Personal Data will be communicated to You before the transfer is made;
+
+(d) Other representatives of the same Developer (You).
+
+16.5. You will process Customers’ personal data in accordance with applicable laws and, in particular, but not exclusively, comply with information obligations and provisions regarding transfers of personal data to third countries or international organizations and process such personal data in accordance with the principles of data protection. This includes Your obligation to notify Customers about the name(s) of Your organization or Yourself, categories of data processed, purposes of personal data processing, any governing documentation such as Your EULA, the conditions for transfer of data to third parties, and the way in which Customers may opt out of or object to processing of their personal data.
+
+16.6. If JetBrains receives personal data of Your Customers from You:
+
+(a) JetBrains will only process such personal data for the purposes for which they have been provided to JetBrains in compliance with applicable laws and the instructions of the Developer that are specified in this Agreement;
+
+(b) You instruct JetBrains to process such personal data as necessary to carry out the purpose for which the personal data were provided to JetBrains;
+
+(c) JetBrains will ensure that persons processing such personal data are bound by confidentiality obligations;
+
+(d) JetBrains will implement adequate security measures as specified in Article 32 of the General Data Protection Regulation 2016/679 ("GDPR");
+
+(e) JetBrains will only use sub-processors for such personal data if the conditions under Article 28 section 2 and 4 are fulfilled;
+
+(f) JetBrains will assist You in implementing reasonable and adequate organizational and technological measures to help You comply with Your obligations regarding data subject requests;
+
+(g) JetBrains will render reasonable assistance to You in achieving compliance with Articles 32 to 36 of GDPR;
+
+(h) JetBrains will either delete or return all such personal data depending on Your decision;
+
+(i) JetBrains will provide all relevant information to You as is necessary to prove compliance with Article 28 of GDPR and provide an audit report to You not older than 18 months demonstrating JetBrains’ compliance.
+
+16.7. JetBrains may send You notifications concerning JetBrains Marketplace. In addition, JetBrains may send You emails containing certain promotions, offers, and other information relating to JetBrains Marketplace, including offers of Plugins that may be of interest to You. You can opt out from receiving these offerings within the emails or through Your JetBrains Marketplace Account.
+
+16.8. You acknowledge and understand that owing to the nature of JetBrains Marketplace, Your user name and related profile information may be displayed to other Developers and Customers within JetBrains Marketplace.
+
+17. Internal Complaint-Handling System
+17.1. Any complaints shall be sent to the email address marketplace@jetbrains.com. All complaints are then handled through JetBrains' free of charge internal complaint system. The system allows Developers to lodge complaints especially regarding any of the following issues:
+
+(a) alleged non-compliance by JetBrains with any legal regulation which affects the Developer lodging the complaint (the ‘complainant’);
+
+(b) technological issues which relate directly to the provision of online intermediation services (this JetBrains Marketplace), and which affect the complainant;
+
+(c) measure taken by, or behavior of, JetBrains which relates directly to the provision of the online intermediation services, and which affects the complainant.
+
+17.2. JetBrains will duly consider complaints lodged and the follow-up which it may need to give to the complaint in order to adequately address the issue raised and process the complaint. Within five (5) business days after the delivery of the complaint, JetBrains will communicate to the complainant the outcome of the internal complaint-handling process.
+
+17.3. If any complaint could not be resolved by means of the internal complaint-handling system referred to in this section 17, the complainant may use the mediation under section 18.
+
+17.4. The mechanism described in this section is without prejudice to your right to report content according to Section 3 and object to our decisions pursuant to Section 5 of JetBrains Marketplace Content Moderation policy available at https://www.jetbrains.com/legal/docs/terms/marketplace-content-moderation/.
+
+18. Mediation
+
+18.1. JetBrains is willing to engage to attempt to reach an agreement with Developers on the settlement, out of court, of any disputes between JetBrains and Developers arising in relation to the provision of the online intermediation services concerned before the following mediators:
+
+(a) listed mediators as per https://www.themii.ie/ or
+
+(b) listed mediators according to Act No. 202/2012 Coll., Mediation Act, available at https://mediatori.justice.cz.
+
+18.2. JetBrains shall bear a reasonable proportion of the total costs of mediation in each individual case. A reasonable proportion of those total costs shall be determined, on the basis of a suggestion by the mediator, by taking into account all relevant elements of the case at hand, in particular the relative merits of the claims of the parties to the dispute, the conduct of the parties, as well as the size and financial strength of the parties relative to one another.
+
+18.3. Any attempt to reach an agreement through mediation on the settlement of a dispute in accordance with this section 18 shall not affect the rights of JetBrains and Developers concerned to initiate judicial proceedings at any time before, during or after the mediation process.
+
+18.4. If requested by a Developer, before entering into or during mediation, JetBrains shall make available, to the Developer, information on the functioning and effectiveness of mediation related to its activities.
+
+19. Term and Termination
+19.1. The term of this Agreement ("Term") will begin on the date You indicate Your assent to the terms of this Agreement by checking the box (or similar action) to accept the Agreement that is presented to You, and will continue until You or JetBrains terminate it.
+
+19.2. Either JetBrains or You may terminate this Agreement with a thirty (30) day advance written notice to the other party.
+
+19.3. Either JetBrains or You may withdraw Your Plugin from JetBrains Marketplace.
+
+19.4. Either JetBrains or You may terminate this Agreement immediately upon written notice to the other party (or with the notice specified by the terminating party at the time) if (a) the other party becomes the subject of a bankruptcy petition or other proceeding relating to insolvency, or (b) the other party breaches its confidentiality obligations under this Agreement, or infringes the terminating party’s intellectual property rights, or (c) the other party commits a breach of the Agreement including JetBrains Marketplace Approval Guidelines.
+
+19.5. JetBrains may terminate this Agreement immediately upon notice to You (or with the notice specified by JetBrains at the time) if JetBrains determines, at its discretion, that Your participation in JetBrains Marketplace could result in legal or business liability to JetBrains or any third party or otherwise harm JetBrains, JetBrains Affiliates, JetBrains Marketplace, or other JetBrains Marketplace developers or users.
+
+19.6. Following any termination of this Agreement or withdrawal of Your Plugin from JetBrains Marketplace, (a) JetBrains may continue to fulfill any end-user orders for Plugins pending as of the date the termination takes effect, and (b) JetBrains will use reasonable efforts to take down the listing for Your Plugin within thirty (30) days of termination ("Transition Period"). However, in any event JetBrains may continue to make available Paid Plugins for further access, downloads, or re‐downloads to end users who will have purchased Plugins before the termination of this Agreement for the duration of the end user’s license or subscription to those Plugins. If specified by JetBrains, the Transition Period may commence from the date of notice of termination rather than the effective date of termination.
+
+19.7. In the event of any termination of this Agreement specified above, Your access to JetBrains Marketplace as a Developer shall be terminated also. Any termination of this Agreement will not have any impact on the rights of both parties which have arisen from this Agreement before the termination of this Agreement (including rights to any payments of Developer Fee), or which are supposed to survive such termination.
+
+19.8. After termination, You are not obligated to provide any Updates of Your terminated Plugin to JetBrains for distribution under this Agreement thereafter, but JetBrains’ post-termination rights in this section will apply for the latest version of Your Plugin that You provided to JetBrains hereunder (and all prior versions).
+
+19.9. The following provision survives this Agreement:
+
+Prior to the expiration of the Transition Period (and otherwise in a timely manner) You are responsible for doing the following, consistent with JetBrains’ guidance and instructions, with regard to Your Paid Plugins:
+
+(a) making any Paid Plugin hosted outside JetBrains Marketplace (including any Updates) available to JetBrains and any Customers using that Paid Plugin on a hosted basis at least until the conclusion of any paid terms or subscriptions of all Paid Plugin Customers who have purchased that Plugin;
+
+(b) taking all actions necessary to move existing Customers to Your non-JetBrains license mechanism, including, as applicable: (i) providing an equivalent product that integrates with JetBrains applications without the use of JetBrains licensing application programming interface (API); (ii) contacting Customers and providing access, installation and migration instructions, and equivalent license terms and keys; and/or (iii) providing Customers with data migration tools and migration assistance, if applicable;
+
+(c) arranging for ongoing support and maintenance (including Updates) for Your Paid Plugins for all Customers who have purchased such rights; and
+
+(d) communicating such matters accurately and in a positive and professional manner to end users.
+
+19.10. The following provision survives this Agreement:
+
+Unless otherwise specified by JetBrains: (a) all EULAs and associated end user licenses and subscriptions to Your Plugins will survive termination or expiration of this Agreement in accordance with their terms and (b) You will continue to host and operate any Paid Plugins hosted outside JetBrains Marketplace for use by end users at least until the conclusion of any paid terms or subscriptions of all Customers who have purchased such Paid Plugins.
+
+19.11. The following Sections of this Agreement will survive termination or expiration of this Agreement and any Transition Period: 5, 6, 14, 15, and 19.
+
+20. Representations and Warranties
+20.1. You represent and warrant on the date of this Agreement and covenant that during the Term:
+
+(a) You are at least 18 years of age and are able to enter into a legally binding contract. If the Developer is a business or other legal entity and not an individual, then You, the individual entering into this Agreement on the Developer’s behalf, represent that You have all necessary legal authority to bind the Developer to this Agreement;
+
+(b) You have the full right, power, and authority to enter into, and fully perform the binding obligations of, this Agreement;
+
+(c) Before providing JetBrains with any Content, or listing Content on JetBrains Marketplace, You will have obtained the rights necessary for the exercise of all rights granted under this Agreement by JetBrains, Resellers, and Customers in relation to Content, You will be solely responsible for and will pay any licensors or co‐owners any royalties or other monies due to them related to such Content, and You will identify this Content to JetBrains, specify if any sublicense is relevant, and include source code as specified below;
+
+(d) None of the following will violate any law, contain any defamatory material, or violate or infringe on any intellectual property, proprietary, or other rights of any person or entity (including contractual rights, copyrights, trademarks, patents, trade dress, trade secrets, common law rights, rights of publicity, or privacy, or moral rights): (i) the exercise of any rights granted under this Agreement; (ii) Content; (iii) the sale or distribution of Content as contemplated in this Agreement; or (iv) any notices, instructions or advertising by You for or in connection with any Content;
+
+(e) Your Content will not contain any viruses, spyware, Trojan horses, or other malware or harmful code, and will not cause injury to any person or damage to any property;
+
+(f) Your Plugins are authorized for export from Your country to each country in which they are made available through JetBrains Marketplace, in accordance with the requirements of the export laws applicable in Your country;
+
+(g) You will include any attributions, copyright information, and other notices, terms, and conditions that may be required to be provided to end users (e.g., as part of a Developer EULA) based on Your use of third-party open source software or other third-party intellectual property in any Plugin. You will also promptly make available to JetBrains, end users, and any other third party that is entitled to it, the source code corresponding to any Plugin or portion thereof if, and in the manner required by applicable third-party terms and conditions. JetBrains’ use (in any manner as permitted hereunder) of any Content will not subject JetBrains to, or cause JetBrains to violate, any open source or other third-party terms or agreements of any kind.
+
+(h) You are not an entity restricted by export control laws, nor are You acting on behalf of an entity restricted by export control laws.
+
+20.2. You agree that the Developer is solely responsible for (and that JetBrains has no responsibility to the Developer or to any third party for) any breach of the Developer’s obligations under this Agreement, any applicable third-party contract or terms of service, or any applicable law or regulation, and for the consequences (including any loss or damage which JetBrains or any third party may suffer) of any such breach.
+
+20.3. You confirm that You own all the Intellectual Property Rights related to Your Plugins necessary in order for You to provide Your Plugins to JetBrains for distribution on JetBrains Marketplace. You will immediately notify JetBrains if You are in breach or anticipate being in breach of this Agreement or become aware of any third-party claim in relation to Your Plugins.
+
+21. Indemnity
+21.1. You will indemnify, defend, and hold JetBrains, its subsidiaries, respective affiliates, officers, directors, employees, contractors and assigns harmless from and against any loss, claim, liability, demand, damage, action or cause of action (including reasonable attorney fees) arising out of any claim relating to:
+
+(a) Your Content or Your use of Content (including any claims made by or arising from end users or third parties); or
+
+(b) any breach or alleged breach of Your representations, warranties or obligations set forth in this Agreement;
+
+(c) any actual or, in JetBrains’ reasonable opinion, perceived (i) access, use, disclosure, loss, modification, or destruction of data in the possession of JetBrains or a third party, including any end user of Your Plugin, or (ii) vulnerability or compromise to JetBrains’ or a third party’s system running Your Plugin;
+
+(d) the Developer EULA and/or Standard EULA (individually, a "Claim", and collectively, the "Claims").
+
+21.2. You will not consent to the entry of a judgment or settle a Claim without JetBrains’ prior written consent, which may not be unreasonably withheld. If You do not promptly assume and conduct the defense of a Claim or take reasonable action to settle any such Claim after being provided with sufficient reasonable advance notice to evaluate the Claim, then JetBrains may take control of the defense (without limiting Your indemnification obligations). Your obligations under this Section are independent of Your other obligations under the Agreement.
+
+22. Confidential Information
+22.1. All information disclosed by JetBrains that is marked as confidential or proprietary, or that You should reasonably understand to be confidential or proprietary, is "Confidential Information". Confidential Information includes non-public aspects of JetBrains Marketplace and JetBrains Products; non-public aspects of third-party applications listed on JetBrains Marketplace to which You obtain access as a result of the relationship between You and JetBrains under this Agreement; and non-public technology, technical information, and product plans to which You obtain access as a result of the relationship between You and JetBrains under this Agreement. Confidential Information shall not include any information that: (i) is or becomes generally known to the public; (ii) was known to You before its disclosure hereunder; or (iii) is received from a third party, in each case without breach of an obligation owed to JetBrains or anyone else.
+
+22.2. During and after the term of this Agreement, You shall (a) maintain Confidential Information in confidence (using at least the same measures as for Your own confidential information, and no less than reasonable care) and not divulge it to any third party and (b) only use Confidential Information to fulfill Your obligations under this Agreement. If You are compelled by law to disclose Confidential Information, You must provide JetBrains with a prior notice of such compelled disclosure (to the extent legally permitted) and reasonable assistance, at JetBrains’ cost, if JetBrains wishes to contest the disclosure.
+
+22.3. JetBrains may develop, have already developed, or be developing its own products and services, and works with many other third parties. Either JetBrains or these third parties could in the future develop, be developing now, or have already developed products similar to Yours. However, JetBrains will in no event use any of Your intellectual property contained within any Content for such purposes.
+
+22.4. You should not provide JetBrains with any information that You consider confidential. You agree that JetBrains is not subject to any confidentiality obligations or usage restrictions related to information that You may provide to Us in relation to this Agreement. You expressly agree that neither this Agreement nor Your participation in JetBrains Marketplace limits JetBrains’ right to develop or commission the development of products, concepts, systems, or techniques that are similar to or compete with any Plugin or any other products, concepts, systems, or techniques contemplated by or embodied in information You disclose to JetBrains. However, this section does not grant JetBrains any license under Your intellectual property rights.
+
+23. JetBrains Trademarks
+"JetBrains Marks" means the trademarks, trade names, service marks, and logos owned or otherwise used by JetBrains. Nothing contained herein shall grant You any ownership right in JetBrains Marks.
+
+You will:
+
+(a) only use JetBrains Marks in the form and manner as set forth at
+
+https://www.jetbrains.com/company/brand/ and only in connection with the offering of Your Marketplace Plugins on JetBrains Marketplace;
+
+(b) not register any domain names that contain any terms that are the same or similar to any JetBrains Marks without obtaining permission from JetBrains to register such domains; and
+
+(c) upon expiration or termination of this Agreement for any reason, immediately cease all use of JetBrains Marks, unless You are otherwise authorized to continue using JetBrains Marks pursuant to a separate written agreement with JetBrains.
+
+24. Limitation of Liability
+JETBRAINS SHALL HAVE NO LIABILITY TO YOU FOR ANY LOST PROFITS OR CONSEQUENTIAL DAMAGES, HOWEVER CAUSED, AND IN NO EVENT WILL JETBRAINS’ AGGREGATE LIABILITY ARISING OUT OF OR RELATED TO THIS AGREEMENT OR JETBRAINS MARKETPLACE EXCEED JETBRAINS’ MARGIN IN THE TWELVE-MONTH PERIOD PRECEDING THE CLAIM. FOR THE PURPOSES OF THIS AGREEMENT, “JETBRAINS’ MARGIN” MEANS THE AMOUNTS RECEIVED BY JETBRAINS FROM SALES OF YOUR PLUGINS, MINUS THE DEVELOPER FEE JETBRAINS HAS PAID YOU.
+
+25. Marketing
+As long as this Agreement remains valid and is not terminated, the Developer is entitled to designate itself as a “JetBrains Technology Partner” for the purposes of using such designation in its own marketing and PR materials.
+
+26. Agreement Changes
+This Agreement, including its annexes, such as JetBrains Marketplace Approval Guidelines, relates to the broader JetBrains Marketplace, which will change over time. JetBrains reserves the right to change this Agreement at any time, in its sole discretion, with such changes to become effective on the date specified in the updated Agreement. If a revision meaningfully reduces Your rights, JetBrains will use reasonable efforts to notify You of the changes by emailing You at the email address You have provided or by displaying it in Your JetBrains Marketplace Account. You may be required to click through the updated Agreement to show Your acceptance. If You do not agree to any of the proposed changes, You may terminate this Agreement within thirty (30) days from the effective date of the updated Agreement by (i) providing a written notice to JetBrains and (ii) withdrawing all of Your Plugins from JetBrains Marketplace. If You so terminate the Agreement, the proposed changes will have no effect on You. However, if You do not so terminate the Agreement, then Your continued participation on and use of JetBrains Marketplace after thirty (30) days from the effective date constitute Your acceptance of the changes to the Agreement.
+
+27. Dispute Resolution; Governing Law
+Should the attempts to settle a dispute amicably fail, the dispute will be excluded from the jurisdiction of general courts and all such disputes will be finally decided by the Arbitration Court attached to the Czech Chamber of Commerce and the Agricultural Chamber of the Czech Republic by three (3) arbitrators in accordance with the Rules of that Arbitration Court, and the language of the proceedings will be English. However, if You are a consumer, any dispute between JetBrains and You which cannot be settled amicably will be resolved before the court where You have Your habitual residence, unless You choose to bring Your action before the court of the Czech Republic. Consumer complaints can also be addressed to the Czech Trade Inspection Authority (www.coi.cz), which is also competent for the out-of-court settlement of consumer disputes. Alternatively, consumers can select the European Commission’s online platform for dispute resolution (https://ec.europa.eu/consumers/odr).
+
+28. General
+28.1. This Agreement may not be amended except in writing signed by both parties or as provided in the Sections 3 and 24.
+
+28.2. Nothing in this Agreement constitutes any form of legal partnership between You and JetBrains, nor entitles You to present Yourself as a representative of JetBrains or its Affiliates.
+
+28.3. If any provision of this Agreement is held invalid by a court with jurisdiction over the parties to this Agreement, such provision will be deemed to be restated to reflect as closely as possible the original intentions of the parties in accordance with applicable law, and the remainder of this Agreement will remain in full force and effect.
+
+28.4. JetBrains’ failure to enforce any provision of this Agreement will not constitute a waiver of JetBrains’ rights to subsequently enforce the provision.
+
+28.5. JetBrains may freely assign, transfer, and delegate its rights and obligations under this Agreement.
+
+28.6. You agree that JetBrains may identify You as a Customer and/or Developer using JetBrains Marketplace and may refer to You by name, trade name, and trademark, if applicable. JetBrains may also make reference to Your business in JetBrains marketing materials, on JetBrains websites, and/or in public or legal documents. You hereby grant JetBrains a worldwide, non-exclusive, and royalty-free license to use Your name and any of Your trade names and trademarks solely pursuant to this section.
+
+28.7. You acknowledge and agree that JetBrains Affiliates, JetBrains’ contractors, and JetBrains’ service providers may exercise all rights of JetBrains under this Agreement, including JetBrains’ license rights.
+
+28.8. You may not assign any of Your rights or obligations under this Agreement without JetBrains’ prior written consent.
+
+28.9. Any notice or other communication to be given hereunder will be made in writing and given (i) by JetBrains to You via the email address You have registered for Your JetBrains Marketplace Account or directly via JetBrains Marketplace, and (ii) by You via email to marketplace@jetbrains.com or to such other email or physical addresses as JetBrains may specify from time to time. The date of receipt will, in the case of email, be deemed the date on which such notice is transmitted.
+
+For exceptions or modifications to this Agreement, please contact JetBrains at:
+
+Address: Na Hřebenech II 1718/8, Prague, 14000, Czech Republic
+
+Phone/Fax: +420 241 722 501
+
+Email: legal@jetbrains.com
+
+Appendix 1
+The Standard EULA (End User License Agreement) displayed below is primarily intended as an example of an EULA to accompany Your Plugin. It cannot be used without the necessary modifications. Using Your own EULA or a similar license agreement granting rights to users of Your Plugin is recommended. Provision of this Standard EULA does not constitute legal advice; advice from a qualified attorney is required. If You use the wording presented below in the Standard EULA, You acknowledge that JetBrains is not liable for its use by You in any way and that You have to modify it to suit Your individual needs.
+
+Standard EULA
+This Standard EULA is concluded between You and the Developer with respect to the Plugin.
+
+1. Definitions
+"Confirmation" means an email from JetBrains confirming Your rights to use a Paid Plugin and containing important information about Your license or Subscription.
+
+"Developer" means [FILL IN].
+
+"Documentation" means the latest versions of all online technical documentation available for a Plugin on JetBrains Marketplace and any other relevant Plugin documentation provided either by JetBrains or the Developer that applies to the Plugin.
+
+"Fallback Date" means the date falling twelve (12) months prior to the date Your Subscription expired.
+
+"Fallback Version" means the most recent Plugin Version that the Developer made available for public purchase prior to the Fallback Date, along with any bug-fix updates for that Plugin Version. The Fallback Version does not include any Plugin updates or upgrades other than bug-fix updates that You may have used in the period between the Fallback Date and the expiration date of Your Subscription. For more information, see FAQ available at https://sales.jetbrains.com/hc/en-gb.
+
+"Free Plugin" means a Plugin that is offered at no cost.
+
+"JetBrains" means JetBrains s.r.o., which has its registered office at Na Hřebenech II 1718/8, Prague, 14000, Czech Republic, registered with the Commercial Register kept by the Municipal Court of Prague, Section C, file 86211, ID.Nr.: 265 02 275.
+
+"JetBrains Affiliate" means the subsidiary and/or any associated companies of JetBrains.
+
+"JetBrains Marketplace" means any platform operated by JetBrains or a JetBrains Affiliate on which JetBrains or JetBrains Affiliate markets Plugins for JetBrains Products, including the website https://plugins.jetbrains.com and/or any other website or other platform, whether named JetBrains Marketplace, JetBrains Plugins Repository, or otherwise.
+
+"JetBrains Product" means any software program or service made available by JetBrains.
+
+"Paid Plugin"means a Plugin that is offered for a fee (can be either a one-time license fee or a recurring subscription fee).
+
+"Plugin" means any plugin, extension, application, widget, or other software program designed to work with JetBrains Products that the Developer makes available under this Standard EULA.
+
+"Plugin Users" means users that are able to access and use the Plugin concurrently.
+
+"Plugin Version" means a release, update, or upgrade of a particular Plugin that is not identified by the Developer as being made for the purpose of fixing software bugs.
+
+"Subscription" means Your right to use a Paid Plugin during the Subscription Period.
+
+"Subscription Period" means the Subscription period described in Your Confirmation.
+
+"You" means an individual or an entity concluding this Standard EULA.
+
+2. Grant of License
+2.1. License. The Developer hereby grants You a limited, worldwide, non-exclusive, non-transferable license to use the Plugin (including any generally available updates and upgrades released during Your rightful use of the Plugin) as long as the use is in line with Your Confirmation, the Documentation, and the limits set out in this Standard EULA. You may:
+
+(a) install the Plugin;
+
+(b) use the Plugin subject to the limits described in Your Confirmation (if any); and
+
+(c) make backup copies of the Plugin for archival purposes.
+
+2.2. Restrictions. You may not modify, reverse-engineer, decompile, or disassemble the Plugin in whole or in part, or create any derivative works from the Plugin, or sublicense any rights to the Plugin, unless otherwise expressly authorized in writing by the Developer.
+
+2.3. Duration of License. The license granted under this Standard EULA can be provided as:
+
+(a) perpetual in the case of Free Plugins or Paid Plugins for which You are charged a one-time license fee, and
+
+(b) time-limited for the duration of Your Subscription Period, in the case of Paid Plugins for which You pay an annual or monthly Subscription fee.
+
+For more details about the type of Paid Plugin, see the information in Your Confirmation.
+
+3. Subscription
+3.1. Subscription Limits. If You purchased a Plugin Subscription, You must use the Paid Plugin in accordance with the limits described in Your subscription plan (e.g., You must ensure that the maximum number of Plugin Users does not exceed the number of Plugin Users for which You have purchased the Subscription).
+
+3.2. Subscription Period. The Subscription Period can be either annual or monthly.
+
+3.3. Fallback License. If the Plugin is provided with a Fallback license according to the Confirmation, following the expiration of the Subscription Period without a renewal, Your license to use the Plugin as stipulated in Section 2 shall continue on a perpetual, royalty-free, non-exclusive, and non-transferable basis with respect to the Fallback Version of the Plugin (including all limitations). The granting of the Fallback license is expressly contingent upon Your compliance with this EULA, including Your payment of the applicable Subscription fees for at least the preceding 12 months in full and without interruptions.
+
+3. Intellectual Property
+The Plugin is protected by copyright and other intellectual property laws and treaties. The Developer or its licensors own all title, copyright, and other intellectual property rights to the Plugin.
+
+4. Disclaimer of Warranty
+ALL PLUGINS ARE PROVIDED TO YOU ON AN “AS-IS” AND “AS AVAILABLE” BASIS WITHOUT WARRANTIES. YOUR USE OF PLUGINS IS AT YOUR OWN RISK. THE DEVELOPER PROVIDES NO WARRANTY AS TO THE PLUGIN’S USE OR PERFORMANCE. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE DEVELOPER DISCLAIMS ALL OTHER WARRANTIES AND CONDITIONS, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT, WITH REGARD TO THE PLUGIN, AND THE PROVISION OF OR FAILURE TO PROVIDE SUPPORT SERVICES. THE DEVELOPER DOES NOT WARRANT THAT THE PLUGIN IS ACCURATE, RELIABLE, OR CORRECT; THAT THE PLUGIN MEETS YOUR REQUIREMENTS; THAT THE PLUGIN WILL BE AVAILABLE AT ANY PARTICULAR TIME OR LOCATION, UNINTERRUPTED, OR SECURE; THAT ANY DEFECTS OR ERRORS WILL BE CORRECTED; OR THAT THE PLUGIN IS FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS. EXCEPT AS REQUIRED BY APPLICABLE LAWS, ANY UPDATES AND UPGRADES TO THE PLUGIN WILL ONLY BE PROVIDED ON AN “AS AVAILABLE” BASIS, I.E., AT THE DEVELOPER’S SOLE DISCRETION.
+
+5. Limitation of Liability
+IN NO EVENT WILL THE DEVELOPER BE LIABLE FOR ANY DIRECT OR INDIRECT COSTS, LOSSES, OR DAMAGES ASSOCIATED WITH THE USE OF THE DEVELOPER’S PLUGIN.
+
+THE DEVELOPER SHALL NOT BE LIABLE TO YOU FOR ANY LOST PROFITS OR CONSEQUENTIAL DAMAGES, NO MATTER THE CAUSE OF SAID PROFITS OR DAMAGES, AND IN NO EVENT WILL THE DEVELOPER’S AGGREGATE LIABILITY ARISING OUT OF OR RELATED TO THIS AGREEMENT OR THE USE OF THE PLUGIN EXCEED THE FEES WHICH YOU PAID FOR THE PLUGIN VIA JETBRAINS MARKETPLACE IN THE THREE-MONTH PERIOD PRECEDING THE CLAIM. THIS LIMITATION WILL APPLY EVEN IF THE DEVELOPER HAS BEEN ADVISED OF THE POSSIBILITY OF THE LIABILITY EXCEEDING THE AMOUNT AND NOTWITHSTANDING ANY FAILURE OF ESSENTIAL PURPOSE OF ANY LIMITED REMEDY. JETBRAINS’ LIABILITY IS EXCLUDED IN ITS ENTIRETY AS JETBRAINS IS NOT A PARTY TO THE CONTRACTUAL RELATIONSHIP BETWEEN THE DEVELOPER AND YOU.

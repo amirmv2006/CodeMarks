@@ -84,7 +84,7 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
                     package test;
                     
                     public class Test {
-                        // @bookmark Amir
+                        // @CodeMarks Amir
                         public void test() {
                         }
                     }
@@ -162,7 +162,7 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
                             package test;
                             
                             public class Test {
-                                // @bookmark Updated
+                                // @CodeMarks Updated
                                 public void test() {
                                 }
                             }
