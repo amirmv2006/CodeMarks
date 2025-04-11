@@ -21,7 +21,7 @@ class AddBookmarkAction : AnAction() {
         WriteCommandAction.runWriteCommandAction(project) {
             val line = editor.caretModel.logicalPosition.line
             val bookmarkManager = BookmarkManager.getInstance(project)
-            bookmarkManager.addTextBookmark(editor.virtualFile, line, "CodeMark")
+            bookmarkManager.addTextBookmark(editor.virtualFile, line, "CodeMarks: CodeMark")
             
             // Trigger a rescan to ensure bookmark is properly synced
             project.service<CodeMarkService>().scanAndSync()

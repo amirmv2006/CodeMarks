@@ -41,7 +41,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     companion object {
         private val LOG = Logger.getInstance(CodeMarkServiceImpl::class.java)
         private val SUPPORTED_FILE_EXTENSIONS = setOf("java", "kt", "scala", "groovy", "xml", "gradle")
-        private val BOOKMARK_PATTERN = Pattern.compile("//\\s*CodeMarks:\\s*(.*)")
+        private val BOOKMARK_PATTERN = Pattern.compile("//\\s*CodeMarks:\\s*(.*)", Pattern.CASE_INSENSITIVE)
     }
 
     private val alarm = Alarm(Alarm.ThreadToUse.POOLED_THREAD, this)
@@ -82,7 +82,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
 
     private fun scheduleSync() {
         alarm.cancelAllRequests()
-        alarm.addRequest({ 
+        alarm.addRequest({
             ApplicationManager.getApplication().invokeAndWait({
                 doScanAndSync()
             }, ModalityState.defaultModalityState())
@@ -95,7 +95,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
 
     override fun scanAndSync() {
         if (!ApplicationManager.getApplication().isDispatchThread) {
-            ApplicationManager.getApplication().invokeLater({ 
+            ApplicationManager.getApplication().invokeLater({
                 doScanAndSync()
             }, ModalityState.defaultModalityState())
             return
@@ -111,14 +111,21 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
 
         WriteCommandAction.runWriteCommandAction(project) {
             try {
-                val sourceRoots = ProjectRootManager.getInstance(project).contentSourceRoots
-                for (root in sourceRoots) {
-                    if (!root.isValid) continue
-                    scanDirectory(root)
+                // Clear existing bookmarks first
+                bookmarkManager.validBookmarks.forEach { bookmark ->
+                    if (bookmark.description.startsWith("CodeMarks:")) {
+                        bookmarkManager.removeBookmark(bookmark)
+                    }
                 }
             } catch (e: Exception) {
-                LOG.error("Error during scan and sync", e)
+                LOG.error("Error clearing bookmarks", e)
             }
+        }
+
+        val sourceRoots = ProjectRootManager.getInstance(project).contentSourceRoots
+        for (root in sourceRoots) {
+            if (!root.isValid) continue
+            scanDirectory(root)
         }
     }
 
@@ -149,9 +156,10 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
             if (matcher.find()) {
                 val description = matcher.group(1).trim()
                 LOG.info("Found bookmark at ${file.path}:${index + 1} with description: $description")
-                WriteAction.runAndWait<RuntimeException> {
-                    val bookmark = bookmarkManager.addTextBookmark(file, index, description)
-                    bookmark?.description = description
+                try {
+                    bookmarkManager.addTextBookmark(file, index, "CodeMarks: " + description)
+                } catch (e: Exception) {
+                    LOG.error("Failed to add bookmark at ${file.path}:${index + 1}", e)
                 }
             }
         }

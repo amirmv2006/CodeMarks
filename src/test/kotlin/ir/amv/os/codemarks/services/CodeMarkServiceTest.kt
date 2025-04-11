@@ -32,11 +32,11 @@ class CodeMarkServiceTest : BasePlatformTestCase() {
 
     @Test
     fun testJavaFileBookmarkCreation() {
-        val file = myFixture.configureByText("Test.java", """
+        myFixture.configureByText("Test.java", """
             public class Test {
                 // Some code
                 // Some more code
-                // @bookmark Test bookmark
+                // CodeMarks: Test bookmark
                 // Final line
             }
         """.trimIndent())
@@ -52,6 +52,6 @@ class CodeMarkServiceTest : BasePlatformTestCase() {
         val bookmarks = bookmarkManager.validBookmarks
         assertEquals(1, bookmarks.size, "Expected exactly one bookmark")
         assertEquals(4, bookmarks[0].line, "Bookmark should be on line 4")
-        assertEquals("Test bookmark", bookmarks[0].description, "Bookmark description should match")
+        assertEquals("CodeMarks: Test bookmark", bookmarks[0].description, "Bookmark description should match")
     }
 } 
