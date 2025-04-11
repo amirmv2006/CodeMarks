@@ -28,7 +28,8 @@ class AddBookmarkAction : AnAction() {
             bookmarkState.attributes.putAll(mapOf(
                 "file" to editor.virtualFile.path,
                 "url" to editor.virtualFile.url,
-                "line" to (line + 1).toString()
+                "line" to (line + 1).toString(),
+                "description" to "CodeMarks: Bookmark"
             ))
             val bookmark = bookmarksManager?.createBookmark(bookmarkState)
             if (bookmark != null) {
