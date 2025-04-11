@@ -163,16 +163,18 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 try {
                     val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
                     bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
-                    bookmarkState.description = "CodeMarks: $description"
                     bookmarkState.attributes.putAll(mapOf(
                         "file" to file.path,
                         "url" to file.url,
-                        "line" to (index + 1).toString(),
-                        "description" to "CodeMarks: $description"
+                        "line" to (index + 1).toString()
                     ))
                     val bookmark = bookmarksManager?.createBookmark(bookmarkState)
                     if (bookmark != null) {
-                        bookmarksManager?.add(bookmark, BookmarkType.DEFAULT)
+                        val groups = bookmarksManager?.findGroupsToAdd(bookmark)
+                        if (!groups.isNullOrEmpty()) {
+                            val group = groups.first()
+                            group.add(bookmark, BookmarkType.DEFAULT, "CodeMarks: $description")
+                        }
                     }
                 } catch (e: Exception) {
                     LOG.error("Failed to add bookmark at ${file.path}:${index + 1}", e)
