@@ -41,7 +41,7 @@ interface CodeMarkService {
 class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Disposable {
     companion object {
         private val LOG = Logger.getInstance(CodeMarkServiceImpl::class.java)
-        private val BOOKMARK_PATTERN = Pattern.compile("CodeMarks:\\s*(.*)", Pattern.CASE_INSENSITIVE)
+        private val BOOKMARK_PATTERN = Pattern.compile("CodeMarks(?:\\[(\\w+)\\])?:\\s*(.*)", Pattern.CASE_INSENSITIVE)
         private const val CODEMARKS_GROUP_NAME = "CodeMarks"
     }
 
@@ -100,11 +100,12 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         doScanAndSync()
     }
 
-    private fun getOrCreateCodeMarksGroup(): com.intellij.ide.bookmark.BookmarkGroup? {
-        val existingGroup = bookmarksManager?.groups?.find { it.name == CODEMARKS_GROUP_NAME }
+    private fun getOrCreateCodeMarksGroup(suffix: String? = null): com.intellij.ide.bookmark.BookmarkGroup? {
+        val groupName = if (suffix != null) "$CODEMARKS_GROUP_NAME[$suffix]" else CODEMARKS_GROUP_NAME
+        val existingGroup = bookmarksManager?.groups?.find { it.name == groupName }
         if (existingGroup != null) return existingGroup
         
-        return bookmarksManager?.addGroup(CODEMARKS_GROUP_NAME, true)
+        return bookmarksManager?.addGroup(groupName, true)
     }
 
     private fun doScanAndSync() {
@@ -162,11 +163,12 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         text.lines().forEachIndexed { index, line ->
             val matcher = BOOKMARK_PATTERN.matcher(line)
             if (matcher.find()) {
-                val description = matcher.group(1).trim()
-                LOG.info("Found bookmark at ${file.path}:${index + 1} with description: $description")
+                val suffix = matcher.group(1)
+                val description = matcher.group(2).trim()
+                LOG.info("Found bookmark at ${file.path}:${index + 1} with description: $description in group: $suffix")
                 try {
                     // Get our group and check if a bookmark already exists at this line
-                    val group = getOrCreateCodeMarksGroup()
+                    val group = getOrCreateCodeMarksGroup(suffix)
                     val existingBookmark = group?.getBookmarks()?.find { bookmark ->
                         val attributes = bookmark.attributes
                         attributes["url"] == file.url && 
@@ -174,7 +176,12 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     }
 
                     if (existingBookmark != null) {
-                        val existingDescription = group?.getDescription(existingBookmark)?.substringAfter("CodeMarks:")?.trim()
+                        val existingDescription = group?.getDescription(existingBookmark)?.let { desc ->
+                            desc.substringAfter("CodeMarks").let { 
+                                if (it.startsWith("[")) it.substringAfter("]:").trim()
+                                else it.substringAfter(":").trim()
+                            }
+                        }
                         if (existingDescription == description) {
                             // Bookmark exists with the same description, skip
                             return@forEachIndexed
@@ -195,7 +202,8 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     ))
                     val bookmark = bookmarksManager?.createBookmark(bookmarkState)
                     if (bookmark != null) {
-                        group?.add(bookmark, BookmarkType.DEFAULT, "CodeMarks: $description")
+                        val groupName = if (suffix != null) "$CODEMARKS_GROUP_NAME[$suffix]" else CODEMARKS_GROUP_NAME
+                        group?.add(bookmark, BookmarkType.DEFAULT, "$groupName: $description")
                     }
                 } catch (e: Exception) {
                     LOG.error("Failed to add bookmark at ${file.path}:${index + 1}", e)
