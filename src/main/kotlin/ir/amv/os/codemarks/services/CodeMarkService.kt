@@ -161,8 +161,9 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 val description = matcher.group(1).trim()
                 LOG.info("Found bookmark at ${file.path}:${index + 1} with description: $description")
                 try {
-                    val bookmark = bookmarksManager?.createBookmark(file)
+                    val bookmark = bookmarksManager?.createBookmark(file, index + 1)
                     if (bookmark != null) {
+                        bookmark.description = "CodeMarks: $description"
                         bookmarksManager?.add(bookmark, BookmarkType.DEFAULT)
                     }
                 } catch (e: Exception) {

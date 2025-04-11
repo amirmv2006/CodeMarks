@@ -15,13 +15,15 @@ class AddBookmarkAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
         val editor = e.getData(com.intellij.openapi.actionSystem.CommonDataKeys.EDITOR) ?: return
-        addBookmark(project, editor)
+        addBookmark(editor, project)
     }
 
-    private fun addBookmark(project: Project, editor: Editor) {
+    private fun addBookmark(editor: Editor, project: Project) {
         WriteCommandAction.runWriteCommandAction(project) {
+            val line = editor.caretModel.logicalPosition.line
             val bookmarksManager = BookmarksManager.getInstance(project)
-            val bookmark = bookmarksManager?.createBookmark(editor.virtualFile)
+            val bookmarkState = com.intellij.ide.bookmark.BookmarkState(editor.virtualFile, line + 1, "CodeMarks: Bookmark")
+            val bookmark = bookmarksManager.createBookmark(bookmarkState)
             if (bookmark != null) {
                 bookmarksManager.add(bookmark, BookmarkType.DEFAULT)
             }
