@@ -101,7 +101,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     }
 
     private fun getOrCreateCodeMarksGroup(suffix: String? = null): com.intellij.ide.bookmark.BookmarkGroup? {
-        val groupName = if (suffix != null) "$CODEMARKS_GROUP_NAME[$suffix]" else CODEMARKS_GROUP_NAME
+        val groupName = if (suffix != null) "$CODEMARKS_GROUP_NAME $suffix" else CODEMARKS_GROUP_NAME
         val existingGroup = bookmarksManager?.groups?.find { it.name == groupName }
         if (existingGroup != null) return existingGroup
         
@@ -217,7 +217,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     ))
                     val bookmark = bookmarksManager?.createBookmark(bookmarkState)
                     if (bookmark != null) {
-                        val groupName = if (suffix != null) "$CODEMARKS_GROUP_NAME[$suffix]" else CODEMARKS_GROUP_NAME
+                        val groupName = if (suffix != null) "$CODEMARKS_GROUP_NAME $suffix" else CODEMARKS_GROUP_NAME
                         group?.add(bookmark, BookmarkType.DEFAULT, "$groupName: $description")
                     }
                 } catch (e: Exception) {
