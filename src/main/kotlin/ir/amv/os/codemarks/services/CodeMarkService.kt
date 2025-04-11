@@ -1,6 +1,7 @@
 package ir.amv.os.codemarks.services
 
-import com.intellij.ide.bookmarks.BookmarkManager
+import com.intellij.ide.bookmark.BookmarksManager
+import com.intellij.ide.bookmark.BookmarkType
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.invokeLater
@@ -45,7 +46,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     }
 
     private val alarm = Alarm(Alarm.ThreadToUse.POOLED_THREAD, this)
-    private val bookmarkManager = BookmarkManager.getInstance(project)
+    private val bookmarksManager = BookmarksManager.getInstance(project)
     private val fileDocumentManager = FileDocumentManager.getInstance()
 
     init {
@@ -112,9 +113,12 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         WriteCommandAction.runWriteCommandAction(project) {
             try {
                 // Clear existing bookmarks first
-                bookmarkManager.validBookmarks.forEach { bookmark ->
-                    if (bookmark.description.startsWith("CodeMarks:")) {
-                        bookmarkManager.removeBookmark(bookmark)
+                bookmarksManager?.let { manager ->
+                    manager.bookmarks.forEach { bookmark ->
+                        val text = bookmark.toString()
+                        if (text.startsWith("CodeMarks:")) {
+                            manager.remove(bookmark)
+                        }
                     }
                 }
             } catch (e: Exception) {
@@ -157,7 +161,10 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 val description = matcher.group(1).trim()
                 LOG.info("Found bookmark at ${file.path}:${index + 1} with description: $description")
                 try {
-                    bookmarkManager.addTextBookmark(file, index, "CodeMarks: " + description)
+                    val bookmark = bookmarksManager?.createBookmark(file)
+                    if (bookmark != null) {
+                        bookmarksManager?.add(bookmark, BookmarkType.DEFAULT)
+                    }
                 } catch (e: Exception) {
                     LOG.error("Failed to add bookmark at ${file.path}:${index + 1}", e)
                 }

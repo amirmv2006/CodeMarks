@@ -1,6 +1,7 @@
 package ir.amv.os.codemarks.actions
 
-import com.intellij.ide.bookmarks.BookmarkManager
+import com.intellij.ide.bookmark.BookmarksManager
+import com.intellij.ide.bookmark.BookmarkType
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.command.WriteCommandAction
@@ -19,9 +20,11 @@ class AddBookmarkAction : AnAction() {
 
     private fun addBookmark(project: Project, editor: Editor) {
         WriteCommandAction.runWriteCommandAction(project) {
-            val line = editor.caretModel.logicalPosition.line
-            val bookmarkManager = BookmarkManager.getInstance(project)
-            bookmarkManager.addTextBookmark(editor.virtualFile, line, "CodeMarks: CodeMark")
+            val bookmarksManager = BookmarksManager.getInstance(project)
+            val bookmark = bookmarksManager?.createBookmark(editor.virtualFile)
+            if (bookmark != null) {
+                bookmarksManager.add(bookmark, BookmarkType.DEFAULT)
+            }
             
             // Trigger a rescan to ensure bookmark is properly synced
             project.service<CodeMarkService>().scanAndSync()
