@@ -77,4 +77,7 @@
                        serviceImplementation="ir.amv.os.codemarks.services.CodeMarkServiceImpl"/>
         <postStartupActivity implementation="ir.amv.os.codemarks.components.CodeMarkStartupActivity"/>
     </extensions>
+
+    <!-- Plugin's version. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-update-notes.html -->
+    <version>1.0.1-SNAPSHOT</version>
 </idea-plugin>
