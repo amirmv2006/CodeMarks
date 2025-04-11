@@ -22,10 +22,17 @@ class AddBookmarkAction : AnAction() {
         WriteCommandAction.runWriteCommandAction(project) {
             val line = editor.caretModel.logicalPosition.line
             val bookmarksManager = BookmarksManager.getInstance(project)
-            val bookmarkState = com.intellij.ide.bookmark.BookmarkState(editor.virtualFile, line + 1, "CodeMarks: Bookmark")
-            val bookmark = bookmarksManager.createBookmark(bookmarkState)
+            val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
+            bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
+            bookmarkState.attributes.putAll(mapOf(
+                "file" to editor.virtualFile.path,
+                "url" to editor.virtualFile.url,
+                "line" to (line + 1).toString(),
+                "description" to "CodeMarks: Bookmark"
+            ))
+            val bookmark = bookmarksManager?.createBookmark(bookmarkState)
             if (bookmark != null) {
-                bookmarksManager.add(bookmark, BookmarkType.DEFAULT)
+                bookmarksManager?.add(bookmark, BookmarkType.DEFAULT)
             }
             
             // Trigger a rescan to ensure bookmark is properly synced
