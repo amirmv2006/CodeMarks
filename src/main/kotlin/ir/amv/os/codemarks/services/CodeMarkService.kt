@@ -191,12 +191,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
 
                     // Now handle the description comparison if bookmark exists in our group
                     if (existingBookmark != null) {
-                        val existingDescription = group?.getDescription(existingBookmark)?.let { desc ->
-                            desc.substringAfter("CodeMarks").let { 
-                                if (it.startsWith("[")) it.substringAfter("]:").trim()
-                                else it.substringAfter(":").trim()
-                            }
-                        }
+                        val existingDescription = group?.getDescription(existingBookmark)
                         if (existingDescription == description) {
                             // Bookmark exists with the same description, skip
                             return@forEachIndexed
@@ -217,8 +212,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     ))
                     val bookmark = bookmarksManager?.createBookmark(bookmarkState)
                     if (bookmark != null) {
-                        val groupName = if (suffix != null) "$CODEMARKS_GROUP_NAME $suffix" else CODEMARKS_GROUP_NAME
-                        group?.add(bookmark, BookmarkType.DEFAULT, "$groupName: $description")
+                        group?.add(bookmark, BookmarkType.DEFAULT, description)
                         
                         // Clean up empty CodeMarks groups
                         bookmarksManager?.groups?.forEach { g ->
