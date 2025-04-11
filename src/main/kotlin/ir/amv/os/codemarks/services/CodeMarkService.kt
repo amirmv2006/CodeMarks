@@ -169,12 +169,27 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 val description = matcher.group(1).trim()
                 LOG.info("Found bookmark at ${file.path}:${index + 1} with description: $description")
                 try {
+                    // Check if a bookmark already exists at this line
+                    val existingBookmark = bookmarksManager?.bookmarks?.find { bookmark ->
+                        val attributes = bookmark.attributes
+                        attributes["url"] == file.url && 
+                        attributes["line"] == index.toString() &&
+                        attributes["description"] == description
+                    }
+
+                    if (existingBookmark != null) {
+                        // Bookmark exists with the same description, skip
+                        return@forEachIndexed
+                    }
+
+                    // Create new bookmark
                     val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
                     bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
                     bookmarkState.attributes.putAll(mapOf(
                         "file" to file.path,
                         "url" to file.url,
-                        "line" to index.toString()
+                        "line" to index.toString(),
+                        "description" to description
                     ))
                     val bookmark = bookmarksManager?.createBookmark(bookmarkState)
                     if (bookmark != null) {
