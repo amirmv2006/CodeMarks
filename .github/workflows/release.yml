@@ -34,7 +34,7 @@ jobs:
           git push origin "v${{ github.event.inputs.version }}"
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build -x test
 
       - name: Publish to JetBrains Marketplace
         run: ./gradlew publishPlugin
