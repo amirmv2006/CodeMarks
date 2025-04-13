@@ -2,10 +2,12 @@ plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.9.25"
     id("org.jetbrains.intellij") version "1.17.4"
+    id("com.palantir.git-version") version "3.0.0"
 }
 
 group = "ir.amv.os"
-version = "1.2-SNAPSHOT"
+val gitVersion: groovy.lang.Closure<String> by extra
+version = gitVersion()
 
 repositories {
     mavenCentral()
@@ -41,6 +43,7 @@ tasks {
     patchPluginXml {
         sinceBuild.set("241")
         untilBuild.set("243.*")
+        version.set(gitVersion())
     }
 
     signPlugin {
