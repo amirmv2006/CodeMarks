@@ -7,7 +7,7 @@ plugins {
 
 group = "ir.amv.os"
 val gitVersion: groovy.lang.Closure<String> by extra
-version = gitVersion()
+version = gitVersion().removePrefix("v")
 
 repositories {
     mavenCentral()
@@ -43,7 +43,7 @@ tasks {
     patchPluginXml {
         sinceBuild.set("241")
         untilBuild.set("243.*")
-        version.set(gitVersion())
+        version.set(gitVersion().removePrefix("v"))
     }
 
     signPlugin {
