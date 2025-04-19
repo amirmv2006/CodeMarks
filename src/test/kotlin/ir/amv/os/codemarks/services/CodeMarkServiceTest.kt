@@ -1,6 +1,6 @@
 package ir.amv.os.codemarks.services
 
-import com.intellij.ide.bookmarks.BookmarkManager
+import com.intellij.ide.bookmark.BookmarksManager
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.command.WriteCommandAction
@@ -12,19 +12,19 @@ import kotlin.test.assertEquals
 class CodeMarkServiceTest : BasePlatformTestCase() {
 
     private lateinit var service: CodeMarkService
-    private lateinit var bookmarkManager: BookmarkManager
+    private val bookmarksManager: BookmarksManager
+        get() = BookmarksManager.getInstance(project)!!
 
     override fun setUp() {
         super.setUp()
         service = CodeMarkService.getInstance(project)
-        bookmarkManager = BookmarkManager.getInstance(project)
-        bookmarkManager.validBookmarks.forEach { bookmarkManager.removeBookmark(it) }
+        bookmarksManager.bookmarks.forEach { bookmarksManager.remove(it) }
     }
 
     override fun tearDown() {
         ApplicationManager.getApplication().invokeAndWait {
             WriteCommandAction.runWriteCommandAction(project) {
-                bookmarkManager.validBookmarks.forEach { bookmarkManager.removeBookmark(it) }
+                bookmarksManager.bookmarks.forEach { bookmarksManager.remove(it) }
             }
         }
         super.tearDown()
@@ -49,9 +49,11 @@ class CodeMarkServiceTest : BasePlatformTestCase() {
             service.scanAndSync()
         }, ModalityState.defaultModalityState())
 
-        val bookmarks = bookmarkManager.validBookmarks
+        val bookmarks = bookmarksManager.bookmarks
         assertEquals(1, bookmarks.size, "Expected exactly one bookmark")
-        assertEquals(4, bookmarks[0].line, "Bookmark should be on line 4")
-        assertEquals("CodeMarks: Test bookmark", bookmarks[0].description, "Bookmark description should match")
+        val bookmark = bookmarks.first()
+        val attributes = bookmark.attributes
+        assertEquals("4", attributes["line"], "Bookmark should be on line 4")
+        assertEquals("Test bookmark", attributes["description"], "Bookmark description should match")
     }
 } 
