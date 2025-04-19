@@ -28,6 +28,8 @@ jobs:
           VERSION="v${{ github.event.inputs.version }}"
           git tag -a "$VERSION" -m "Release $VERSION"
           git push origin "$VERSION"
+          # Wait for tag to be available
+          sleep 5
 
       - name: Build with Gradle
         run: ./gradlew build -x test
@@ -42,5 +44,6 @@ jobs:
         with:
           files: build/distributions/*.zip
           generate_release_notes: true
+          tag_name: v${{ github.event.inputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
