@@ -3,9 +3,9 @@
   <component name="CodeMarkSettings">
     <option name="lastScanState">
       <map>
-        <entry key="$PROJECT_DIR$/.git/COMMIT_EDITMSG" value="1745069177177" />
-        <entry key="$PROJECT_DIR$/.git/FETCH_HEAD" value="1744560547903" />
-        <entry key="$PROJECT_DIR$/.git/HEAD" value="1745055314160" />
+        <entry key="$PROJECT_DIR$/.git/COMMIT_EDITMSG" value="1745069304909" />
+        <entry key="$PROJECT_DIR$/.git/FETCH_HEAD" value="1745070619523" />
+        <entry key="$PROJECT_DIR$/.git/HEAD" value="1745070609575" />
         <entry key="$PROJECT_DIR$/.git/ORIG_HEAD" value="1744404803999" />
         <entry key="$PROJECT_DIR$/.git/config" value="1745058697024" />
         <entry key="$PROJECT_DIR$/.git/description" value="1744125681515" />
@@ -24,24 +24,32 @@
         <entry key="$PROJECT_DIR$/.git/hooks/sendemail-validate.sample" value="1744125681515" />
         <entry key="$PROJECT_DIR$/.git/hooks/update.sample" value="1744125681517" />
         <entry key="$PROJECT_DIR$/.git/info/exclude" value="1744125681514" />
-        <entry key="$PROJECT_DIR$/.git/logs/HEAD" value="1745069177179" />
+        <entry key="$PROJECT_DIR$/.git/logs/HEAD" value="1745070609575" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/heads/fix-slow-plugin" value="1744972625894" />
-        <entry key="$PROJECT_DIR$/.git/logs/refs/heads/fix-slow-plugin-attempt-2" value="1745069177180" />
-        <entry key="$PROJECT_DIR$/.git/logs/refs/heads/main" value="1744567987514" />
+        <entry key="$PROJECT_DIR$/.git/logs/refs/heads/fix-slow-plugin-attempt-2" value="1745069304911" />
+        <entry key="$PROJECT_DIR$/.git/logs/refs/heads/main" value="1745070606934" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/heads/release/v1.3" value="1744405593627" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/HEAD" value="1744402930607" />
-        <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/fix-slow-plugin-attempt-2" value="1745069182071" />
-        <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/main" value="1744567998361" />
+        <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/fix-slow-plugin-attempt-2" value="1745069310519" />
+        <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/main" value="1745070606937" />
+        <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/release/v1.2-SNAPSHOT" value="1745070619522" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/release/v1.3" value="1744405597582" />
         <entry key="$PROJECT_DIR$/.git/refs/heads/fix-slow-plugin" value="1744972625894" />
-        <entry key="$PROJECT_DIR$/.git/refs/heads/fix-slow-plugin-attempt-2" value="1745069177179" />
-        <entry key="$PROJECT_DIR$/.git/refs/heads/main" value="1744567987512" />
+        <entry key="$PROJECT_DIR$/.git/refs/heads/fix-slow-plugin-attempt-2" value="1745069304910" />
+        <entry key="$PROJECT_DIR$/.git/refs/heads/main" value="1745070606932" />
         <entry key="$PROJECT_DIR$/.git/refs/heads/release/v1.3" value="1744405593627" />
         <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/HEAD" value="1744402930606" />
-        <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/fix-slow-plugin-attempt-2" value="1745069182070" />
-        <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/main" value="1744567998358" />
+        <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/fix-slow-plugin-attempt-2" value="1745069310518" />
+        <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/main" value="1745070606937" />
+        <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/release/v1.2-SNAPSHOT" value="1745070619520" />
         <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/release/v1.3" value="1744405597580" />
-        <entry key="$PROJECT_DIR$/.github/workflows/release.yml" value="1745060535831" />
+        <entry key="$PROJECT_DIR$/.git/refs/tags/v1.2.0" value="1745070606935" />
+        <entry key="$PROJECT_DIR$/.git/refs/tags/v1.2.1" value="1745070606935" />
+        <entry key="$PROJECT_DIR$/.git/refs/tags/v1.2.2" value="1745070606936" />
+        <entry key="$PROJECT_DIR$/.git/refs/tags/v1.2.3" value="1745070606936" />
+        <entry key="$PROJECT_DIR$/.git/refs/tags/v1.3.0" value="1745070606936" />
+        <entry key="$PROJECT_DIR$/.git/refs/tags/v1.3.1" value="1745070654372" />
+        <entry key="$PROJECT_DIR$/.github/workflows/release.yml" value="1745070732041" />
         <entry key="$PROJECT_DIR$/.gitignore" value="1744125678320" />
         <entry key="$PROJECT_DIR$/.gradle/8.11/gc.properties" value="1745055736710" />
         <entry key="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" value="1744125706048" />
@@ -49,13 +57,13 @@
         <entry key="$PROJECT_DIR$/.gradle/kotlin/sessions/kotlin-compiler-4149752562814483799.salive" value="1745064861418" />
         <entry key="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" value="1745055736705" />
         <entry key="$PROJECT_DIR$/.idea/.gitignore" value="1744125684252" />
-        <entry key="$PROJECT_DIR$/.idea/codemarks.xml" value="1745069241719" />
+        <entry key="$PROJECT_DIR$/.idea/codemarks.xml" value="1745070618583" />
         <entry key="$PROJECT_DIR$/.idea/compiler.xml" value="1744137676751" />
         <entry key="$PROJECT_DIR$/.idea/gradle.xml" value="1744404803989" />
         <entry key="$PROJECT_DIR$/.idea/kotlinc.xml" value="1744403686102" />
         <entry key="$PROJECT_DIR$/.idea/misc.xml" value="1744404803990" />
         <entry key="$PROJECT_DIR$/.idea/vcs.xml" value="1744125684681" />
-        <entry key="$PROJECT_DIR$/.idea/workspace.xml" value="1745069069650" />
+        <entry key="$PROJECT_DIR$/.idea/workspace.xml" value="1745070618574" />
         <entry key="$PROJECT_DIR$/.run/Run IDE with Plugin.run.xml" value="1744125681674" />
         <entry key="$PROJECT_DIR$/.vscode/settings.json" value="1744931313247" />
         <entry key="$PROJECT_DIR$/build.gradle.kts" value="1745067495527" />
