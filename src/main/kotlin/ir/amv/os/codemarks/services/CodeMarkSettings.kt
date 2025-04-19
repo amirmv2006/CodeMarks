@@ -23,6 +23,38 @@ class CodeMarkSettings : PersistentStateComponent<CodeMarkSettings> {
     }
     
     companion object {
+        private val DEFAULT_FILE_TYPE_PATTERNS = listOf(
+            "/**/src/*/java/**/*.java",
+            "/**/src/*/kotlin/**/*.kt",
+            "*.xml",
+            "*.{yaml,yml}",
+            "*.{js,jsx,ts,tsx}",  // JavaScript and TypeScript
+            "*.{py,pyi}",         // Python
+            "*.{go}",             // Go
+            "*.{rb}",             // Ruby
+            "*.{php}",            // PHP
+            "*.{c,cpp,h,hpp}",    // C/C++
+            "*.{cs}",             // C#
+            "*.{swift}",          // Swift
+            "*.{rs}",             // Rust
+            "*.{scala}",          // Scala
+            "*.{groovy}",         // Groovy
+            "*.{gradle}",         // Gradle
+            "*.{properties}",     // Properties files
+            "*.{ini,cfg,conf}",   // Configuration files
+            "*.{md,markdown}",    // Markdown
+            "*.{sql}",            // SQL
+            "*.{sh,bash}",        // Shell scripts
+            "*.{ps1}",            // PowerShell
+            "*.{bat,cmd}",        // Batch files
+            "*.{json}",           // JSON
+            "*.{html,htm}",       // HTML
+            "*.{css,scss,less}",  // CSS and preprocessors
+            "*.{vue}",            // Vue.js
+            "*.{svelte}",         // Svelte
+            "*.{astro}"           // Astro
+        )
+        
         fun getInstance(project: Project): CodeMarkSettings = project.service<CodeMarkSettings>()
     }
 } 
