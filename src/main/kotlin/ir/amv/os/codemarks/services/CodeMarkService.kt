@@ -45,6 +45,13 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         private val LOG = Logger.getInstance(CodeMarkServiceImpl::class.java)
         private val BOOKMARK_PATTERN = Pattern.compile("CodeMarks(?:\\[(\\w+)\\])?:\\s*(.*)", Pattern.CASE_INSENSITIVE)
         private const val CODEMARKS_GROUP_NAME = "CodeMarks"
+        
+        private fun matchesGlob(fileName: String, glob: String): Boolean {
+            if (glob == "*") return true
+            val fs = java.nio.file.FileSystems.getDefault()
+            val matcher = fs.getPathMatcher("glob:$glob")
+            return matcher.matches(fs.getPath(fileName))
+        }
     }
 
     private val alarm = Alarm(Alarm.ThreadToUse.POOLED_THREAD, this)
@@ -99,9 +106,11 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         if (file.isDirectory) return false
         val fileName = file.name
         return settings.fileTypePatterns.any { pattern ->
-            when (pattern) {
-                "*" -> true
-                else -> fileName.matches(pattern.toRegex())
+            try {
+                matchesGlob(fileName, pattern)
+            } catch (e: Exception) {
+                LOG.error("Invalid pattern: $pattern", e)
+                false
             }
         }
     }
