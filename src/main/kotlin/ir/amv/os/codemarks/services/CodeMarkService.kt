@@ -27,9 +27,11 @@ import com.intellij.util.messages.Topic
 import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.application.ReadAction
 import com.intellij.openapi.application.WriteAction
+import java.util.concurrent.ConcurrentHashMap
 
 interface CodeMarkService {
     fun scanAndSync()
+    fun getSettings(): CodeMarkSettings
 
     companion object {
         @JvmStatic
@@ -48,6 +50,9 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     private val alarm = Alarm(Alarm.ThreadToUse.POOLED_THREAD, this)
     private val bookmarksManager = BookmarksManager.getInstance(project)
     private val fileDocumentManager = FileDocumentManager.getInstance()
+    private val settings = CodeMarkSettings.getInstance(project)
+
+    override fun getSettings(): CodeMarkSettings = settings
 
     init {
         LOG.info("Initializing CodeMarkService for project: ${project.name}")
@@ -57,21 +62,30 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     private fun setupListeners() {
         project.messageBus.connect().subscribe(VirtualFileManager.VFS_CHANGES, object : BulkFileListener {
             override fun after(events: List<VFileEvent>) {
-                scheduleSync()
+                val modifiedFiles = events.filter { it.file != null && shouldScanFile(it.file!!) }
+                if (modifiedFiles.isNotEmpty()) {
+                    scheduleSync()
+                }
             }
         })
 
         val connection = project.messageBus.connect()
         connection.subscribe(Topic.create("DocumentListener", DocumentListener::class.java, Topic.BroadcastDirection.NONE), object : DocumentListener {
             override fun documentChanged(event: DocumentEvent) {
-                scheduleSync()
+                val file = fileDocumentManager.getFile(event.document)
+                if (file != null && shouldScanFile(file)) {
+                    scheduleSync()
+                }
             }
         })
 
         connection.subscribe(Topic.create("FileDocumentManagerListener", FileDocumentManagerListener::class.java, Topic.BroadcastDirection.NONE), object : FileDocumentManagerListener {
             override fun beforeDocumentSaving(document: Document) {
-                LOG.warn("beforeDocumentSaving: ${fileDocumentManager.getFile(document)?.path}")
-                scheduleSync()
+                val file = fileDocumentManager.getFile(document)
+                if (file != null && shouldScanFile(file)) {
+                    LOG.warn("beforeDocumentSaving: ${file.path}")
+                    scheduleSync()
+                }
             }
 
             override fun beforeAllDocumentsSaving() {
@@ -79,6 +93,17 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 scheduleSync()
             }
         })
+    }
+
+    private fun shouldScanFile(file: VirtualFile): Boolean {
+        if (file.isDirectory) return false
+        val fileName = file.name
+        return settings.fileTypePatterns.any { pattern ->
+            when (pattern) {
+                "*" -> true
+                else -> fileName.matches(pattern.toRegex())
+            }
+        }
     }
 
     private fun scheduleSync() {
@@ -146,12 +171,20 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         children.forEach { file ->
             when {
                 file.isDirectory -> scanDirectory(file)
-                else -> scanFile(file)
+                shouldScanFile(file) -> scanFile(file)
             }
         }
     }
 
     private fun scanFile(file: VirtualFile) {
+        val lastModified = file.timeStamp
+        val lastScanned = settings.lastScanState[file.path]
+        
+        // Skip if file hasn't changed since last scan
+        if (lastScanned != null && lastScanned == lastModified) {
+            return
+        }
+
         val document = ReadAction.compute<Document?, RuntimeException> {
             fileDocumentManager.getDocument(file)
         } ?: return
@@ -226,6 +259,9 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 }
             }
         }
+
+        // Update last scan time
+        settings.lastScanState[file.path] = lastModified
     }
 
     override fun dispose() {

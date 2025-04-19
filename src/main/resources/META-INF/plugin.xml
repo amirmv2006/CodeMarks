@@ -73,9 +73,11 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceImplementation="ir.amv.os.codemarks.services.CodeMarkSettings"/>
         <projectService serviceInterface="ir.amv.os.codemarks.services.CodeMarkService"
                        serviceImplementation="ir.amv.os.codemarks.services.CodeMarkServiceImpl"/>
         <postStartupActivity implementation="ir.amv.os.codemarks.components.CodeMarkStartupActivity"/>
+        <projectConfigurable instance="ir.amv.os.codemarks.settings.CodeMarkSettingsConfigurable"/>
     </extensions>
 
     <!-- Plugin's version. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-update-notes.html -->
