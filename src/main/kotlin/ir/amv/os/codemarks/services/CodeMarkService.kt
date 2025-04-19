@@ -150,12 +150,22 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
 
         WriteCommandAction.runWriteCommandAction(project) {
             try {
-                // Clear existing bookmarks first
+                // First validate existing bookmarks
                 bookmarksManager?.let { manager ->
                     manager.groups.forEach { group ->
                         if (group.name.startsWith(CODEMARKS_GROUP_NAME)) {
                             group.getBookmarks().forEach { bookmark ->
-                                group.remove(bookmark)
+                                val lineNumber = bookmark.attributes["line"]?.toIntOrNull()
+                                val description = group.getDescription(bookmark)
+                                val filePath = if (bookmark is com.intellij.ide.bookmark.providers.LineBookmarkImpl) {
+                                    bookmark.file?.path
+                                } else {
+                                    bookmark.attributes["file"]
+                                }
+                                
+                                if (filePath == null || !isValidBookmark(filePath, lineNumber, description)) {
+                                    group.remove(bookmark)
+                                }
                             }
                             if (group.getBookmarks().isEmpty()) {
                                 group.remove()
@@ -163,17 +173,42 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                         }
                     }
                 }
+
+                // Now scan for new bookmarks
+                val contentRoots = ProjectRootManager.getInstance(project).contentRoots
+                for (root in contentRoots) {
+                    if (!root.isValid) continue
+                    scanDirectory(root)
+                }
             } catch (e: Exception) {
-                LOG.error("Error clearing bookmarks", e)
+                LOG.error("Error in scan and sync", e)
             }
         }
+    }
 
-        // Scan all content roots
-        val contentRoots = ProjectRootManager.getInstance(project).contentRoots
-        for (root in contentRoots) {
-            if (!root.isValid) continue
-            scanDirectory(root)
+    private fun isValidBookmark(filePath: String?, lineNumber: Int?, description: String?): Boolean {
+        if (filePath == null || lineNumber == null || description == null) return false
+        
+        val file = VirtualFileManager.getInstance().findFileByUrl("file://$filePath") ?: return false
+        if (!shouldScanFile(file)) return false
+        
+        val document = ReadAction.compute<Document?, RuntimeException> {
+            fileDocumentManager.getDocument(file)
+        } ?: return false
+        
+        if (lineNumber >= document.lineCount) return false
+        
+        val line = ReadAction.compute<String, RuntimeException> {
+            val startOffset = document.getLineStartOffset(lineNumber)
+            val endOffset = document.getLineEndOffset(lineNumber)
+            document.getText(com.intellij.openapi.util.TextRange(startOffset, endOffset))
         }
+        
+        val matcher = BOOKMARK_PATTERN.matcher(line)
+        if (!matcher.find()) return false
+        
+        val foundDescription = matcher.group(2).trim()
+        return foundDescription == description
     }
 
     private fun scanDirectory(dir: VirtualFile) {

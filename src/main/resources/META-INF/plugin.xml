@@ -81,5 +81,12 @@
     </extensions>
 
     <!-- Plugin's version. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-update-notes.html -->
-µ    <version>1.2-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
+
+    <actions>
+        <group id="CodeMarks.Toolbar" text="CodeMarks" description="CodeMarks toolbar group">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <action id="CodeMarks.RefreshBookmarks" class="ir.amv.os.codemarks.actions.RefreshBookmarksAction" text="Refresh Bookmarks" description="Force refresh all bookmarks"/>
+        </group>
+    </actions>
 </idea-plugin>
