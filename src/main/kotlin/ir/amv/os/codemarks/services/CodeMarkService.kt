@@ -31,6 +31,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 interface CodeMarkService {
     fun scanAndSync()
+    fun scanAndSync(file: VirtualFile)
     fun getSettings(): CodeMarkSettings
 
     companion object {
@@ -71,7 +72,11 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
             override fun after(events: List<VFileEvent>) {
                 val modifiedFiles = events.filter { it.file != null && shouldScanFile(it.file!!) }
                 if (modifiedFiles.isNotEmpty()) {
-                    scheduleSync()
+                    if (modifiedFiles.size == 1) {
+                        scheduleSingleFileSync(modifiedFiles[0].file!!)
+                    } else {
+                        scheduleSync()
+                    }
                 }
             }
         })
@@ -81,7 +86,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
             override fun documentChanged(event: DocumentEvent) {
                 val file = fileDocumentManager.getFile(event.document)
                 if (file != null && shouldScanFile(file)) {
-                    scheduleSync()
+                    scheduleSingleFileSync(file)
                 }
             }
         })
@@ -91,7 +96,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 val file = fileDocumentManager.getFile(document)
                 if (file != null && shouldScanFile(file)) {
                     LOG.warn("beforeDocumentSaving: ${file.path}")
-                    scheduleSync()
+                    scheduleSingleFileSync(file)
                 }
             }
 
@@ -124,6 +129,15 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         }, 100)
     }
 
+    private fun scheduleSingleFileSync(file: VirtualFile) {
+        alarm.cancelAllRequests()
+        alarm.addRequest({
+            ApplicationManager.getApplication().invokeAndWait({
+                doScanAndSync(file)
+            }, ModalityState.defaultModalityState())
+        }, 100)
+    }
+
     override fun scanAndSync() {
         if (!ApplicationManager.getApplication().isDispatchThread) {
             ApplicationManager.getApplication().invokeLater({
@@ -132,6 +146,16 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
             return
         }
         doScanAndSync()
+    }
+
+    override fun scanAndSync(file: VirtualFile) {
+        if (!ApplicationManager.getApplication().isDispatchThread) {
+            ApplicationManager.getApplication().invokeLater({
+                doScanAndSync(file)
+            }, ModalityState.defaultModalityState())
+            return
+        }
+        doScanAndSync(file)
     }
 
     private fun getOrCreateCodeMarksGroup(suffix: String? = null): com.intellij.ide.bookmark.BookmarkGroup? {
@@ -182,6 +206,46 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 }
             } catch (e: Exception) {
                 LOG.error("Error in scan and sync", e)
+            }
+        }
+    }
+
+    private fun doScanAndSync(file: VirtualFile) {
+        if (!project.isInitialized || project.isDisposed) {
+            LOG.warn("Project not initialized or disposed")
+            return
+        }
+
+        WriteCommandAction.runWriteCommandAction(project) {
+            try {
+                // First validate existing bookmarks for this file
+                bookmarksManager?.let { manager ->
+                    manager.groups.forEach { group ->
+                        if (group.name.startsWith(CODEMARKS_GROUP_NAME)) {
+                            group.getBookmarks().forEach { bookmark ->
+                                val lineNumber = bookmark.attributes["line"]?.toIntOrNull()
+                                val description = group.getDescription(bookmark)
+                                val filePath = if (bookmark is com.intellij.ide.bookmark.providers.LineBookmarkImpl) {
+                                    bookmark.file?.path
+                                } else {
+                                    bookmark.attributes["file"]
+                                }
+                                
+                                if (filePath == file.path && !isValidBookmark(filePath, lineNumber, description)) {
+                                    group.remove(bookmark)
+                                }
+                            }
+                            if (group.getBookmarks().isEmpty()) {
+                                group.remove()
+                            }
+                        }
+                    }
+                }
+
+                // Now scan the file for new bookmarks
+                scanFile(file)
+            } catch (e: Exception) {
+                LOG.error("Error in scan and sync for file ${file.path}", e)
             }
         }
     }

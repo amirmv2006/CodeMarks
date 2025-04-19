@@ -47,7 +47,7 @@ class CodeMarkStartupActivity : ProjectActivity, DumbAware {
                                 LOG.info("File change detected for ${file.path}, rescanning CodeMarks")
                                 ApplicationManager.getApplication().invokeLater({
                                     WriteCommandAction.runWriteCommandAction(project) {
-                                        codeMarkService.scanAndSync()
+                                        codeMarkService.scanAndSync(file)
                                     }
                                 }, ModalityState.defaultModalityState())
                             }
