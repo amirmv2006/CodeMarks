@@ -3,7 +3,7 @@
   <component name="CodeMarkSettings">
     <option name="lastScanState">
       <map>
-        <entry key="$PROJECT_DIR$/.git/COMMIT_EDITMSG" value="1745064929900" />
+        <entry key="$PROJECT_DIR$/.git/COMMIT_EDITMSG" value="1745069177177" />
         <entry key="$PROJECT_DIR$/.git/FETCH_HEAD" value="1744560547903" />
         <entry key="$PROJECT_DIR$/.git/HEAD" value="1745055314160" />
         <entry key="$PROJECT_DIR$/.git/ORIG_HEAD" value="1744404803999" />
@@ -24,21 +24,21 @@
         <entry key="$PROJECT_DIR$/.git/hooks/sendemail-validate.sample" value="1744125681515" />
         <entry key="$PROJECT_DIR$/.git/hooks/update.sample" value="1744125681517" />
         <entry key="$PROJECT_DIR$/.git/info/exclude" value="1744125681514" />
-        <entry key="$PROJECT_DIR$/.git/logs/HEAD" value="1745064929901" />
+        <entry key="$PROJECT_DIR$/.git/logs/HEAD" value="1745069177179" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/heads/fix-slow-plugin" value="1744972625894" />
-        <entry key="$PROJECT_DIR$/.git/logs/refs/heads/fix-slow-plugin-attempt-2" value="1745064929901" />
+        <entry key="$PROJECT_DIR$/.git/logs/refs/heads/fix-slow-plugin-attempt-2" value="1745069177180" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/heads/main" value="1744567987514" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/heads/release/v1.3" value="1744405593627" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/HEAD" value="1744402930607" />
-        <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/fix-slow-plugin-attempt-2" value="1745064936969" />
+        <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/fix-slow-plugin-attempt-2" value="1745069182071" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/main" value="1744567998361" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/release/v1.3" value="1744405597582" />
         <entry key="$PROJECT_DIR$/.git/refs/heads/fix-slow-plugin" value="1744972625894" />
-        <entry key="$PROJECT_DIR$/.git/refs/heads/fix-slow-plugin-attempt-2" value="1745064929901" />
+        <entry key="$PROJECT_DIR$/.git/refs/heads/fix-slow-plugin-attempt-2" value="1745069177179" />
         <entry key="$PROJECT_DIR$/.git/refs/heads/main" value="1744567987512" />
         <entry key="$PROJECT_DIR$/.git/refs/heads/release/v1.3" value="1744405593627" />
         <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/HEAD" value="1744402930606" />
-        <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/fix-slow-plugin-attempt-2" value="1745064936968" />
+        <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/fix-slow-plugin-attempt-2" value="1745069182070" />
         <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/main" value="1744567998358" />
         <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/release/v1.3" value="1744405597580" />
         <entry key="$PROJECT_DIR$/.github/workflows/release.yml" value="1745060535831" />
@@ -49,7 +49,7 @@
         <entry key="$PROJECT_DIR$/.gradle/kotlin/sessions/kotlin-compiler-4149752562814483799.salive" value="1745064861418" />
         <entry key="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" value="1745055736705" />
         <entry key="$PROJECT_DIR$/.idea/.gitignore" value="1744125684252" />
-        <entry key="$PROJECT_DIR$/.idea/codemarks.xml" value="1745069069666" />
+        <entry key="$PROJECT_DIR$/.idea/codemarks.xml" value="1745069241719" />
         <entry key="$PROJECT_DIR$/.idea/compiler.xml" value="1744137676751" />
         <entry key="$PROJECT_DIR$/.idea/gradle.xml" value="1744404803989" />
         <entry key="$PROJECT_DIR$/.idea/kotlinc.xml" value="1744403686102" />
@@ -608,7 +608,7 @@
         <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/services/CodeMarkSettings.kt" value="1745067874487" />
         <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/settings/CodeMarkSettingsConfigurable.kt" value="1745060535831" />
         <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/settings/CodeMarkSettingsPanel.kt" value="1745060535831" />
-        <entry key="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" value="1745061743608" />
+        <entry key="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" value="1745069246197" />
         <entry key="$PROJECT_DIR$/src/main/resources/META-INF/pluginIcon.svg" value="1744404803993" />
         <entry key="$PROJECT_DIR$/src/test/kotlin/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest.kt" value="1745060535857" />
         <entry key="$PROJECT_DIR$/src/test/kotlin/ir/amv/os/codemarks/services/CodeMarkServiceTest.kt" value="1745060535836" />

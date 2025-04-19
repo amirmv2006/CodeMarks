@@ -30,6 +30,18 @@
         <li><b>Group Management</b>: Organize bookmarks into groups for better organization</li>
         <li><b>Real-time Sync</b>: Bookmarks stay in sync with code changes</li>
         <li><b>IDE Integration</b>: Seamlessly integrated with IntelliJ's bookmark system</li>
+        <li><b>Wide Language Support</b>: Works with Java, Kotlin, Python, JavaScript, TypeScript, and many more</li>
+        <li><b>Efficient Scanning</b>: Optimized for single file changes</li>
+    </ul>
+
+    <h3>Supported File Types</h3>
+    <ul>
+        <li><b>Java/Kotlin</b>: <code>/**/src/*/java/**/*.java</code>, <code>/**/src/*/kotlin/**/*.kt</code></li>
+        <li><b>Web</b>: JavaScript, TypeScript, HTML, CSS, Vue, Svelte, Astro</li>
+        <li><b>Backend</b>: Python, Go, Ruby, PHP, C/C++, C#, Swift, Rust, Scala</li>
+        <li><b>Scripting</b>: Shell, PowerShell, Batch</li>
+        <li><b>Configuration</b>: XML, YAML, Properties, INI, JSON</li>
+        <li><b>Documentation</b>: Markdown, SQL</li>
     </ul>
 
     <h3>Usage</h3>
@@ -37,6 +49,7 @@
         <li><b>Adding Bookmarks</b>:
             <ul>
                 <li>Add a comment with CodeMarks: prefix</li>
+                <li>Works in any supported file type</li>
             </ul>
         </li>
         <li><b>Grouping Bookmarks</b>:
@@ -51,6 +64,7 @@
                 <li>View all bookmarks in the Bookmarks tool window</li>
                 <li>Navigate between bookmarks using the tool window</li>
                 <li>Bookmarks are automatically updated when code changes</li>
+                <li>Changes are processed efficiently, even in large projects</li>
             </ul>
         </li>
     </ol>
@@ -61,6 +75,7 @@
         <li>Group related bookmarks together for better organization</li>
         <li>Bookmarks persist across IDE restarts</li>
         <li>Bookmarks are project-specific</li>
+        <li>Customize file patterns in settings for optimal performance</li>
     </ul>
   ]]></description>
 
