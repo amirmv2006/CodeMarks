@@ -1,6 +1,6 @@
 package ir.amv.os.codemarks.services
 
-import com.intellij.ide.bookmarks.BookmarkManager
+import com.intellij.ide.bookmark.BookmarksManager
 import com.intellij.ide.bookmarks.BookmarksListener
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.ModalityState
@@ -36,7 +36,8 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
     }
 
     private lateinit var codeMarkService: CodeMarkService
-    private lateinit var bookmarkManager: BookmarkManager
+    private val bookmarksManager: BookmarksManager
+        get() = BookmarksManager.getInstance(project)!!
     private lateinit var sourceFile: VirtualFile
     private lateinit var startupActivity: CodeMarkStartupActivity
 
@@ -48,8 +49,7 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
         codeMarkService = project.service<CodeMarkService>()
         LOG.info("CodeMarkService initialized")
         
-        bookmarkManager = BookmarkManager.getInstance(project)
-        LOG.info("BookmarkManager initialized")
+        LOG.info("BookmarksManager initialized")
         
         startupActivity = CodeMarkStartupActivity()
         LOG.info("StartupActivity initialized")
@@ -58,7 +58,7 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
         LOG.info("Cleaning up existing bookmarks")
         ApplicationManager.getApplication().invokeAndWait {
             WriteCommandAction.runWriteCommandAction(project) {
-                bookmarkManager.validBookmarks.forEach { bookmarkManager.removeBookmark(it) }
+                bookmarksManager.bookmarks.forEach { bookmarksManager.remove(it) }
             }
         }
         LOG.info("Bookmarks cleanup completed")
@@ -100,7 +100,7 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
         LOG.info("Starting tearDown")
         ApplicationManager.getApplication().invokeAndWait {
             WriteCommandAction.runWriteCommandAction(project) {
-                bookmarkManager.validBookmarks.forEach { bookmarkManager.removeBookmark(it) }
+                bookmarksManager.bookmarks.forEach { bookmarksManager.remove(it) }
                 if (sourceFile.isValid) {
                     sourceFile.delete(this)
                 }
@@ -125,12 +125,15 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
                 // Verify bookmark was created by startup activity
                 ApplicationManager.getApplication().invokeAndWait({
                     LOG.info("Verifying bookmarks")
-                    val bookmarks = bookmarkManager.validBookmarks
+                    val bookmarks = bookmarksManager.bookmarks
                     assertTrue("No bookmarks found after startup", bookmarks.isNotEmpty())
-                    val bookmark = bookmarks.find { it.description.contains("Amir") }
+                    val bookmark = bookmarks.find { 
+                        val attributes = it.attributes
+                        attributes["description"]?.contains("Amir") == true
+                    }
                     assertNotNull("Bookmark with description containing 'Amir' not found after startup", bookmark)
-                    assertEquals("Bookmark should be on line 4", 4, bookmark!!.line)
-                    assertEquals("Bookmark should be in Test.java", sourceFile, bookmark.file)
+                    assertEquals("4", bookmark!!.attributes["line"], "Bookmark should be on line 4")
+                    assertEquals(sourceFile.url, bookmark.attributes["url"], "Bookmark should be in Test.java")
                     latch.countDown()
                 }, ModalityState.defaultModalityState())
             }
@@ -175,12 +178,15 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
                 // Verify bookmark was updated by file listener
                 ApplicationManager.getApplication().invokeAndWait({
                     LOG.info("Verifying updated bookmarks")
-                    val bookmarks = bookmarkManager.validBookmarks
+                    val bookmarks = bookmarksManager.bookmarks
                     assertTrue("No bookmarks found after file change", bookmarks.isNotEmpty())
-                    val bookmark = bookmarks.find { it.description.contains("Updated") }
+                    val bookmark = bookmarks.find { 
+                        val attributes = it.attributes
+                        attributes["description"]?.contains("Updated") == true
+                    }
                     assertNotNull("Updated bookmark not found after file change", bookmark)
-                    assertEquals("Bookmark should be on line 4", 4, bookmark!!.line)
-                    assertEquals("Bookmark should be in Test.java", sourceFile, bookmark.file)
+                    assertEquals("4", bookmark!!.attributes["line"], "Bookmark should be on line 4")
+                    assertEquals(sourceFile.url, bookmark.attributes["url"], "Bookmark should be in Test.java")
                     latch.countDown()
                 }, ModalityState.defaultModalityState())
             }
@@ -208,12 +214,15 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
                 // Verify bookmark was created by startup activity
                 ApplicationManager.getApplication().invokeAndWait({
                     LOG.info("Verifying bookmarks")
-                    val bookmarks = bookmarkManager.validBookmarks
+                    val bookmarks = bookmarksManager.bookmarks
                     assertTrue("No bookmarks found after project load", bookmarks.isNotEmpty())
-                    val bookmark = bookmarks.find { it.description.contains("Amir") }
+                    val bookmark = bookmarks.find { 
+                        val attributes = it.attributes
+                        attributes["description"]?.contains("Amir") == true
+                    }
                     assertNotNull("Bookmark with description containing 'Amir' not found after project load", bookmark)
-                    assertEquals("Bookmark should be on line 4", 4, bookmark!!.line)
-                    assertEquals("Bookmark should be in Test.java", sourceFile, bookmark.file)
+                    assertEquals("4", bookmark!!.attributes["line"], "Bookmark should be on line 4")
+                    assertEquals(sourceFile.url, bookmark.attributes["url"], "Bookmark should be in Test.java")
                     latch.countDown()
                 }, ModalityState.defaultModalityState())
             }

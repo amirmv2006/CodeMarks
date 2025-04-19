@@ -152,10 +152,14 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
             try {
                 // Clear existing bookmarks first
                 bookmarksManager?.let { manager ->
-                    manager.bookmarks.forEach { bookmark ->
-                        val text = bookmark.toString()
-                        if (text.startsWith("CodeMarks:")) {
-                            manager.remove(bookmark)
+                    manager.groups.forEach { group ->
+                        if (group.name.startsWith(CODEMARKS_GROUP_NAME)) {
+                            group.getBookmarks().forEach { bookmark ->
+                                group.remove(bookmark)
+                            }
+                            if (group.getBookmarks().isEmpty()) {
+                                group.remove()
+                            }
                         }
                     }
                 }
@@ -255,13 +259,6 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     val bookmark = bookmarksManager?.createBookmark(bookmarkState)
                     if (bookmark != null) {
                         group?.add(bookmark, BookmarkType.DEFAULT, description)
-                        
-                        // Clean up empty CodeMarks groups
-                        bookmarksManager?.groups?.forEach { g ->
-                            if (g.name.startsWith(CODEMARKS_GROUP_NAME) && g.getBookmarks().isEmpty()) {
-                                g.remove()
-                            }
-                        }
                     }
                 } catch (e: Exception) {
                     LOG.error("Failed to add bookmark at ${file.path}:${index + 1}", e)
