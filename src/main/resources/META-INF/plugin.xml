@@ -86,7 +86,7 @@
     <actions>
         <group id="CodeMarks.Toolbar" text="CodeMarks" description="CodeMarks toolbar group">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-            <action id="CodeMarks.RefreshBookmarks" class="ir.amv.os.codemarks.actions.RefreshBookmarksAction" text="Refresh Bookmarks" description="Force refresh all bookmarks"/>
+            <action id="CodeMarks.RefreshCodeMarks" class="ir.amv.os.codemarks.actions.RefreshCodeMarksAction" text="Refresh CodeMarks" description="Force refresh all CodeMarks"/>
         </group>
     </actions>
 </idea-plugin>

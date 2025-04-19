@@ -5,7 +5,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.Project
 import ir.amv.os.codemarks.services.CodeMarkService
 
-class RefreshBookmarksAction : AnAction() {
+class RefreshCodeMarksAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
         val service = CodeMarkService.getInstance(project)
