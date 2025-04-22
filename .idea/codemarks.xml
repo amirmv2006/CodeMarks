@@ -3,9 +3,9 @@
   <component name="CodeMarkSettings">
     <option name="lastScanState">
       <map>
-        <entry key="$PROJECT_DIR$/.git/COMMIT_EDITMSG" value="1745070907592" />
-        <entry key="$PROJECT_DIR$/.git/FETCH_HEAD" value="1745070619523" />
-        <entry key="$PROJECT_DIR$/.git/HEAD" value="1745070609575" />
+        <entry key="$PROJECT_DIR$/.git/COMMIT_EDITMSG" value="1745071907893" />
+        <entry key="$PROJECT_DIR$/.git/FETCH_HEAD" value="1745332583797" />
+        <entry key="$PROJECT_DIR$/.git/HEAD" value="1745332580358" />
         <entry key="$PROJECT_DIR$/.git/ORIG_HEAD" value="1744404803999" />
         <entry key="$PROJECT_DIR$/.git/config" value="1745058697024" />
         <entry key="$PROJECT_DIR$/.git/description" value="1744125681515" />
@@ -24,23 +24,23 @@
         <entry key="$PROJECT_DIR$/.git/hooks/sendemail-validate.sample" value="1744125681515" />
         <entry key="$PROJECT_DIR$/.git/hooks/update.sample" value="1744125681517" />
         <entry key="$PROJECT_DIR$/.git/info/exclude" value="1744125681514" />
-        <entry key="$PROJECT_DIR$/.git/logs/HEAD" value="1745070907594" />
+        <entry key="$PROJECT_DIR$/.git/logs/HEAD" value="1745332580359" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/heads/fix-slow-plugin" value="1744972625894" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/heads/fix-slow-plugin-attempt-2" value="1745069304911" />
-        <entry key="$PROJECT_DIR$/.git/logs/refs/heads/main" value="1745070907595" />
+        <entry key="$PROJECT_DIR$/.git/logs/refs/heads/main" value="1745071907895" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/heads/release/v1.3" value="1744405593627" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/HEAD" value="1744402930607" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/fix-slow-plugin-attempt-2" value="1745069310519" />
-        <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/main" value="1745070912960" />
+        <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/main" value="1745071912315" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/release/v1.2-SNAPSHOT" value="1745070619522" />
         <entry key="$PROJECT_DIR$/.git/logs/refs/remotes/origin/release/v1.3" value="1744405597582" />
         <entry key="$PROJECT_DIR$/.git/refs/heads/fix-slow-plugin" value="1744972625894" />
         <entry key="$PROJECT_DIR$/.git/refs/heads/fix-slow-plugin-attempt-2" value="1745069304910" />
-        <entry key="$PROJECT_DIR$/.git/refs/heads/main" value="1745070907594" />
+        <entry key="$PROJECT_DIR$/.git/refs/heads/main" value="1745071907894" />
         <entry key="$PROJECT_DIR$/.git/refs/heads/release/v1.3" value="1744405593627" />
         <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/HEAD" value="1744402930606" />
         <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/fix-slow-plugin-attempt-2" value="1745069310518" />
-        <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/main" value="1745070912959" />
+        <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/main" value="1745071912314" />
         <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/release/v1.2-SNAPSHOT" value="1745070619520" />
         <entry key="$PROJECT_DIR$/.git/refs/remotes/origin/release/v1.3" value="1744405597580" />
         <entry key="$PROJECT_DIR$/.git/refs/tags/v1.2.0" value="1745070606935" />
@@ -49,24 +49,26 @@
         <entry key="$PROJECT_DIR$/.git/refs/tags/v1.2.3" value="1745070606936" />
         <entry key="$PROJECT_DIR$/.git/refs/tags/v1.3.0" value="1745070606936" />
         <entry key="$PROJECT_DIR$/.git/refs/tags/v1.3.1" value="1745070654372" />
-        <entry key="$PROJECT_DIR$/.github/workflows/release.yml" value="1745071863659" />
+        <entry key="$PROJECT_DIR$/.git/refs/tags/v1.3.2" value="1745332583795" />
+        <entry key="$PROJECT_DIR$/.git/refs/tags/v1.3.3" value="1745332583796" />
+        <entry key="$PROJECT_DIR$/.github/workflows/release.yml" value="1745332975202" />
         <entry key="$PROJECT_DIR$/.gitignore" value="1744125678320" />
-        <entry key="$PROJECT_DIR$/.gradle/8.11/gc.properties" value="1745055736710" />
+        <entry key="$PROJECT_DIR$/.gradle/8.11/gc.properties" value="1745332595700" />
         <entry key="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" value="1744125706048" />
         <entry key="$PROJECT_DIR$/.gradle/configuration-cache/gc.properties" value="1744560669936" />
         <entry key="$PROJECT_DIR$/.gradle/kotlin/sessions/kotlin-compiler-4149752562814483799.salive" value="1745064861418" />
-        <entry key="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" value="1745055736705" />
+        <entry key="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" value="1745332595695" />
         <entry key="$PROJECT_DIR$/.idea/.gitignore" value="1744125684252" />
-        <entry key="$PROJECT_DIR$/.idea/codemarks.xml" value="1745070848885" />
+        <entry key="$PROJECT_DIR$/.idea/codemarks.xml" value="1745332836700" />
         <entry key="$PROJECT_DIR$/.idea/compiler.xml" value="1744137676751" />
         <entry key="$PROJECT_DIR$/.idea/gradle.xml" value="1744404803989" />
         <entry key="$PROJECT_DIR$/.idea/kotlinc.xml" value="1744403686102" />
         <entry key="$PROJECT_DIR$/.idea/misc.xml" value="1744404803990" />
         <entry key="$PROJECT_DIR$/.idea/vcs.xml" value="1744125684681" />
-        <entry key="$PROJECT_DIR$/.idea/workspace.xml" value="1745070618574" />
+        <entry key="$PROJECT_DIR$/.idea/workspace.xml" value="1745332694839" />
         <entry key="$PROJECT_DIR$/.run/Run IDE with Plugin.run.xml" value="1744125681674" />
         <entry key="$PROJECT_DIR$/.vscode/settings.json" value="1744931313247" />
-        <entry key="$PROJECT_DIR$/build.gradle.kts" value="1745067495527" />
+        <entry key="$PROJECT_DIR$/build.gradle.kts" value="1745332975159" />
         <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/actions/RefreshCodeMarksAction.class" value="1745064863999" />
         <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/components/CodeMarkStartupActivity$Companion.class" value="1745064863759" />
         <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/components/CodeMarkStartupActivity$execute$2$2.class" value="1745064863759" />
@@ -79,8 +81,8 @@
         <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/services/CodeMarkServiceImpl$setupListeners$2.class" value="1745064863760" />
         <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/services/CodeMarkServiceImpl$setupListeners$3.class" value="1745064863760" />
         <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/services/CodeMarkServiceImpl.class" value="1745064863759" />
-        <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/services/CodeMarkSettings$Companion.class" value="1745061332595" />
-        <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/services/CodeMarkSettings.class" value="1745061332595" />
+        <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/services/CodeMarkSettings$Companion.class" value="1745072370237" />
+        <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/services/CodeMarkSettings.class" value="1745072370237" />
         <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/settings/CodeMarkSettingsConfigurable.class" value="1745061332596" />
         <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/settings/CodeMarkSettingsPanel$2.class" value="1745061332596" />
         <entry key="$PROJECT_DIR$/build/classes/kotlin/main/ir/amv/os/codemarks/settings/CodeMarkSettingsPanel.class" value="1745061332596" />
@@ -97,6 +99,8 @@
         <entry key="$PROJECT_DIR$/build/classes/kotlin/test/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testProjectStartupScenario$1.class" value="1745060169513" />
         <entry key="$PROJECT_DIR$/build/classes/kotlin/test/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest.class" value="1745060169513" />
         <entry key="$PROJECT_DIR$/build/classes/kotlin/test/ir/amv/os/codemarks/services/CodeMarkServiceTest.class" value="1745064919281" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/config-test/event-log-metadata/fus/events-scheme.json" value="1745072377494" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/config-test/options/updates.xml" value="1745072372741" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/config/.lock" value="1745067625273" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/config/bundled_plugins.txt" value="1744972624402" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/config/early-access-registry.txt" value="1745069076857" />
@@ -129,15 +133,24 @@
         <entry key="$PROJECT_DIR$/build/idea-sandbox/config/options/runner.layout.xml" value="1744931403743" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/config/options/settingsSync.xml" value="1744648239071" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/config/options/trusted-paths.xml" value="1745061975339" />
-        <entry key="$PROJECT_DIR$/build/idea-sandbox/config/options/updates.xml" value="1745067624164" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/config/options/updates.xml" value="1745332855391" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/config/options/usage.statistics.xml" value="1744648239067" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/config/options/window.layouts.xml" value="1744648239072" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/config/options/window.state.xml" value="1745062302368" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/config/workspace/2XgcxtU1xp5jDHT6OstFddFs9vK.xml" value="1745067664804" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/config/workspace/2vS6VwnLTxX8J9ymbp2RlHpaNEN.xml" value="1745069077475" />
-        <entry key="$PROJECT_DIR$/build/idea-sandbox/system-test/index/indices.config" value="1744650489482" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system-test/caches/attributes_enums.dat" value="1745072379079" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system-test/index/filetypes/fileType.enum" value="1745072379087" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system-test/index/idindex/.perFileVersion/indexed_versions/indexed_versions.next" value="1745072380019" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system-test/index/indices.config" value="1745072943340" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system-test/index/indices.enum" value="1745072377300" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system-test/index/stubs/.perFileVersion/indexed_versions/indexed_versions.next" value="1745072380027" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system-test/log/idea.log" value="1745072943407" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system-test/log/open-telemetry-metrics-plotter.html" value="1745072376605" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system-test/log/open-telemetry-metrics.2025-04-19-16-19-36.csv" value="1745072943416" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system-test/log/opentelemetry.json" value="1745072680104" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/.appinfo" value="1745067627191" />
-        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/.home" value="1745067627001" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/.home" value="1745332856405" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/.pid" value="1745067627226" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/caches/attributes_enums.dat" value="1745062002821" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/compile-server/myapplication_87a47c66/ustamp" value="1745067648244" />
@@ -160,16 +173,16 @@
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/fileincludes/.perFileVersion/indexed_versions/indexed_versions.next" value="1745061925153" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/filetypes/fileType.enum" value="1745062016137" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/idindex/.perFileVersion/indexed_versions/indexed_versions.next" value="1745062176970" />
-        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/indices.config" value="1745069077714" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/indices.config" value="1745332864064" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/indices.enum" value="1744648193608" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/shared_indexes/descriptors" value="1745061899340" />
-        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/shared_indexes/forward.index.versions" value="1745067629092" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/shared_indexes/forward.index.versions" value="1745332856691" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/shared_indexes/version" value="1744648193132" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/.perFileVersion/indexed_versions/indexed_versions.next" value="1745062124546" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/org.jetbrains.kotlin.idea.stubindex.kotlinmultifileclasspartindex/org.jetbrains.kotlin.idea.stubindex.KotlinMultifileClassPartIndex.storage.keystream" value="1745062211385" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/build-log/build-log-jul.properties" value="1744931383187" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/build-log/build.log" value="1745067674473" />
-        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/idea.log" value="1745069077817" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/idea.log" value="1745332864109" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/indexing-diagnostic/playback-recorder-app.e297cb10/changed-files-pushing-events.json" value="1745062211026" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/indexing-diagnostic/playback-recorder-app.e297cb10/diagnostic-2025-04-19-13-25-17.575.html" value="1745061917609" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/indexing-diagnostic/playback-recorder-app.e297cb10/diagnostic-2025-04-19-13-25-17.575.json" value="1745061917578" />
@@ -279,7 +292,7 @@
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/indexing-diagnostic/untitled1.b09e2312/diagnostic-2025-04-19-15-01-07.791.html" value="1745067668435" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/indexing-diagnostic/untitled1.b09e2312/diagnostic-2025-04-19-15-01-07.791.json" value="1745067668373" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/indexing-diagnostic/untitled1.b09e2312/report.html" value="1745067668606" />
-        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/open-telemetry-metrics-plotter.html" value="1745067627088" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/open-telemetry-metrics-plotter.html" value="1745332856057" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/open-telemetry-metrics.2025-04-14-18-29-52.csv" value="1744648245582" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/open-telemetry-metrics.2025-04-14-18-31-59.csv" value="1744648326226" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/open-telemetry-metrics.2025-04-14-18-54-05.csv" value="1744649656294" />
@@ -316,6 +329,9 @@
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/open-telemetry-metrics.2025-04-19-14-52-50.csv" value="1745067176344" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/open-telemetry-metrics.2025-04-19-14-52-58.csv" value="1745067197239" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/open-telemetry-metrics.2025-04-19-15-00-27.csv" value="1745069077816" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/open-telemetry-metrics.2025-04-22-16-36-39.csv" value="1745332607112" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/open-telemetry-metrics.2025-04-22-16-39-01.csv" value="1745332749022" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/open-telemetry-metrics.2025-04-22-16-40-56.csv" value="1745332864109" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/threadDumps-freeze-20250419-125737-IC-241.14494.240-CodeMarkServiceImpl.doScanAndSync-156sec/threadDump-20250419-125826.txt" value="1745060311890" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/threadDumps-freeze-20250419-125737-IC-241.14494.240-CodeMarkServiceImpl.doScanAndSync-156sec/threadDump-20250419-125854.txt" value="1745060334253" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/log/threadDumps-freeze-20250419-125737-IC-241.14494.240-CodeMarkServiceImpl.doScanAndSync-156sec/threadDump-20250419-125921.txt" value="1745060361925" />
@@ -453,8 +469,8 @@
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/plugins/meta/546759.json.etag" value="1744648325485" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/plugins/meta/714641.json" value="1745055753874" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/plugins/meta/714641.json.etag" value="1745055753875" />
-        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/plugins/pluginsXMLIds.json" value="1745055753632" />
-        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/plugins/pluginsXMLIds.json.etag" value="1745055753632" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/plugins/pluginsXMLIds.json" value="1745332602126" />
+        <entry key="$PROJECT_DIR$/build/idea-sandbox/system/plugins/pluginsXMLIds.json.etag" value="1745332602127" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/projects/playback-recorder-app.e297cb10/cache-state.xml" value="1745062302639" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/projects/playback-recorder-app.e297cb10/external_build_system/modules/MyApplication.androidApp.xml" value="1745062189106" />
         <entry key="$PROJECT_DIR$/build/idea-sandbox/system/projects/playback-recorder-app.e297cb10/external_build_system/modules/MyApplication.shared.commonMain.xml" value="1745062189128" />
@@ -493,41 +509,56 @@
         <entry key="$PROJECT_DIR$/build/instrumented/instrumentCode/ir/amv/os/codemarks/services/CodeMarkServiceImpl$setupListeners$2.class" value="1745064864817" />
         <entry key="$PROJECT_DIR$/build/instrumented/instrumentCode/ir/amv/os/codemarks/services/CodeMarkServiceImpl$setupListeners$3.class" value="1745064864821" />
         <entry key="$PROJECT_DIR$/build/instrumented/instrumentCode/ir/amv/os/codemarks/services/CodeMarkServiceImpl.class" value="1745064864818" />
-        <entry key="$PROJECT_DIR$/build/instrumented/instrumentCode/ir/amv/os/codemarks/services/CodeMarkSettings$Companion.class" value="1745055749949" />
-        <entry key="$PROJECT_DIR$/build/instrumented/instrumentCode/ir/amv/os/codemarks/services/CodeMarkSettings.class" value="1745055749950" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentCode/ir/amv/os/codemarks/services/CodeMarkSettings$Companion.class" value="1745072372511" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentCode/ir/amv/os/codemarks/services/CodeMarkSettings.class" value="1745072372512" />
         <entry key="$PROJECT_DIR$/build/instrumented/instrumentCode/ir/amv/os/codemarks/settings/CodeMarkSettingsConfigurable.class" value="1745056427472" />
         <entry key="$PROJECT_DIR$/build/instrumented/instrumentCode/ir/amv/os/codemarks/settings/CodeMarkSettingsPanel$2.class" value="1745058398743" />
         <entry key="$PROJECT_DIR$/build/instrumented/instrumentCode/ir/amv/os/codemarks/settings/CodeMarkSettingsPanel.class" value="1745058398744" />
-        <entry key="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/counters.tab" value="1745064864248" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$Companion.class" value="1745072373297" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testFileChangeScenario$1$1$1.class" value="1745072373294" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testFileChangeScenario$1$1.class" value="1745072373293" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testFileChangeScenario$1.class" value="1745072373298" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testLoadingExistingProject$1$1$1$1.class" value="1745072373296" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testLoadingExistingProject$1$1$1.class" value="1745072373295" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testLoadingExistingProject$1$1.class" value="1745072373292" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testLoadingExistingProject$1.class" value="1745072373296" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testProjectStartupScenario$1$1$1.class" value="1745072373297" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testProjectStartupScenario$1$1.class" value="1745072373297" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testProjectStartupScenario$1.class" value="1745072373292" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest.class" value="1745072373293" />
+        <entry key="$PROJECT_DIR$/build/instrumented/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceTest.class" value="1745072373295" />
+        <entry key="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/counters.tab" value="1745072371963" />
         <entry key="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/counters.tab" value="1745064919297" />
-        <entry key="$PROJECT_DIR$/build/patchedPluginXmlFiles/plugin.xml" value="1745067623126" />
-        <entry key="$PROJECT_DIR$/build/reports/problems/problems-report.html" value="1745067497964" />
-        <entry key="$PROJECT_DIR$/build/resources/main/META-INF/plugin.xml" value="1745067623793" />
-        <entry key="$PROJECT_DIR$/build/resources/main/META-INF/pluginIcon.svg" value="1745067623791" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/Groovy.jar!/search/Groovy.jar!.searchableOptions.xml" value="1745067197177" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/Groovy.jar/search/Groovy.jar.searchableOptions.xml" value="1745067197101" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/IntelliLang.jar/search/IntelliLang.jar.searchableOptions.xml" value="1745067197086" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/app-client.jar/search/app-client.jar.searchableOptions.xml" value="1745067197163" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/app.jar/search/app.jar.searchableOptions.xml" value="1745067197172" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/byteCodeViewer.jar/search/byteCodeViewer.jar.searchableOptions.xml" value="1745067197096" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/completionMlRanking.jar/search/completionMlRanking.jar.searchableOptions.xml" value="1745067197172" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/copyright.jar/search/copyright.jar.searchableOptions.xml" value="1745067197097" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/cwm-common.jar/search/cwm-common.jar.searchableOptions.xml" value="1745067197177" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/cwm-host.jar/search/cwm-host.jar.searchableOptions.xml" value="1745067197185" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/cwm-plugin-terminal.jar/search/cwm-plugin-terminal.jar.searchableOptions.xml" value="1745067197094" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/dev.jar/search/dev.jar.searchableOptions.xml" value="1745067197094" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/eclipse.jar/search/eclipse.jar.searchableOptions.xml" value="1745067197087" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/editorconfig.jar/search/editorconfig.jar.searchableOptions.xml" value="1745067197180" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/featuresTrainer.jar/search/featuresTrainer.jar.searchableOptions.xml" value="1745067197184" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/gradle-java-maven.jar/search/gradle-java-maven.jar.searchableOptions.xml" value="1745067197185" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/gradle-java.jar/search/gradle-java.jar.searchableOptions.xml" value="1745067197101" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/gradle.jar/search/gradle.jar.searchableOptions.xml" value="1745067197167" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/grazie.jar/search/grazie.jar.searchableOptions.xml" value="1745067197167" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/html-tools.jar/search/html-tools.jar.searchableOptions.xml" value="1745067197164" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/idea-junit.jar!/search/idea-junit.jar!.searchableOptions.xml" value="1745067197092" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/idea-junit.jar/search/idea-junit.jar.searchableOptions.xml" value="1745067197178" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/indexing-shared.jar/search/indexing-shared.jar.searchableOptions.xml" value="1745067197184" />
+        <entry key="$PROJECT_DIR$/build/patchedPluginXmlFiles/plugin.xml" value="1745332855292" />
+        <entry key="$PROJECT_DIR$/build/reports/problems/problems-report.html" value="1745332975657" />
+        <entry key="$PROJECT_DIR$/build/resources/main/META-INF/plugin.xml" value="1745332855325" />
+        <entry key="$PROJECT_DIR$/build/resources/main/META-INF/pluginIcon.svg" value="1745332855323" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/Groovy.jar!/search/Groovy.jar!.searchableOptions.xml" value="1745332864057" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/Groovy.jar/search/Groovy.jar.searchableOptions.xml" value="1745332864031" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/IntelliLang.jar/search/IntelliLang.jar.searchableOptions.xml" value="1745332864016" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/app-client.jar/search/app-client.jar.searchableOptions.xml" value="1745332864046" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/app.jar/search/app.jar.searchableOptions.xml" value="1745332864054" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/byteCodeViewer.jar/search/byteCodeViewer.jar.searchableOptions.xml" value="1745332864025" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/completionMlRanking.jar/search/completionMlRanking.jar.searchableOptions.xml" value="1745332864055" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/copyright.jar/search/copyright.jar.searchableOptions.xml" value="1745332864026" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/cwm-common.jar/search/cwm-common.jar.searchableOptions.xml" value="1745332864056" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/cwm-host.jar/search/cwm-host.jar.searchableOptions.xml" value="1745332864061" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/cwm-plugin-terminal.jar/search/cwm-plugin-terminal.jar.searchableOptions.xml" value="1745332864024" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/dev.jar/search/dev.jar.searchableOptions.xml" value="1745332864023" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/eclipse.jar/search/eclipse.jar.searchableOptions.xml" value="1745332864016" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/editorconfig.jar/search/editorconfig.jar.searchableOptions.xml" value="1745332864058" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/featuresTrainer.jar/search/featuresTrainer.jar.searchableOptions.xml" value="1745332864061" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/gradle-java-maven.jar/search/gradle-java-maven.jar.searchableOptions.xml" value="1745332864062" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/gradle-java.jar/search/gradle-java.jar.searchableOptions.xml" value="1745332864031" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/gradle.jar/search/gradle.jar.searchableOptions.xml" value="1745332864048" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/grazie.jar/search/grazie.jar.searchableOptions.xml" value="1745332864051" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/html-tools.jar/search/html-tools.jar.searchableOptions.xml" value="1745332864047" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/idea-junit.jar!/search/idea-junit.jar!.searchableOptions.xml" value="1745332864022" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/idea-junit.jar/search/idea-junit.jar.searchableOptions.xml" value="1745332864057" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/indexing-shared.jar/search/indexing-shared.jar.searchableOptions.xml" value="1745332864061" />
         <entry key="$PROJECT_DIR$/build/searchableOptions/instrumented-CodeMarks-1.0-SNAPSHOT.jar/search/instrumented-CodeMarks-1.0-SNAPSHOT.jar.searchableOptions.xml" value="1744648175810" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/instrumented-CodeMarks-1.3.3.dirty.jar/search/instrumented-CodeMarks-1.3.3.dirty.jar.searchableOptions.xml" value="1745332864017" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/instrumented-CodeMarks-1.3.3.jar/search/instrumented-CodeMarks-1.3.3.jar.searchableOptions.xml" value="1745332607041" />
         <entry key="$PROJECT_DIR$/build/searchableOptions/instrumented-CodeMarks-13e3647.dirty.jar/search/instrumented-CodeMarks-13e3647.dirty.jar.searchableOptions.xml" value="1744972512058" />
         <entry key="$PROJECT_DIR$/build/searchableOptions/instrumented-CodeMarks-3d66ee1.dirty.jar/search/instrumented-CodeMarks-3d66ee1.dirty.jar.searchableOptions.xml" value="1744648936973" />
         <entry key="$PROJECT_DIR$/build/searchableOptions/instrumented-CodeMarks-4d84757.dirty.jar/search/instrumented-CodeMarks-4d84757.dirty.jar.searchableOptions.xml" value="1745061463349" />
@@ -539,53 +570,55 @@
         <entry key="$PROJECT_DIR$/build/searchableOptions/instrumented-CodeMarks-ef1ece9.dirty.jar/search/instrumented-CodeMarks-ef1ece9.dirty.jar.searchableOptions.xml" value="1745056436446" />
         <entry key="$PROJECT_DIR$/build/searchableOptions/instrumented-CodeMarks-f7aa34f.dirty.jar/search/instrumented-CodeMarks-f7aa34f.dirty.jar.searchableOptions.xml" value="1745067197185" />
         <entry key="$PROJECT_DIR$/build/searchableOptions/instrumented-CodeMarks-f7aa34f.jar/search/instrumented-CodeMarks-f7aa34f.jar.searchableOptions.xml" value="1745067021421" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/java-coverage.jar/search/java-coverage.jar.searchableOptions.xml" value="1745067197089" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/java-debugger-streams.jar/search/java-debugger-streams.jar.searchableOptions.xml" value="1745067197165" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/java-decompiler.jar/search/java-decompiler.jar.searchableOptions.xml" value="1745067197172" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/java-i18n.jar/search/java-i18n.jar.searchableOptions.xml" value="1745067197177" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/java-impl.jar!/search/java-impl.jar!.searchableOptions.xml" value="1745067197089" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/java-impl.jar/search/java-impl.jar.searchableOptions.xml" value="1745067197118" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/javaFX.jar!/search/javaFX.jar!.searchableOptions.xml" value="1745067197089" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/javaFX.jar/search/javaFX.jar.searchableOptions.xml" value="1745067197093" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/kotlin-plugin-shared.jar/search/kotlin-plugin-shared.jar.searchableOptions.xml" value="1745067197091" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/kotlin-plugin.jar!/search/kotlin-plugin.jar!.searchableOptions.xml" value="1745067197184" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/kotlin-plugin.jar/search/kotlin-plugin.jar.searchableOptions.xml" value="1745067197182" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/java-coverage.jar/search/java-coverage.jar.searchableOptions.xml" value="1745332864018" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/java-debugger-streams.jar/search/java-debugger-streams.jar.searchableOptions.xml" value="1745332864047" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/java-decompiler.jar/search/java-decompiler.jar.searchableOptions.xml" value="1745332864055" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/java-i18n.jar/search/java-i18n.jar.searchableOptions.xml" value="1745332864057" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/java-impl.jar!/search/java-impl.jar!.searchableOptions.xml" value="1745332864019" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/java-impl.jar/search/java-impl.jar.searchableOptions.xml" value="1745332864035" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/javaFX.jar!/search/javaFX.jar!.searchableOptions.xml" value="1745332864019" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/javaFX.jar/search/javaFX.jar.searchableOptions.xml" value="1745332864023" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/kotlin-plugin-shared.jar/search/kotlin-plugin-shared.jar.searchableOptions.xml" value="1745332864021" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/kotlin-plugin.jar!/search/kotlin-plugin.jar!.searchableOptions.xml" value="1745332864061" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/kotlin-plugin.jar/search/kotlin-plugin.jar.searchableOptions.xml" value="1745332864060" />
         <entry key="$PROJECT_DIR$/build/searchableOptions/llmInstaller.jar/search/llmInstaller.jar.searchableOptions.xml" value="1744648175817" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/markdown.jar/search/markdown.jar.searchableOptions.xml" value="1745067197085" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/marketplace.jar/search/marketplace.jar.searchableOptions.xml" value="1745067197096" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/maven.jar!/search/maven.jar!.searchableOptions.xml" value="1745067197099" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/maven.jar/search/maven.jar.searchableOptions.xml" value="1745067197099" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/modules.jar/search/modules.jar.searchableOptions.xml" value="1745067197184" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/packageChecker.jar/search/packageChecker.jar.searchableOptions.xml" value="1745067197179" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/performanceTesting-async.jar/search/performanceTesting-async.jar.searchableOptions.xml" value="1745067197104" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/performanceTesting.jar/search/performanceTesting.jar.searchableOptions.xml" value="1745067197175" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/platform-ijent-impl.jar/search/platform-ijent-impl.jar.searchableOptions.xml" value="1745067197178" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/platform-images.jar/search/platform-images.jar.searchableOptions.xml" value="1745067197181" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/platform-langInjection.jar/search/platform-langInjection.jar.searchableOptions.xml" value="1745067197181" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/platform-tracing-ide.jar/search/platform-tracing-ide.jar.searchableOptions.xml" value="1745067197179" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/properties.jar/search/properties.jar.searchableOptions.xml" value="1745067197103" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/qodana.jar/search/qodana.jar.searchableOptions.xml" value="1745067197168" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/searchEverywhereMl.jar/search/searchEverywhereMl.jar.searchableOptions.xml" value="1745067197092" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/settingsSync.jar/search/settingsSync.jar.searchableOptions.xml" value="1745067197186" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/sh.jar/search/sh.jar.searchableOptions.xml" value="1745067197087" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/tasks-core.jar/search/tasks-core.jar.searchableOptions.xml" value="1745067197088" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/terminal.jar/search/terminal.jar.searchableOptions.xml" value="1745067197102" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/testng-plugin.jar!/search/testng-plugin.jar!.searchableOptions.xml" value="1745067197096" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/testng-plugin.jar/search/testng-plugin.jar.searchableOptions.xml" value="1745067197167" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/textmate.jar/search/textmate.jar.searchableOptions.xml" value="1745067197082" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/toml.jar/search/toml.jar.searchableOptions.xml" value="1745067197177" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/uiDesigner.jar/search/uiDesigner.jar.searchableOptions.xml" value="1745067197093" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-git.jar/search/vcs-git.jar.searchableOptions.xml" value="1745067197183" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-github.jar/search/vcs-github.jar.searchableOptions.xml" value="1745067197180" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-gitlab.jar/search/vcs-gitlab.jar.searchableOptions.xml" value="1745067197176" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-hg.jar/search/vcs-hg.jar.searchableOptions.xml" value="1745067197174" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-perforce.jar/search/vcs-perforce.jar.searchableOptions.xml" value="1745067197166" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-svn.jar/search/vcs-svn.jar.searchableOptions.xml" value="1745067197095" />
-        <entry key="$PROJECT_DIR$/build/searchableOptions/yaml.jar/search/yaml.jar.searchableOptions.xml" value="1745067197179" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/markdown.jar/search/markdown.jar.searchableOptions.xml" value="1745332864016" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/marketplace.jar/search/marketplace.jar.searchableOptions.xml" value="1745332864025" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/maven.jar!/search/maven.jar!.searchableOptions.xml" value="1745332864029" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/maven.jar/search/maven.jar.searchableOptions.xml" value="1745332864029" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/modules.jar/search/modules.jar.searchableOptions.xml" value="1745332864061" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/packageChecker.jar/search/packageChecker.jar.searchableOptions.xml" value="1745332864058" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/performanceTesting-async.jar/search/performanceTesting-async.jar.searchableOptions.xml" value="1745332864032" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/performanceTesting.jar/search/performanceTesting.jar.searchableOptions.xml" value="1745332864056" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/platform-ijent-impl.jar/search/platform-ijent-impl.jar.searchableOptions.xml" value="1745332864057" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/platform-images.jar/search/platform-images.jar.searchableOptions.xml" value="1745332864059" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/platform-langInjection.jar/search/platform-langInjection.jar.searchableOptions.xml" value="1745332864059" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/platform-tracing-ide.jar/search/platform-tracing-ide.jar.searchableOptions.xml" value="1745332864058" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/properties.jar/search/properties.jar.searchableOptions.xml" value="1745332864032" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/qodana.jar/search/qodana.jar.searchableOptions.xml" value="1745332864051" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/searchEverywhereMl.jar/search/searchEverywhereMl.jar.searchableOptions.xml" value="1745332864021" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/settingsSync.jar/search/settingsSync.jar.searchableOptions.xml" value="1745332864062" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/sh.jar/search/sh.jar.searchableOptions.xml" value="1745332864017" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/tasks-core.jar/search/tasks-core.jar.searchableOptions.xml" value="1745332864018" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/terminal.jar/search/terminal.jar.searchableOptions.xml" value="1745332864032" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/testng-plugin.jar!/search/testng-plugin.jar!.searchableOptions.xml" value="1745332864025" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/testng-plugin.jar/search/testng-plugin.jar.searchableOptions.xml" value="1745332864050" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/textmate.jar/search/textmate.jar.searchableOptions.xml" value="1745332864013" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/toml.jar/search/toml.jar.searchableOptions.xml" value="1745332864057" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/uiDesigner.jar/search/uiDesigner.jar.searchableOptions.xml" value="1745332864023" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-git.jar/search/vcs-git.jar.searchableOptions.xml" value="1745332864060" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-github.jar/search/vcs-github.jar.searchableOptions.xml" value="1745332864059" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-gitlab.jar/search/vcs-gitlab.jar.searchableOptions.xml" value="1745332864056" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-hg.jar/search/vcs-hg.jar.searchableOptions.xml" value="1745332864055" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-perforce.jar/search/vcs-perforce.jar.searchableOptions.xml" value="1745332864048" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/vcs-svn.jar/search/vcs-svn.jar.searchableOptions.xml" value="1745332864025" />
+        <entry key="$PROJECT_DIR$/build/searchableOptions/yaml.jar/search/yaml.jar.searchableOptions.xml" value="1745332864058" />
         <entry key="$PROJECT_DIR$/build/tmp/initializeIntelliJPlugin/2025-04-11" value="1744401681152" />
         <entry key="$PROJECT_DIR$/build/tmp/initializeIntelliJPlugin/2025-04-14" value="1744648175603" />
         <entry key="$PROJECT_DIR$/build/tmp/initializeIntelliJPlugin/2025-04-18" value="1744931351392" />
         <entry key="$PROJECT_DIR$/build/tmp/initializeIntelliJPlugin/2025-04-19" value="1745055733487" />
+        <entry key="$PROJECT_DIR$/build/tmp/initializeIntelliJPlugin/2025-04-20" value="1745136740621" />
+        <entry key="$PROJECT_DIR$/build/tmp/initializeIntelliJPlugin/2025-04-22" value="1745332596714" />
         <entry key="$PROJECT_DIR$/build/tmp/instrumentCode/ir/amv/os/codemarks/actions/RefreshCodeMarksAction.class" value="1745061751602" />
         <entry key="$PROJECT_DIR$/build/tmp/instrumentCode/ir/amv/os/codemarks/components/CodeMarkStartupActivity$execute$2$2.class" value="1745064864728" />
         <entry key="$PROJECT_DIR$/build/tmp/instrumentCode/ir/amv/os/codemarks/components/CodeMarkStartupActivity$execute$2.class" value="1745055749911" />
@@ -598,28 +631,41 @@
         <entry key="$PROJECT_DIR$/build/tmp/instrumentCode/ir/amv/os/codemarks/services/CodeMarkServiceImpl$setupListeners$2.class" value="1745064864732" />
         <entry key="$PROJECT_DIR$/build/tmp/instrumentCode/ir/amv/os/codemarks/services/CodeMarkServiceImpl$setupListeners$3.class" value="1745064864733" />
         <entry key="$PROJECT_DIR$/build/tmp/instrumentCode/ir/amv/os/codemarks/services/CodeMarkServiceImpl.class" value="1745064864733" />
-        <entry key="$PROJECT_DIR$/build/tmp/instrumentCode/ir/amv/os/codemarks/services/CodeMarkSettings$Companion.class" value="1745055749914" />
-        <entry key="$PROJECT_DIR$/build/tmp/instrumentCode/ir/amv/os/codemarks/services/CodeMarkSettings.class" value="1745055749914" />
-        <entry key="$PROJECT_DIR$/build/tmp/instrumentedJar/MANIFEST.MF" value="1745067168140" />
-        <entry key="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" value="1745067168099" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentCode/ir/amv/os/codemarks/services/CodeMarkSettings$Companion.class" value="1745072372465" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentCode/ir/amv/os/codemarks/services/CodeMarkSettings.class" value="1745072372468" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$Companion.class" value="1745072373267" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testFileChangeScenario$1$1$1.class" value="1745072373268" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testFileChangeScenario$1$1.class" value="1745072373268" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testFileChangeScenario$1.class" value="1745072373268" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testLoadingExistingProject$1$1$1$1.class" value="1745072373269" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testLoadingExistingProject$1$1$1.class" value="1745072373269" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testLoadingExistingProject$1$1.class" value="1745072373270" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testLoadingExistingProject$1.class" value="1745072373270" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testProjectStartupScenario$1$1$1.class" value="1745072373271" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testProjectStartupScenario$1$1.class" value="1745072373271" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest$testProjectStartupScenario$1.class" value="1745072373272" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest.class" value="1745072373274" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentTestCode/ir/amv/os/codemarks/services/CodeMarkServiceTest.class" value="1745072373274" />
+        <entry key="$PROJECT_DIR$/build/tmp/instrumentedJar/MANIFEST.MF" value="1745332741045" />
+        <entry key="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" value="1745332741044" />
         <entry key="$PROJECT_DIR$/build/tmp/jarSearchableOptions/MANIFEST.MF" value="1744648175841" />
-        <entry key="$PROJECT_DIR$/docs/bookmarks.md" value="1745060535831" />
-        <entry key="$PROJECT_DIR$/gradle.properties" value="1745060535831" />
+        <entry key="$PROJECT_DIR$/docs/bookmarks.md" value="1745332975221" />
+        <entry key="$PROJECT_DIR$/gradle.properties" value="1745332975157" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="1744125678319" />
         <entry key="$PROJECT_DIR$/gradlew" value="1744125678320" />
         <entry key="$PROJECT_DIR$/gradlew.bat" value="1744125678320" />
         <entry key="$PROJECT_DIR$/intellij-agreement.txt" value="1744404803991" />
         <entry key="$PROJECT_DIR$/settings.gradle.kts" value="1744125678318" />
-        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/actions/RefreshCodeMarksAction.kt" value="1745061735371" />
-        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/components/CodeMarkStartupActivity.kt" value="1745064585290" />
-        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/services/CodeMarkService.kt" value="1745064346417" />
-        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/services/CodeMarkSettings.kt" value="1745067874487" />
-        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/settings/CodeMarkSettingsConfigurable.kt" value="1745060535831" />
-        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/settings/CodeMarkSettingsPanel.kt" value="1745060535831" />
-        <entry key="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" value="1745069246197" />
+        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/actions/RefreshCodeMarksAction.kt" value="1745332975224" />
+        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/components/CodeMarkStartupActivity.kt" value="1745332975224" />
+        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/services/CodeMarkService.kt" value="1745332975221" />
+        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/services/CodeMarkSettings.kt" value="1745332975184" />
+        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/settings/CodeMarkSettingsConfigurable.kt" value="1745332975219" />
+        <entry key="$PROJECT_DIR$/src/main/kotlin/ir/amv/os/codemarks/settings/CodeMarkSettingsPanel.kt" value="1745332975186" />
+        <entry key="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" value="1745332975194" />
         <entry key="$PROJECT_DIR$/src/main/resources/META-INF/pluginIcon.svg" value="1744404803993" />
-        <entry key="$PROJECT_DIR$/src/test/kotlin/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest.kt" value="1745060535857" />
-        <entry key="$PROJECT_DIR$/src/test/kotlin/ir/amv/os/codemarks/services/CodeMarkServiceTest.kt" value="1745060535836" />
+        <entry key="$PROJECT_DIR$/src/test/kotlin/ir/amv/os/codemarks/services/CodeMarkServiceIntegrationTest.kt" value="1745332975167" />
+        <entry key="$PROJECT_DIR$/src/test/kotlin/ir/amv/os/codemarks/services/CodeMarkServiceTest.kt" value="1745332975219" />
       </map>
     </option>
   </component>
