@@ -255,7 +255,12 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                         val latch = java.util.concurrent.CountDownLatch(1)
                         ApplicationManager.getApplication().invokeLater({
                             try {
-                                applyChanges()
+                                // Check if project is still valid before applying changes
+                                if (!project.isDisposed) {
+                                    applyChanges()
+                                } else {
+                                    LOG.warn("Project is disposed, skipping applying CodeMarks changes in test mode")
+                                }
                             } finally {
                                 latch.countDown()
                             }
@@ -266,7 +271,12 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 } else {
                     // In normal mode, just schedule on UI thread
                     ApplicationManager.getApplication().invokeLater({
-                        applyChanges()
+                        // Check if project is still valid before applying changes
+                        if (!project.isDisposed) {
+                            applyChanges()
+                        } else {
+                            LOG.warn("Project is disposed, skipping applying CodeMarks changes")
+                        }
                     }, ModalityState.any())
                 }
             } catch (e: Exception) {
@@ -283,7 +293,12 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 performScanAndApplyChanges()
             } else {
                 ApplicationManager.getApplication().invokeLater({
-                    performScanAndApplyChanges()
+                    // Check if project is still valid before performing scan
+                    if (!project.isDisposed) {
+                        performScanAndApplyChanges()
+                    } else {
+                        LOG.warn("Project is disposed, skipping CodeMarks scan in test mode")
+                    }
                 }, ModalityState.any())
             }
         } else {
@@ -371,7 +386,12 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                         val latch = java.util.concurrent.CountDownLatch(1)
                         ApplicationManager.getApplication().invokeLater({
                             try {
-                                applyChanges()
+                                // Check if project is still valid before applying changes
+                                if (!project.isDisposed) {
+                                    applyChanges()
+                                } else {
+                                    LOG.warn("Project is disposed, skipping applying CodeMarks changes for file ${file.path} in test mode")
+                                }
                             } finally {
                                 latch.countDown()
                             }
@@ -382,7 +402,12 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 } else {
                     // In normal mode, just schedule on UI thread
                     ApplicationManager.getApplication().invokeLater({
-                        applyChanges()
+                        // Check if project is still valid before applying changes
+                        if (!project.isDisposed) {
+                            applyChanges()
+                        } else {
+                            LOG.warn("Project is disposed, skipping applying CodeMarks changes for file ${file.path}")
+                        }
                     }, ModalityState.any())
                 }
             } catch (e: Exception) {
@@ -399,7 +424,12 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 performScanAndApplyChanges()
             } else {
                 ApplicationManager.getApplication().invokeLater({
-                    performScanAndApplyChanges()
+                    // Check if project is still valid before performing scan
+                    if (!project.isDisposed) {
+                        performScanAndApplyChanges()
+                    } else {
+                        LOG.warn("Project is disposed, skipping CodeMarks scan for file ${file.path} in test mode")
+                    }
                 }, ModalityState.any())
             }
 } else {
