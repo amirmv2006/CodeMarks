@@ -42,12 +42,10 @@ class CodeMarkStartupActivity : ProjectActivity, DumbAware {
                 // Make sure we wait for any background tasks to complete
                 Thread.sleep(500)
             } else {
-                // In normal mode, just run on the main thread
-                withContext(Dispatchers.Main) {
-                    WriteCommandAction.runWriteCommandAction(project) {
-                        codeMarkService.scanAndSync()
-                    }
-                }
+                // In normal mode, let the service handle the background processing
+                // This will prevent IntelliJ from hanging during startup
+                LOG.info("Running initial scan in background")
+                codeMarkService.scanAndSync()
             }
             LOG.info("Initial CodeMarks scan completed")
 
