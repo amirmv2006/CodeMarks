@@ -46,7 +46,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         private val LOG = Logger.getInstance(CodeMarkServiceImpl::class.java)
         private val BOOKMARK_PATTERN = Pattern.compile("CodeMarks(?:\\[(\\w+)\\])?:\\s*(.*)", Pattern.CASE_INSENSITIVE)
         private const val CODEMARKS_GROUP_NAME = "CodeMarks"
-        
+
         private fun matchesGlob(fileName: String, glob: String): Boolean {
             if (glob == "*") return true
             val fs = java.nio.file.FileSystems.getDefault()
@@ -162,7 +162,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         val groupName = if (suffix != null) "$CODEMARKS_GROUP_NAME $suffix" else CODEMARKS_GROUP_NAME
         val existingGroup = bookmarksManager?.groups?.find { it.name == groupName }
         if (existingGroup != null) return existingGroup
-        
+
         return bookmarksManager?.addGroup(groupName, false)
     }
 
@@ -186,7 +186,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                                 } else {
                                     bookmark.attributes["file"]
                                 }
-                                
+
                                 if (filePath == null || !isValidBookmark(filePath, lineNumber, description)) {
                                     group.remove(bookmark)
                                 }
@@ -205,6 +205,9 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     scanDirectory(root)
                 }
             } catch (e: Exception) {
+                if (e is com.intellij.openapi.progress.ProcessCanceledException) {
+                    throw e
+                }
                 LOG.error("Error in scan and sync", e)
             }
         }
@@ -230,7 +233,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                                 } else {
                                     bookmark.attributes["file"]
                                 }
-                                
+
                                 if (filePath == file.path && !isValidBookmark(filePath, lineNumber, description)) {
                                     group.remove(bookmark)
                                 }
@@ -245,6 +248,9 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                 // Now scan the file for new bookmarks
                 scanFile(file)
             } catch (e: Exception) {
+                if (e is com.intellij.openapi.progress.ProcessCanceledException) {
+                    throw e
+                }
                 LOG.error("Error in scan and sync for file ${file.path}", e)
             }
         }
@@ -252,25 +258,25 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
 
     private fun isValidBookmark(filePath: String?, lineNumber: Int?, description: String?): Boolean {
         if (filePath == null || lineNumber == null || description == null) return false
-        
+
         val file = VirtualFileManager.getInstance().findFileByUrl("file://$filePath") ?: return false
         if (!shouldScanFile(file)) return false
-        
+
         val document = ReadAction.compute<Document?, RuntimeException> {
             fileDocumentManager.getDocument(file)
         } ?: return false
-        
+
         if (lineNumber >= document.lineCount) return false
-        
+
         val line = ReadAction.compute<String, RuntimeException> {
             val startOffset = document.getLineStartOffset(lineNumber)
             val endOffset = document.getLineEndOffset(lineNumber)
             document.getText(com.intellij.openapi.util.TextRange(startOffset, endOffset))
         }
-        
+
         val matcher = BOOKMARK_PATTERN.matcher(line)
         if (!matcher.find()) return false
-        
+
         val foundDescription = matcher.group(2).trim()
         return foundDescription == description
     }
@@ -291,7 +297,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     private fun scanFile(file: VirtualFile) {
         val lastModified = file.timeStamp
         val lastScanned = settings.lastScanState[file.path]
-        
+
         // Skip if file hasn't changed since last scan
         if (lastScanned != null && lastScanned == lastModified) {
             return
