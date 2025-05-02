@@ -32,7 +32,7 @@ jobs:
           sleep 5
 
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: ./gradlew build
 
       - name: Publish to JetBrains Marketplace
         run: ./gradlew publishPlugin
