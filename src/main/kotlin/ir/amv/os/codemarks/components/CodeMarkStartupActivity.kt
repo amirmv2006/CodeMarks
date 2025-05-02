@@ -45,7 +45,12 @@ class CodeMarkStartupActivity : ProjectActivity, DumbAware {
                 // In normal mode, let the service handle the background processing
                 // This will prevent IntelliJ from hanging during startup
                 LOG.info("Running initial scan in background")
-                codeMarkService.scanAndSync()
+                // Check if project is disposed before running scan
+                if (!project.isDisposed) {
+                    codeMarkService.scanAndSync()
+                } else {
+                    LOG.warn("Project is disposed, skipping initial CodeMarks scan")
+                }
             }
             LOG.info("Initial CodeMarks scan completed")
 
