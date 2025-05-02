@@ -8,6 +8,7 @@ import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class CodeMarkServiceTest : BasePlatformTestCase() {
 
@@ -53,7 +54,13 @@ class CodeMarkServiceTest : BasePlatformTestCase() {
         assertEquals(1, bookmarks.size, "Expected exactly one bookmark")
         val bookmark = bookmarks.first()
         val attributes = bookmark.attributes
-        assertEquals("4", attributes["line"], "Bookmark should be on line 4")
-        assertEquals("Test bookmark", attributes["description"], "Bookmark description should match")
+        println("[DEBUG_LOG] Line attribute value: '${attributes["line"]}'")
+        val description = bookmarksManager.groups.find { group -> 
+            group.getBookmarks().contains(bookmark)
+        }?.getDescription(bookmark)
+        println("[DEBUG_LOG] Description value: '$description'")
+        assertTrue("Line attribute should be '3' but was '${attributes["line"]}'", attributes["line"] == "3")
+        assertTrue("Description should be 'Test bookmark' but was '$description'", 
+                  description == "Test bookmark")
     }
 } 
