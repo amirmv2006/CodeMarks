@@ -19,6 +19,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.2")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.25")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.25")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("org.awaitility:awaitility:4.2.0")
 }
 
 // Configure Gradle IntelliJ Plugin

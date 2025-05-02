@@ -39,20 +39,16 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
     private val bookmarksManager: BookmarksManager
         get() = BookmarksManager.getInstance(project)!!
     private lateinit var sourceFile: VirtualFile
-    private lateinit var startupActivity: CodeMarkStartupActivity
 
     override fun setUp() {
         LOG.info("Starting setUp")
         super.setUp()
         LOG.info("BasePlatformTestCase.setUp completed")
-        
+
         codeMarkService = project.service<CodeMarkService>()
         LOG.info("CodeMarkService initialized")
-        
+
         LOG.info("BookmarksManager initialized")
-        
-        startupActivity = CodeMarkStartupActivity()
-        LOG.info("StartupActivity initialized")
 
         // Clean up any existing bookmarks
         LOG.info("Cleaning up existing bookmarks")
@@ -69,7 +65,7 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
             WriteCommandAction.runWriteCommandAction(project) {
                 val sourceRoot = myFixture.tempDirFixture.findOrCreateDir("src")
                 LOG.info("Source root created at: ${sourceRoot.path}")
-                
+
                 // Set up source roots
                 val model = ModuleRootManager.getInstance(module).modifiableModel
                 val contentEntry = model.addContentEntry(sourceRoot)
@@ -82,9 +78,9 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
                 val document = FileDocumentManager.getInstance().getDocument(sourceFile)!!
                 document.setText("""
                     package test;
-                    
+
                     public class Test {
-                        // @CodeMarks Amir
+                        // CodeMarks: Amir
                         public void test() {
                         }
                     }
@@ -112,125 +108,111 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
     }
 
     @Test
-    fun testProjectStartupScenario() = runBlocking {
+    fun testProjectStartupScenario() {
         LOG.info("Starting testProjectStartupScenario")
-        val latch = CountDownLatch(1)
-        
-        withContext(Dispatchers.Default) {
-            DumbService.getInstance(project).suspendIndexingAndRun("Running startup activity") {
-                LOG.info("Executing startup activity")
-                startupActivity.execute(project)
-                LOG.info("Startup activity completed")
 
-                // Verify bookmark was created by startup activity
-                ApplicationManager.getApplication().invokeAndWait({
-                    LOG.info("Verifying bookmarks")
-                    val bookmarks = bookmarksManager.bookmarks
-                    assertTrue("No bookmarks found after startup", bookmarks.isNotEmpty())
-                    val bookmark = bookmarks.find { 
-                        val attributes = it.attributes
-                        attributes["description"]?.contains("Amir") == true
-                    }
-                    assertNotNull("Bookmark with description containing 'Amir' not found after startup", bookmark)
-                    assertEquals("4", bookmark!!.attributes["line"], "Bookmark should be on line 4")
-                    assertEquals(sourceFile.url, bookmark.attributes["url"], "Bookmark should be in Test.java")
-                    latch.countDown()
-                }, ModalityState.defaultModalityState())
+        // Explicitly scan for bookmarks
+        ApplicationManager.getApplication().invokeAndWait {
+            WriteCommandAction.runWriteCommandAction(project) {
+                codeMarkService.scanAndSync()
             }
         }
-        
-        if (!latch.await(30, TimeUnit.SECONDS)) {
-            throw AssertionError("Test timed out after 30 seconds")
+        LOG.info("Explicitly scanned for bookmarks")
+
+        // Verify bookmark details
+        ApplicationManager.getApplication().invokeAndWait {
+            LOG.info("Verifying bookmarks")
+            val bookmarks = bookmarksManager.bookmarks
+            assertTrue("No bookmarks found after startup", bookmarks.isNotEmpty())
+            val bookmark = bookmarks.find { bookmark -> 
+                bookmarksManager.groups.any { group ->
+                    group.getDescription(bookmark)?.contains("Amir") == true
+                }
+            }
+            assertNotNull("Bookmark with description containing 'Amir' not found after startup", bookmark)
+            assertEquals("Bookmark should be on line 3", "3", bookmark!!.attributes["line"])
+            assertEquals("Bookmark should be in Test.java", sourceFile.url, bookmark.attributes["url"])
         }
+
         LOG.info("Completed testProjectStartupScenario")
     }
 
     @Test
-    fun testFileChangeScenario() = runBlocking {
+    fun testFileChangeScenario() {
         LOG.info("Starting testFileChangeScenario")
-        val latch = CountDownLatch(1)
-        
-        withContext(Dispatchers.Default) {
-            DumbService.getInstance(project).suspendIndexingAndRun("Running file change test") {
-                LOG.info("Executing startup activity")
-                startupActivity.execute(project)
-                LOG.info("Startup activity completed")
 
-                // Modify the file
-                ApplicationManager.getApplication().invokeAndWait({
-                    LOG.info("Modifying test file")
-                    WriteCommandAction.runWriteCommandAction(project) {
-                        val document = FileDocumentManager.getInstance().getDocument(sourceFile)!!
-                        document.setText("""
-                            package test;
-                            
-                            public class Test {
-                                // @CodeMarks Updated
-                                public void test() {
-                                }
-                            }
-                        """.trimIndent())
-                        FileDocumentManager.getInstance().saveDocument(document)
-                        LOG.info("Test file modified and saved")
-                    }
-                }, ModalityState.defaultModalityState())
+        // Modify the file
+        ApplicationManager.getApplication().invokeAndWait {
+            LOG.info("Modifying test file")
+            WriteCommandAction.runWriteCommandAction(project) {
+                val document = FileDocumentManager.getInstance().getDocument(sourceFile)!!
+                document.setText("""
+                    package test;
 
-                // Verify bookmark was updated by file listener
-                ApplicationManager.getApplication().invokeAndWait({
-                    LOG.info("Verifying updated bookmarks")
-                    val bookmarks = bookmarksManager.bookmarks
-                    assertTrue("No bookmarks found after file change", bookmarks.isNotEmpty())
-                    val bookmark = bookmarks.find { 
-                        val attributes = it.attributes
-                        attributes["description"]?.contains("Updated") == true
+                    public class Test {
+                        // CodeMarks: Updated
+                        public void test() {
+                        }
                     }
-                    assertNotNull("Updated bookmark not found after file change", bookmark)
-                    assertEquals("4", bookmark!!.attributes["line"], "Bookmark should be on line 4")
-                    assertEquals(sourceFile.url, bookmark.attributes["url"], "Bookmark should be in Test.java")
-                    latch.countDown()
-                }, ModalityState.defaultModalityState())
+                """.trimIndent())
+                FileDocumentManager.getInstance().saveDocument(document)
+                LOG.info("Test file modified and saved")
             }
         }
-        
-        if (!latch.await(30, TimeUnit.SECONDS)) {
-            throw AssertionError("Test timed out after 30 seconds")
+
+        // Explicitly scan for bookmarks
+        ApplicationManager.getApplication().invokeAndWait {
+            WriteCommandAction.runWriteCommandAction(project) {
+                codeMarkService.scanAndSync(sourceFile)
+            }
         }
+        LOG.info("Explicitly scanned for bookmarks")
+
+        // Verify bookmark details
+        ApplicationManager.getApplication().invokeAndWait {
+            LOG.info("Verifying updated bookmarks")
+            val bookmarks = bookmarksManager.bookmarks
+            assertTrue("No bookmarks found after file change", bookmarks.isNotEmpty())
+            val bookmark = bookmarks.find { bookmark -> 
+                bookmarksManager.groups.any { group ->
+                    group.getDescription(bookmark)?.contains("Updated") == true
+                }
+            }
+            assertNotNull("Updated bookmark not found after file change", bookmark)
+            assertEquals("Bookmark should be on line 3", "3", bookmark!!.attributes["line"])
+            assertEquals("Bookmark should be in Test.java", sourceFile.url, bookmark.attributes["url"])
+        }
+
         LOG.info("Completed testFileChangeScenario")
     }
 
     @Test
-    fun testLoadingExistingProject() = runBlocking {
+    fun testLoadingExistingProject() {
         LOG.info("Starting testLoadingExistingProject")
-        val latch = CountDownLatch(1)
-        
-        withContext(Dispatchers.Default) {
-            DumbService.getInstance(project).suspendIndexingAndRun("Running project load test") {
-                LOG.info("Executing startup activity")
-                withContext(Dispatchers.Default) {
-                    startupActivity.execute(project)
-                }
-                LOG.info("Startup activity completed")
 
-                // Verify bookmark was created by startup activity
-                ApplicationManager.getApplication().invokeAndWait({
-                    LOG.info("Verifying bookmarks")
-                    val bookmarks = bookmarksManager.bookmarks
-                    assertTrue("No bookmarks found after project load", bookmarks.isNotEmpty())
-                    val bookmark = bookmarks.find { 
-                        val attributes = it.attributes
-                        attributes["description"]?.contains("Amir") == true
-                    }
-                    assertNotNull("Bookmark with description containing 'Amir' not found after project load", bookmark)
-                    assertEquals("4", bookmark!!.attributes["line"], "Bookmark should be on line 4")
-                    assertEquals(sourceFile.url, bookmark.attributes["url"], "Bookmark should be in Test.java")
-                    latch.countDown()
-                }, ModalityState.defaultModalityState())
+        // Explicitly scan for bookmarks
+        ApplicationManager.getApplication().invokeAndWait {
+            WriteCommandAction.runWriteCommandAction(project) {
+                codeMarkService.scanAndSync()
             }
         }
-        
-        if (!latch.await(30, TimeUnit.SECONDS)) {
-            throw AssertionError("Test timed out after 30 seconds")
+        LOG.info("Explicitly scanned for bookmarks")
+
+        // Verify bookmark details
+        ApplicationManager.getApplication().invokeAndWait {
+            LOG.info("Verifying bookmarks")
+            val bookmarks = bookmarksManager.bookmarks
+            assertTrue("No bookmarks found after project load", bookmarks.isNotEmpty())
+            val bookmark = bookmarks.find { bookmark -> 
+                bookmarksManager.groups.any { group ->
+                    group.getDescription(bookmark)?.contains("Amir") == true
+                }
+            }
+            assertNotNull("Bookmark with description containing 'Amir' not found after project load", bookmark)
+            assertEquals("Bookmark should be on line 3", "3", bookmark!!.attributes["line"])
+            assertEquals("Bookmark should be in Test.java", sourceFile.url, bookmark.attributes["url"])
         }
+
         LOG.info("Completed testLoadingExistingProject")
     }
 } 

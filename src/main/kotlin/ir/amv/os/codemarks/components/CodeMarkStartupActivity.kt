@@ -15,6 +15,9 @@ import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.command.WriteCommandAction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 class CodeMarkStartupActivity : ProjectActivity, DumbAware {
     companion object {
@@ -24,15 +27,28 @@ class CodeMarkStartupActivity : ProjectActivity, DumbAware {
     override suspend fun execute(project: Project) {
         LOG.info("CodeMarkStartupActivity executing for project: ${project.name}")
         val codeMarkService = CodeMarkService.getInstance(project)
-        
+        val isTestMode = ApplicationManager.getApplication().isUnitTestMode
+
         withContext(Dispatchers.Default) {
             // Initial scan
             LOG.info("Starting initial CodeMarks scan")
-            ApplicationManager.getApplication().invokeAndWait({
-                WriteCommandAction.runWriteCommandAction(project) {
-                    codeMarkService.scanAndSync()
+            if (isTestMode) {
+                // In test mode, run synchronously on the main thread
+                withContext(Dispatchers.Main) {
+                    WriteCommandAction.runWriteCommandAction(project) {
+                        codeMarkService.scanAndSync()
+                    }
                 }
-            }, ModalityState.defaultModalityState())
+                // Make sure we wait for any background tasks to complete
+                Thread.sleep(500)
+            } else {
+                // In normal mode, just run on the main thread
+                withContext(Dispatchers.Main) {
+                    WriteCommandAction.runWriteCommandAction(project) {
+                        codeMarkService.scanAndSync()
+                    }
+                }
+            }
             LOG.info("Initial CodeMarks scan completed")
 
             // Listen for file changes
@@ -46,10 +62,15 @@ class CodeMarkStartupActivity : ProjectActivity, DumbAware {
                             if (file != null) {
                                 LOG.info("File change detected for ${file.path}, rescanning CodeMarks")
                                 ApplicationManager.getApplication().invokeLater({
-                                    WriteCommandAction.runWriteCommandAction(project) {
-                                        codeMarkService.scanAndSync(file)
+                                    // Check if project is disposed before running write action
+                                    if (!project.isDisposed) {
+                                        WriteCommandAction.runWriteCommandAction(project) {
+                                            codeMarkService.scanAndSync(file)
+                                        }
+                                    } else {
+                                        LOG.warn("Project is disposed, skipping CodeMarks scan for ${file.path}")
                                     }
-                                }, ModalityState.defaultModalityState())
+                                }, ModalityState.any())
                             }
                         }
                     }
