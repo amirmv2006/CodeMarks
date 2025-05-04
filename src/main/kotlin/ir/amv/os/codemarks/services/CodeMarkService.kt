@@ -25,9 +25,15 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.application.ModalityState
 import com.intellij.util.messages.Topic
 import com.intellij.openapi.roots.ProjectRootManager
+import com.intellij.openapi.roots.ProjectFileIndex
 import com.intellij.openapi.application.ReadAction
 import com.intellij.openapi.application.WriteAction
+import com.intellij.find.FindManager
+import com.intellij.find.FindModel
+import com.intellij.find.FindResult
+import com.intellij.openapi.util.TextRange
 import java.util.concurrent.ConcurrentHashMap
+import com.intellij.openapi.roots.ContentIterator
 
 interface CodeMarkService {
     fun scanAndSync()
@@ -45,6 +51,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     companion object {
         private val LOG = Logger.getInstance(CodeMarkServiceImpl::class.java)
         private val BOOKMARK_PATTERN = Pattern.compile("CodeMarks(?:\\[(\\w+)\\])?:\\s*(.*)", Pattern.CASE_INSENSITIVE)
+        private const val BOOKMARK_PATTERN_STRING = "CodeMarks(?:\\[(\\w+)\\])?:\\s*(.*)"
         private const val CODEMARKS_GROUP_NAME = "CodeMarks"
 
         private fun matchesGlob(fileName: String, glob: String): Boolean {
@@ -172,8 +179,15 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
             return
         }
 
+        // Check if application is available
+        val application = ApplicationManager.getApplication()
+        if (application == null) {
+            LOG.warn("Application is not available, skipping CodeMarks scan")
+            return
+        }
+
         // Check if we're in unit test mode
-        val isTestMode = ApplicationManager.getApplication().isUnitTestMode
+        val isTestMode = application.isUnitTestMode
 
         // Define a function to handle scanning and applying changes
         fun performScanAndApplyChanges() {
@@ -213,11 +227,8 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     }
                 }
 
-                // Scan for new bookmarks
-                for (root in contentRoots) {
-                    if (!root.isValid) continue
-                    scanDirectoryForBookmarks(root, bookmarksToAdd)
-                }
+                // Scan for new bookmarks using FileIndex
+                scanFilesUsingFileIndex(bookmarksToAdd)
 
                 // Apply changes in UI thread
                 fun applyChanges() {
@@ -447,7 +458,39 @@ val file: VirtualFile,
         val line: Int
     )
 
+    private fun scanFilesUsingFileIndex(bookmarksToAdd: MutableList<BookmarkData>) {
+        // Check if application is available before using ReadAction
+        val application = ApplicationManager.getApplication()
+        if (application == null) {
+            LOG.warn("Application is not available, skipping file index scan")
+            return
+        }
+
+        val fileIndex = ProjectFileIndex.getInstance(project)
+
+        ReadAction.run<RuntimeException> {
+            // Create a content iterator that processes each file
+            val iterator = ContentIterator { file ->
+                if (shouldScanFile(file)) {
+                    scanFileForBookmarks(file, bookmarksToAdd)
+                }
+                true // Continue iteration
+            }
+
+            // Iterate through all content files in the project
+            fileIndex.iterateContent(iterator)
+        }
+    }
+
+    // Keep this method for backward compatibility or specific file scanning
     private fun scanDirectoryForBookmarks(dir: VirtualFile, bookmarksToAdd: MutableList<BookmarkData>) {
+        // Check if application is available before using ReadAction
+        val application = ApplicationManager.getApplication()
+        if (application == null) {
+            LOG.warn("Application is not available, skipping directory scan for ${dir.path}")
+            return
+        }
+
         val children = ReadAction.compute<Array<VirtualFile>, RuntimeException> {
             dir.children
         } ?: return
@@ -469,21 +512,53 @@ val file: VirtualFile,
             return
         }
 
+        // Check if application is available before using ReadAction
+        val application = ApplicationManager.getApplication()
+        if (application == null) {
+            LOG.warn("Application is not available, skipping document retrieval for ${file.path}")
+            return
+        }
+
         val document = ReadAction.compute<Document?, RuntimeException> {
             fileDocumentManager.getDocument(file)
         } ?: return
 
-        val text = ReadAction.compute<String, RuntimeException> {
-            document.text
-        }
+        // Use IntelliJ's FindManager for efficient searching
+        ReadAction.run<RuntimeException> {
+            val findManager = FindManager.getInstance(project)
+            val findModel = FindModel()
+            findModel.isRegularExpressions = true
+            findModel.stringToFind = BOOKMARK_PATTERN_STRING
+            findModel.isCaseSensitive = false
+            findModel.isWholeWordsOnly = false
 
-        text.lines().forEachIndexed { index, line ->
-            val matcher = BOOKMARK_PATTERN.matcher(line)
-            if (matcher.find()) {
-                val suffix = matcher.group(1)
-                val description = matcher.group(2).trim()
-                LOG.info("Found bookmark at ${file.path}:${index + 1} with description: $description in group: $suffix")
-                bookmarksToAdd.add(BookmarkData(file, suffix, description, index))
+            var offset = 0
+            val text = document.text
+
+            while (offset < text.length) {
+                val findResult = findManager.findString(text, offset, findModel)
+                if (!findResult.isStringFound) break
+
+                // Get the line number for this result
+                val startOffset = findResult.startOffset
+                val lineNumber = document.getLineNumber(startOffset)
+
+                // Get the full line text
+                val lineStartOffset = document.getLineStartOffset(lineNumber)
+                val lineEndOffset = document.getLineEndOffset(lineNumber)
+                val lineText = document.getText(TextRange(lineStartOffset, lineEndOffset))
+
+                // Use the regex pattern to extract groups
+                val matcher = BOOKMARK_PATTERN.matcher(lineText)
+                if (matcher.find()) {
+                    val suffix = matcher.group(1)
+                    val description = matcher.group(2).trim()
+                    LOG.info("Found bookmark at ${file.path}:${lineNumber + 1} with description: $description in group: $suffix")
+                    bookmarksToAdd.add(BookmarkData(file, suffix, description, lineNumber))
+                }
+
+                // Move to the next occurrence
+                offset = findResult.endOffset
             }
         }
 
@@ -497,23 +572,43 @@ val file: VirtualFile,
         val file = VirtualFileManager.getInstance().findFileByUrl("file://$filePath") ?: return false
         if (!shouldScanFile(file)) return false
 
+        // Check if application is available before using ReadAction
+        val application = ApplicationManager.getApplication()
+        if (application == null) {
+            LOG.warn("Application is not available, skipping document retrieval for ${file.path}")
+            return false
+        }
+
         val document = ReadAction.compute<Document?, RuntimeException> {
             fileDocumentManager.getDocument(file)
         } ?: return false
 
         if (lineNumber >= document.lineCount) return false
 
-        val line = ReadAction.compute<String, RuntimeException> {
+        return ReadAction.compute<Boolean, RuntimeException> {
+            // Get the line text
             val startOffset = document.getLineStartOffset(lineNumber)
             val endOffset = document.getLineEndOffset(lineNumber)
-            document.getText(com.intellij.openapi.util.TextRange(startOffset, endOffset))
+            val line = document.getText(TextRange(startOffset, endOffset))
+
+            // Use FindManager to check if the pattern exists in this line
+            val findManager = FindManager.getInstance(project)
+            val findModel = FindModel()
+            findModel.isRegularExpressions = true
+            findModel.stringToFind = BOOKMARK_PATTERN_STRING
+            findModel.isCaseSensitive = false
+            findModel.isWholeWordsOnly = false
+
+            val findResult = findManager.findString(line, 0, findModel)
+            if (!findResult.isStringFound) return@compute false
+
+            // Use the regex pattern to extract the description
+            val matcher = BOOKMARK_PATTERN.matcher(line)
+            if (!matcher.find()) return@compute false
+
+            val foundDescription = matcher.group(2).trim()
+            foundDescription == description
         }
-
-        val matcher = BOOKMARK_PATTERN.matcher(line)
-        if (!matcher.find()) return false
-
-        val foundDescription = matcher.group(2).trim()
-        return foundDescription == description
     }
 
     override fun dispose() {

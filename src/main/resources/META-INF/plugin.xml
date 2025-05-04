@@ -16,7 +16,7 @@
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
     <h2>CodeMarks - Code Bookmarking Made Simple</h2>
-    
+
     <h3>Quick Start</h3>
     Add bookmarks directly in your code using comments:
     <ul>
@@ -31,7 +31,7 @@
         <li><b>Real-time Sync</b>: Bookmarks stay in sync with code changes</li>
         <li><b>IDE Integration</b>: Seamlessly integrated with IntelliJ's bookmark system</li>
         <li><b>Wide Language Support</b>: Works with Java, Kotlin, Python, JavaScript, TypeScript, and many more</li>
-        <li><b>Efficient Scanning</b>: Optimized for single file changes</li>
+        <li><b>Efficient Scanning</b>: Optimized for single file changes with IntelliJ's powerful search capabilities</li>
     </ul>
 
     <h3>Supported File Types</h3>
@@ -90,7 +90,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceImplementation="ir.amv.os.codemarks.services.CodeMarkSettings"/>
         <projectService serviceInterface="ir.amv.os.codemarks.services.CodeMarkService"
-                       serviceImplementation="ir.amv.os.codemarks.services.CodeMarkServiceImpl"/>
+                       serviceImplementation="ir.amv.os.codemarks.index.CodeMarkIndexService"/>
+        <fileBasedIndex implementation="ir.amv.os.codemarks.index.CodeMarksIndex"/>
         <postStartupActivity implementation="ir.amv.os.codemarks.components.CodeMarkStartupActivity"/>
         <projectConfigurable instance="ir.amv.os.codemarks.settings.CodeMarkSettingsConfigurable"/>
     </extensions>
