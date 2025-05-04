@@ -666,9 +666,14 @@ val file: VirtualFile,
                         // but we can ensure it stays empty
                         LOG.info("Found empty group: ${group.name}")
                     } else {
+                        // Store descriptions before sorting and removing
+                        val bookmarkDescriptions = bookmarks.associateWith { bookmark ->
+                            group.getDescription(bookmark) ?: ""
+                        }
+
                         // Sort bookmarks within the group by description
                         val sortedBookmarks = bookmarks.sortedBy { bookmark -> 
-                            group.getDescription(bookmark) ?: "" 
+                            bookmarkDescriptions[bookmark] ?: "" 
                         }
 
                         // Reorder bookmarks in the group
@@ -678,10 +683,17 @@ val file: VirtualFile,
                                 group.remove(bookmark)
                             }
 
-                            // Add them back in sorted order
+                            // Add them back in sorted order with new bookmark instances
                             sortedBookmarks.forEach { bookmark ->
-                                val description = group.getDescription(bookmark) ?: ""
-                                group.add(bookmark, BookmarkType.DEFAULT, description)
+                                val description = bookmarkDescriptions[bookmark] ?: ""
+                                // Create a new bookmark with the same attributes
+                                val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
+                                bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
+                                bookmarkState.attributes.putAll(bookmark.attributes)
+                                val newBookmark = bookmarksManager.createBookmark(bookmarkState)
+                                if (newBookmark != null) {
+                                    group.add(newBookmark, BookmarkType.DEFAULT, description)
+                                }
                             }
                         }
                     }
