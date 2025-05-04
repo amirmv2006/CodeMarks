@@ -90,7 +90,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceImplementation="ir.amv.os.codemarks.services.CodeMarkSettings"/>
         <projectService serviceInterface="ir.amv.os.codemarks.services.CodeMarkService"
-                       serviceImplementation="ir.amv.os.codemarks.services.CodeMarkServiceImpl"/>
+                       serviceImplementation="ir.amv.os.codemarks.index.CodeMarkIndexService"/>
+        <fileBasedIndex implementation="ir.amv.os.codemarks.index.CodeMarksIndex"/>
         <postStartupActivity implementation="ir.amv.os.codemarks.components.CodeMarkStartupActivity"/>
         <projectConfigurable instance="ir.amv.os.codemarks.settings.CodeMarkSettingsConfigurable"/>
     </extensions>

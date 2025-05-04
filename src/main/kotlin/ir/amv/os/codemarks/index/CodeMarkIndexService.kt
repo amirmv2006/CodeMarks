@@ -1,11 +1,14 @@
-package ir.amv.os.codemarks.services
+package ir.amv.os.codemarks.index
 
-import com.intellij.ide.bookmark.BookmarksManager
 import com.intellij.ide.bookmark.BookmarkType
+import com.intellij.ide.bookmark.BookmarksManager
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.application.ReadAction
+import com.intellij.openapi.application.WriteAction
 import com.intellij.openapi.application.invokeLater
 import com.intellij.openapi.command.WriteCommandAction
+import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.event.DocumentEvent
@@ -14,52 +17,31 @@ import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.FileDocumentManagerListener
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Disposer
+import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.VirtualFileManager
 import com.intellij.openapi.vfs.newvfs.BulkFileListener
 import com.intellij.openapi.vfs.newvfs.events.VFileEvent
 import com.intellij.util.Alarm
-import java.util.regex.Pattern
-import com.intellij.openapi.components.Service
-import com.intellij.openapi.components.service
-import com.intellij.openapi.application.ModalityState
+import com.intellij.util.indexing.FileBasedIndex
 import com.intellij.util.messages.Topic
-import com.intellij.openapi.roots.ProjectRootManager
-import com.intellij.openapi.roots.ProjectFileIndex
-import com.intellij.openapi.application.ReadAction
-import com.intellij.openapi.application.WriteAction
-import com.intellij.find.FindManager
-import com.intellij.find.FindModel
-import com.intellij.find.FindResult
-import com.intellij.openapi.util.TextRange
+import com.intellij.openapi.application.ModalityState
+import com.intellij.psi.search.GlobalSearchScope
+import ir.amv.os.codemarks.services.CodeMarkService
+import ir.amv.os.codemarks.services.CodeMarkSettings
 import java.util.concurrent.ConcurrentHashMap
-import com.intellij.openapi.roots.ContentIterator
+import java.util.regex.Pattern
 
-interface CodeMarkService {
-    fun scanAndSync()
-    fun scanAndSync(file: VirtualFile)
-    fun getSettings(): CodeMarkSettings
-
-    companion object {
-        @JvmStatic
-        fun getInstance(project: Project): CodeMarkService = project.service<CodeMarkService>()
-    }
-}
-
+/**
+ * Implementation of CodeMarkService that uses FileBasedIndex to scan project files.
+ * This service maintains backward compatibility with the existing CodeMarkService interface.
+ */
 @Service(Service.Level.PROJECT)
-class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Disposable {
+class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disposable {
     companion object {
-        private val LOG = Logger.getInstance(CodeMarkServiceImpl::class.java)
-        private val BOOKMARK_PATTERN = Pattern.compile("CodeMarks(?:\\[(\\w+)\\])?:\\s*(.*)", Pattern.CASE_INSENSITIVE)
-        private const val BOOKMARK_PATTERN_STRING = "CodeMarks(?:\\[(\\w+)\\])?:\\s*(.*)"
+        private val LOG = Logger.getInstance(CodeMarkIndexService::class.java)
         private const val CODEMARKS_GROUP_NAME = "CodeMarks"
-
-        private fun matchesGlob(fileName: String, glob: String): Boolean {
-            if (glob == "*") return true
-            val fs = java.nio.file.FileSystems.getDefault()
-            val matcher = fs.getPathMatcher("glob:$glob")
-            return matcher.matches(fs.getPath(fileName))
-        }
+        private val BOOKMARK_PATTERN = Pattern.compile("CodeMarks(?:\\[(\\w+)\\])?:\\s*(.*)", Pattern.CASE_INSENSITIVE)
     }
 
     private val alarm = Alarm(Alarm.ThreadToUse.POOLED_THREAD, this)
@@ -70,7 +52,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     override fun getSettings(): CodeMarkSettings = settings
 
     init {
-        LOG.info("Initializing CodeMarkService for project: ${project.name}")
+        LOG.info("Initializing CodeMarkIndexService for project: ${project.name}")
         setupListeners()
     }
 
@@ -115,16 +97,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     }
 
     private fun shouldScanFile(file: VirtualFile): Boolean {
-        if (file.isDirectory) return false
-        val fileName = file.name
-        return settings.fileTypePatterns.any { pattern ->
-            try {
-                matchesGlob(fileName, pattern)
-            } catch (e: Exception) {
-                LOG.error("Invalid pattern: $pattern", e)
-                false
-            }
-        }
+        return CodeMarksIndex.shouldIndexFile(file, project)
     }
 
     private fun scheduleSync() {
@@ -167,10 +140,31 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
 
     private fun getOrCreateCodeMarksGroup(suffix: String? = null): com.intellij.ide.bookmark.BookmarkGroup? {
         val groupName = if (suffix != null) "$CODEMARKS_GROUP_NAME $suffix" else CODEMARKS_GROUP_NAME
-        val existingGroup = bookmarksManager?.groups?.find { it.name == groupName }
-        if (existingGroup != null) return existingGroup
+        LOG.info("Getting or creating group: $groupName")
 
-        return bookmarksManager?.addGroup(groupName, false)
+        if (bookmarksManager == null) {
+            LOG.error("BookmarksManager is null")
+            return null
+        }
+
+        val groups = bookmarksManager.groups
+        LOG.info("Found ${groups.size} groups")
+        groups.forEach { LOG.info("Group: ${it.name}") }
+
+        val existingGroup = groups.find { it.name == groupName }
+        if (existingGroup != null) {
+            LOG.info("Found existing group: $groupName")
+            return existingGroup
+        }
+
+        LOG.info("Creating new group: $groupName")
+        val newGroup = bookmarksManager.addGroup(groupName, false)
+        if (newGroup == null) {
+            LOG.error("Failed to create group: $groupName")
+        } else {
+            LOG.info("Created new group: $groupName")
+        }
+        return newGroup
     }
 
     private fun doScanAndSync() {
@@ -192,16 +186,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         // Define a function to handle scanning and applying changes
         fun performScanAndApplyChanges() {
             try {
-                val contentRoots = ReadAction.compute<Array<VirtualFile>, RuntimeException> {
-                    ProjectRootManager.getInstance(project).contentRoots
-                }
-
-                if (contentRoots == null) {
-                    LOG.warn("No content roots found")
-                    return
-                }
-
-                val bookmarksToAdd = mutableListOf<BookmarkData>()
+                val bookmarksToAdd = mutableListOf<CodeMarkInfo>()
                 val bookmarksToRemove = mutableListOf<com.intellij.ide.bookmark.Bookmark>()
 
                 // First validate existing bookmarks
@@ -227,8 +212,8 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     }
                 }
 
-                // Scan for new bookmarks using FileIndex
-                scanFilesUsingFileIndex(bookmarksToAdd)
+                // Scan for new bookmarks using the index
+                scanFilesUsingIndex(bookmarksToAdd)
 
                 // Apply changes in UI thread
                 fun applyChanges() {
@@ -239,19 +224,44 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                         }
 
                         // Add new bookmarks
-                        bookmarksToAdd.forEach { (file, suffix, description, line) ->
-                            val group = getOrCreateCodeMarksGroup(suffix)
-                            val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
-                            bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
-                            bookmarkState.attributes.putAll(mapOf(
-                                "file" to file.path,
-                                "url" to file.url,
-                                "line" to line.toString()
-                            ))
-                            val bookmark = bookmarksManager?.createBookmark(bookmarkState)
-                            if (bookmark != null) {
-                                group?.add(bookmark, BookmarkType.DEFAULT, description)
+                        LOG.info("Adding ${bookmarksToAdd.size} bookmarks")
+                        bookmarksToAdd.forEach { info ->
+                            LOG.info("Adding bookmark: ${info.filePath}:${info.lineNumber} - ${info.description}")
+                            val file = VirtualFileManager.getInstance().findFileByUrl("file://${info.filePath}")
+                            if (file != null) {
+                                LOG.info("File found: ${file.path}")
+                                val group = getOrCreateCodeMarksGroup(info.suffix)
+                                if (group != null) {
+                                    LOG.info("Group found/created: ${group.name}")
+                                    val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
+                                    bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
+                                    bookmarkState.attributes.putAll(mapOf(
+                                        "file" to info.filePath,
+                                        "url" to file.url,
+                                        "line" to info.lineNumber.toString()
+                                    ))
+                                    LOG.info("Creating bookmark with attributes: ${bookmarkState.attributes}")
+                                    val bookmark = bookmarksManager?.createBookmark(bookmarkState)
+                                    if (bookmark != null) {
+                                        LOG.info("Bookmark created, adding to group")
+                                        group.add(bookmark, BookmarkType.DEFAULT, info.description)
+                                        LOG.info("Bookmark added to group")
+                                    } else {
+                                        LOG.error("Failed to create bookmark")
+                                    }
+                                } else {
+                                    LOG.error("Failed to get or create group for suffix: ${info.suffix}")
+                                }
+                            } else {
+                                LOG.error("File not found for path: ${info.filePath}")
                             }
+                        }
+
+                        // Verify bookmarks were added
+                        val bookmarks = bookmarksManager?.bookmarks ?: emptyList()
+                        LOG.info("After adding, bookmarks count: ${bookmarks.size}")
+                        bookmarks.forEach { bookmark ->
+                            LOG.info("Bookmark: ${bookmark.attributes["file"]}:${bookmark.attributes["line"]}")
                         }
                     }
                 }
@@ -332,7 +342,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         // Define a function to handle scanning and applying changes
         fun performScanAndApplyChanges() {
             try {
-                val bookmarksToAdd = mutableListOf<BookmarkData>()
+                val bookmarksToAdd = mutableListOf<CodeMarkInfo>()
                 val bookmarksToRemove = mutableListOf<com.intellij.ide.bookmark.Bookmark>()
 
                 // First validate existing bookmarks for this file
@@ -358,8 +368,8 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     }
                 }
 
-                // Scan file for new bookmarks
-                scanFileForBookmarks(file, bookmarksToAdd)
+                // Scan file for new bookmarks using the index
+                scanFileUsingIndex(file, bookmarksToAdd)
 
                 // Apply changes in UI thread
                 fun applyChanges() {
@@ -370,19 +380,44 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                         }
 
                         // Add new bookmarks
-                        bookmarksToAdd.forEach { (file, suffix, description, line) ->
-                            val group = getOrCreateCodeMarksGroup(suffix)
-                            val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
-                            bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
-                            bookmarkState.attributes.putAll(mapOf(
-                                "file" to file.path,
-                                "url" to file.url,
-                                "line" to line.toString()
-                            ))
-                            val bookmark = bookmarksManager?.createBookmark(bookmarkState)
-                            if (bookmark != null) {
-                                group?.add(bookmark, BookmarkType.DEFAULT, description)
+                        LOG.info("Adding ${bookmarksToAdd.size} bookmarks for file ${file.path}")
+                        bookmarksToAdd.forEach { info ->
+                            LOG.info("Adding bookmark: ${info.filePath}:${info.lineNumber} - ${info.description}")
+                            val file = VirtualFileManager.getInstance().findFileByUrl("file://${info.filePath}")
+                            if (file != null) {
+                                LOG.info("File found: ${file.path}")
+                                val group = getOrCreateCodeMarksGroup(info.suffix)
+                                if (group != null) {
+                                    LOG.info("Group found/created: ${group.name}")
+                                    val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
+                                    bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
+                                    bookmarkState.attributes.putAll(mapOf(
+                                        "file" to info.filePath,
+                                        "url" to file.url,
+                                        "line" to info.lineNumber.toString()
+                                    ))
+                                    LOG.info("Creating bookmark with attributes: ${bookmarkState.attributes}")
+                                    val bookmark = bookmarksManager?.createBookmark(bookmarkState)
+                                    if (bookmark != null) {
+                                        LOG.info("Bookmark created, adding to group")
+                                        group.add(bookmark, BookmarkType.DEFAULT, info.description)
+                                        LOG.info("Bookmark added to group")
+                                    } else {
+                                        LOG.error("Failed to create bookmark")
+                                    }
+                                } else {
+                                    LOG.error("Failed to get or create group for suffix: ${info.suffix}")
+                                }
+                            } else {
+                                LOG.error("File not found for path: ${info.filePath}")
                             }
+                        }
+
+                        // Verify bookmarks were added
+                        val bookmarks = bookmarksManager?.bookmarks ?: emptyList()
+                        LOG.info("After adding, bookmarks count: ${bookmarks.size}")
+                        bookmarks.forEach { bookmark ->
+                            LOG.info("Bookmark: ${bookmark.attributes["file"]}:${bookmark.attributes["line"]}")
                         }
                     }
                 }
@@ -443,7 +478,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     }
                 }, ModalityState.any())
             }
-} else {
+        } else {
             // In normal mode, run in background
             ApplicationManager.getApplication().executeOnPooledThread {
                 performScanAndApplyChanges()
@@ -451,126 +486,143 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
         }
     }
 
-    private data class BookmarkData(
-val file: VirtualFile,
-        val suffix: String?,
-        val description: String,
-        val line: Int
-    )
+    private fun scanFilesUsingIndex(bookmarksToAdd: MutableList<CodeMarkInfo>) {
+        LOG.info("Starting scanFilesUsingIndex")
+        try {
+            ReadAction.run<RuntimeException> {
+                val index = FileBasedIndex.getInstance()
+                val allKeys = index.getAllKeys(CodeMarksIndex.NAME, project)
+                LOG.info("Found ${allKeys.size} keys in the index")
 
-    private fun scanFilesUsingFileIndex(bookmarksToAdd: MutableList<BookmarkData>) {
-        // Check if application is available before using ReadAction
-        val application = ApplicationManager.getApplication()
-        if (application == null) {
-            LOG.warn("Application is not available, skipping file index scan")
-            return
-        }
-
-        val fileIndex = ProjectFileIndex.getInstance(project)
-
-        ReadAction.run<RuntimeException> {
-            // Create a content iterator that processes each file
-            val iterator = ContentIterator { file ->
-                if (shouldScanFile(file)) {
-                    scanFileForBookmarks(file, bookmarksToAdd)
+                for (key in allKeys) {
+                    val values = index.getValues(CodeMarksIndex.NAME, key, GlobalSearchScope.projectScope(project))
+                    LOG.info("Found ${values.size} values for key $key")
+                    for (codeMarks in values) {
+                        LOG.info("Adding ${codeMarks.size} CodeMarks from key $key")
+                        bookmarksToAdd.addAll(codeMarks)
+                    }
                 }
-                true // Continue iteration
             }
 
-            // Iterate through all content files in the project
-            fileIndex.iterateContent(iterator)
+            // If no bookmarks were found using the index, fall back to the old directory traversal method
+            if (bookmarksToAdd.isEmpty()) {
+                LOG.warn("No bookmarks found using the index, falling back to directory traversal")
+                scanDirectoryForBookmarks(bookmarksToAdd)
+            }
+        } catch (e: Exception) {
+            LOG.error("Error in scanFilesUsingIndex", e)
+            // Fall back to the old directory traversal method
+            scanDirectoryForBookmarks(bookmarksToAdd)
+        }
+        LOG.info("Completed scanFilesUsingIndex, found ${bookmarksToAdd.size} bookmarks")
+    }
+
+    private fun scanDirectoryForBookmarks(bookmarksToAdd: MutableList<CodeMarkInfo>) {
+        LOG.info("Starting scanDirectoryForBookmarks")
+        try {
+            val contentRoots = ReadAction.compute<Array<VirtualFile>, RuntimeException> {
+                com.intellij.openapi.roots.ProjectRootManager.getInstance(project).contentRoots
+            }
+
+            if (contentRoots == null) {
+                LOG.warn("No content roots found")
+                return
+            }
+
+            LOG.info("Found ${contentRoots.size} content roots")
+            for (dir in contentRoots) {
+                scanDirectoryRecursively(dir, bookmarksToAdd)
+            }
+        } catch (e: Exception) {
+            LOG.error("Error in scanDirectoryForBookmarks", e)
+        }
+        LOG.info("Completed scanDirectoryForBookmarks, found ${bookmarksToAdd.size} bookmarks")
+    }
+
+    private fun scanDirectoryRecursively(dir: VirtualFile, bookmarksToAdd: MutableList<CodeMarkInfo>) {
+        try {
+            val children = ReadAction.compute<Array<VirtualFile>, RuntimeException> {
+                dir.children
+            } ?: return
+
+            for (file in children) {
+                when {
+                    file.isDirectory -> scanDirectoryRecursively(file, bookmarksToAdd)
+                    shouldScanFile(file) -> scanFileForBookmarks(file, bookmarksToAdd)
+                }
+            }
+        } catch (e: Exception) {
+            LOG.error("Error in scanDirectoryRecursively for ${dir.path}", e)
         }
     }
 
-    // Keep this method for backward compatibility or specific file scanning
-    private fun scanDirectoryForBookmarks(dir: VirtualFile, bookmarksToAdd: MutableList<BookmarkData>) {
-        // Check if application is available before using ReadAction
-        val application = ApplicationManager.getApplication()
-        if (application == null) {
-            LOG.warn("Application is not available, skipping directory scan for ${dir.path}")
-            return
-        }
+    private fun scanFileForBookmarks(file: VirtualFile, bookmarksToAdd: MutableList<CodeMarkInfo>) {
+        try {
+            val document = ReadAction.compute<Document?, RuntimeException> {
+                fileDocumentManager.getDocument(file)
+            } ?: return
 
-        val children = ReadAction.compute<Array<VirtualFile>, RuntimeException> {
-            dir.children
-        } ?: return
-
-        children.forEach { file ->
-            when {
-                file.isDirectory -> scanDirectoryForBookmarks(file, bookmarksToAdd)
-                shouldScanFile(file) -> scanFileForBookmarks(file, bookmarksToAdd)
-            }
-        }
-    }
-
-    private fun scanFileForBookmarks(file: VirtualFile, bookmarksToAdd: MutableList<BookmarkData>) {
-        val lastModified = file.timeStamp
-        val lastScanned = settings.lastScanState[file.path]
-
-        // Skip if file hasn't changed since last scan
-        if (lastScanned != null && lastScanned == lastModified) {
-            return
-        }
-
-        // Check if application is available before using ReadAction
-        val application = ApplicationManager.getApplication()
-        if (application == null) {
-            LOG.warn("Application is not available, skipping document retrieval for ${file.path}")
-            return
-        }
-
-        val document = ReadAction.compute<Document?, RuntimeException> {
-            fileDocumentManager.getDocument(file)
-        } ?: return
-
-        // Use IntelliJ's FindManager for efficient searching
-        ReadAction.run<RuntimeException> {
-            val findManager = FindManager.getInstance(project)
-            val findModel = FindModel()
-            findModel.isRegularExpressions = true
-            findModel.stringToFind = BOOKMARK_PATTERN_STRING
-            findModel.isCaseSensitive = false
-            findModel.isWholeWordsOnly = false
-
-            var offset = 0
             val text = document.text
+            val matcher = BOOKMARK_PATTERN.matcher(text)
 
-            while (offset < text.length) {
-                val findResult = findManager.findString(text, offset, findModel)
-                if (!findResult.isStringFound) break
-
-                // Get the line number for this result
-                val startOffset = findResult.startOffset
+            while (matcher.find()) {
+                val startOffset = matcher.start()
                 val lineNumber = document.getLineNumber(startOffset)
+                val suffix = matcher.group(1)
+                val description = matcher.group(2).trim()
 
-                // Get the full line text
-                val lineStartOffset = document.getLineStartOffset(lineNumber)
-                val lineEndOffset = document.getLineEndOffset(lineNumber)
-                val lineText = document.getText(TextRange(lineStartOffset, lineEndOffset))
-
-                // Use the regex pattern to extract groups
-                val matcher = BOOKMARK_PATTERN.matcher(lineText)
-                if (matcher.find()) {
-                    val suffix = matcher.group(1)
-                    val description = matcher.group(2).trim()
-                    LOG.info("Found bookmark at ${file.path}:${lineNumber + 1} with description: $description in group: $suffix")
-                    bookmarksToAdd.add(BookmarkData(file, suffix, description, lineNumber))
-                }
-
-                // Move to the next occurrence
-                offset = findResult.endOffset
+                LOG.info("Found CodeMark in ${file.path} at line $lineNumber: $description")
+                bookmarksToAdd.add(CodeMarkInfo(file.path, lineNumber, description, suffix))
             }
+        } catch (e: Exception) {
+            LOG.error("Error in scanFileForBookmarks for ${file.path}", e)
         }
+    }
 
-        // Update last scan time
-        settings.lastScanState[file.path] = lastModified
+    private fun scanFileUsingIndex(file: VirtualFile, bookmarksToAdd: MutableList<CodeMarkInfo>) {
+        LOG.info("Starting scanFileUsingIndex for ${file.path}")
+        try {
+            ReadAction.run<RuntimeException> {
+                val index = FileBasedIndex.getInstance()
+                val values = index.getValues(CodeMarksIndex.NAME, file.path, GlobalSearchScope.projectScope(project))
+                LOG.info("Found ${values.size} values for file ${file.path}")
+
+                for (codeMarks in values) {
+                    LOG.info("Adding ${codeMarks.size} CodeMarks from file ${file.path}")
+                    bookmarksToAdd.addAll(codeMarks)
+                }
+            }
+
+            // If no bookmarks were found using the index, fall back to scanning the file directly
+            if (bookmarksToAdd.isEmpty()) {
+                LOG.warn("No bookmarks found using the index for ${file.path}, falling back to direct file scan")
+                scanFileForBookmarks(file, bookmarksToAdd)
+            }
+        } catch (e: Exception) {
+            LOG.error("Error in scanFileUsingIndex for ${file.path}", e)
+            // Fall back to scanning the file directly
+            scanFileForBookmarks(file, bookmarksToAdd)
+        }
+        LOG.info("Completed scanFileUsingIndex for ${file.path}, found ${bookmarksToAdd.size} bookmarks")
     }
 
     private fun isValidBookmark(filePath: String?, lineNumber: Int?, description: String?): Boolean {
-        if (filePath == null || lineNumber == null || description == null) return false
+        LOG.info("Checking if bookmark is valid: filePath=$filePath, lineNumber=$lineNumber, description=$description")
+        if (filePath == null || lineNumber == null || description == null) {
+            LOG.warn("Invalid bookmark: null parameters")
+            return false
+        }
 
-        val file = VirtualFileManager.getInstance().findFileByUrl("file://$filePath") ?: return false
-        if (!shouldScanFile(file)) return false
+        val file = VirtualFileManager.getInstance().findFileByUrl("file://$filePath")
+        if (file == null) {
+            LOG.warn("Invalid bookmark: file not found for path $filePath")
+            return false
+        }
+
+        if (!shouldScanFile(file)) {
+            LOG.warn("Invalid bookmark: file ${file.path} should not be scanned")
+            return false
+        }
 
         // Check if application is available before using ReadAction
         val application = ApplicationManager.getApplication()
@@ -581,38 +633,73 @@ val file: VirtualFile,
 
         val document = ReadAction.compute<Document?, RuntimeException> {
             fileDocumentManager.getDocument(file)
-        } ?: return false
+        }
+        if (document == null) {
+            LOG.warn("Invalid bookmark: document not found for file ${file.path}")
+            return false
+        }
 
-        if (lineNumber >= document.lineCount) return false
+        if (lineNumber >= document.lineCount) {
+            LOG.warn("Invalid bookmark: line number $lineNumber is out of range for file ${file.path} with ${document.lineCount} lines")
+            return false
+        }
 
+        // First try to use the index to check if this bookmark is still valid
+        try {
+            val isValidFromIndex = ReadAction.compute<Boolean, RuntimeException> {
+                val index = FileBasedIndex.getInstance()
+                val values = index.getValues(CodeMarksIndex.NAME, file.path, GlobalSearchScope.projectScope(project))
+                LOG.info("Found ${values.size} values for file ${file.path} in index")
+
+                for (codeMarks in values) {
+                    for (codeMark in codeMarks) {
+                        if (codeMark.lineNumber == lineNumber && codeMark.description == description) {
+                            LOG.info("Bookmark found in index: ${file.path}:$lineNumber - $description")
+                            return@compute true
+                        }
+                    }
+                }
+
+                false
+            }
+
+            if (isValidFromIndex) {
+                return true
+            }
+        } catch (e: Exception) {
+            LOG.error("Error checking bookmark validity using index for ${file.path}", e)
+        }
+
+        // If the index check failed or didn't find the bookmark, fall back to checking the file directly
+        LOG.info("Bookmark not found in index, checking file directly: ${file.path}:$lineNumber - $description")
         return ReadAction.compute<Boolean, RuntimeException> {
-            // Get the line text
-            val startOffset = document.getLineStartOffset(lineNumber)
-            val endOffset = document.getLineEndOffset(lineNumber)
-            val line = document.getText(TextRange(startOffset, endOffset))
+            try {
+                // Get the line text
+                val startOffset = document.getLineStartOffset(lineNumber)
+                val endOffset = document.getLineEndOffset(lineNumber)
+                val line = document.getText(TextRange(startOffset, endOffset))
+                LOG.info("Line text: $line")
 
-            // Use FindManager to check if the pattern exists in this line
-            val findManager = FindManager.getInstance(project)
-            val findModel = FindModel()
-            findModel.isRegularExpressions = true
-            findModel.stringToFind = BOOKMARK_PATTERN_STRING
-            findModel.isCaseSensitive = false
-            findModel.isWholeWordsOnly = false
+                // Use the regex pattern to check if the line contains a CodeMark comment
+                val matcher = BOOKMARK_PATTERN.matcher(line)
+                if (!matcher.find()) {
+                    LOG.warn("Invalid bookmark: no CodeMark pattern found in line")
+                    return@compute false
+                }
 
-            val findResult = findManager.findString(line, 0, findModel)
-            if (!findResult.isStringFound) return@compute false
-
-            // Use the regex pattern to extract the description
-            val matcher = BOOKMARK_PATTERN.matcher(line)
-            if (!matcher.find()) return@compute false
-
-            val foundDescription = matcher.group(2).trim()
-            foundDescription == description
+                val foundDescription = matcher.group(2).trim()
+                val isValid = foundDescription == description
+                LOG.info("Bookmark validity check result: $isValid (found description: $foundDescription)")
+                isValid
+            } catch (e: Exception) {
+                LOG.error("Error checking bookmark validity directly for ${file.path}", e)
+                false
+            }
         }
     }
 
     override fun dispose() {
         alarm.cancelAllRequests()
-        Disposer.dispose(alarm)
+        alarm.dispose()
     }
 }
