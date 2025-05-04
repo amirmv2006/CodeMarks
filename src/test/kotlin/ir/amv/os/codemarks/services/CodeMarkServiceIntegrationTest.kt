@@ -86,7 +86,7 @@ class CodeMarkServiceIntegrationTest : BasePlatformTestCase() {
                     }
                 """.trimIndent())
                 FileDocumentManager.getInstance().saveDocument(document)
-                LOG.info("Test.java created and saved")
+                LOG.info("Test.java created and saved at path: ${sourceFile.path} with URL: ${sourceFile.url} and protocol: ${sourceFile.url.substringBefore(":")}")
             }
         }
         LOG.info("setUp completed")

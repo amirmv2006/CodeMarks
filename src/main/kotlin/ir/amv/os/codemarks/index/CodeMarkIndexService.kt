@@ -227,17 +227,29 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                         LOG.info("Adding ${bookmarksToAdd.size} bookmarks")
                         bookmarksToAdd.forEach { info ->
                             LOG.info("Adding bookmark: ${info.filePath}:${info.lineNumber} - ${info.description}")
-                            val file = VirtualFileManager.getInstance().findFileByUrl("file://${info.filePath}")
-                            if (file != null) {
-                                LOG.info("File found: ${file.path}")
+
+                            // Use the file directly from the scanFileUsingIndex method
+                            val fileUrl = info.filePath
+                            val filePathFromUrl = fileUrl.replace("file://", "").replace("temp://", "")
+
+                            // Try to find the file by URL first
+                            var fileToUse = VirtualFileManager.getInstance().findFileByUrl(fileUrl)
+
+                            // If that fails, try to find it by path
+                            if (fileToUse == null) {
+                                fileToUse = VirtualFileManager.getInstance().findFileByUrl("file://$filePathFromUrl")
+                            }
+
+                            if (fileToUse != null) {
+                                LOG.info("File found: ${fileToUse.path}")
                                 val group = getOrCreateCodeMarksGroup(info.suffix)
                                 if (group != null) {
                                     LOG.info("Group found/created: ${group.name}")
                                     val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
                                     bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
                                     bookmarkState.attributes.putAll(mapOf(
-                                        "file" to info.filePath,
-                                        "url" to file.url,
+                                        "file" to fileToUse.path,
+                                        "url" to fileToUse.url,
                                         "line" to info.lineNumber.toString()
                                     ))
                                     LOG.info("Creating bookmark with attributes: ${bookmarkState.attributes}")
@@ -253,7 +265,7 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                                     LOG.error("Failed to get or create group for suffix: ${info.suffix}")
                                 }
                             } else {
-                                LOG.error("File not found for path: ${info.filePath}")
+                                LOG.error("File not found for URL: ${fileUrl} or path: ${filePathFromUrl}")
                             }
                         }
 
@@ -383,17 +395,34 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                         LOG.info("Adding ${bookmarksToAdd.size} bookmarks for file ${file.path}")
                         bookmarksToAdd.forEach { info ->
                             LOG.info("Adding bookmark: ${info.filePath}:${info.lineNumber} - ${info.description}")
-                            val file = VirtualFileManager.getInstance().findFileByUrl("file://${info.filePath}")
-                            if (file != null) {
-                                LOG.info("File found: ${file.path}")
+
+                            // Use the file directly from the scanFileUsingIndex method
+                            val fileUrl = info.filePath
+                            val filePathFromUrl = fileUrl.replace("file://", "").replace("temp://", "")
+
+                            // Try to find the file by URL first
+                            var fileToUse = VirtualFileManager.getInstance().findFileByUrl(fileUrl)
+
+                            // If that fails, try to find it by path
+                            if (fileToUse == null) {
+                                fileToUse = VirtualFileManager.getInstance().findFileByUrl("file://$filePathFromUrl")
+                            }
+
+                            // If that fails too, try to use the original file if we're in a single file scan
+                            if (fileToUse == null && file.path == filePathFromUrl) {
+                                fileToUse = file
+                            }
+
+                            if (fileToUse != null) {
+                                LOG.info("File found: ${fileToUse.path}")
                                 val group = getOrCreateCodeMarksGroup(info.suffix)
                                 if (group != null) {
                                     LOG.info("Group found/created: ${group.name}")
                                     val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
                                     bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
                                     bookmarkState.attributes.putAll(mapOf(
-                                        "file" to info.filePath,
-                                        "url" to file.url,
+                                        "file" to fileToUse.path,
+                                        "url" to fileToUse.url,
                                         "line" to info.lineNumber.toString()
                                     ))
                                     LOG.info("Creating bookmark with attributes: ${bookmarkState.attributes}")
@@ -409,7 +438,7 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                                     LOG.error("Failed to get or create group for suffix: ${info.suffix}")
                                 }
                             } else {
-                                LOG.error("File not found for path: ${info.filePath}")
+                                LOG.error("File not found for URL: ${fileUrl} or path: ${filePathFromUrl}")
                             }
                         }
 
@@ -558,6 +587,7 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
 
     private fun scanFileForBookmarks(file: VirtualFile, bookmarksToAdd: MutableList<CodeMarkInfo>) {
         try {
+            LOG.info("Scanning file for bookmarks: ${file.path} with URL: ${file.url}, protocol: ${file.url.substringBefore(":")}")
             val document = ReadAction.compute<Document?, RuntimeException> {
                 fileDocumentManager.getDocument(file)
             } ?: return
@@ -572,7 +602,15 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                 val description = matcher.group(2).trim()
 
                 LOG.info("Found CodeMark in ${file.path} at line $lineNumber: $description")
-                bookmarksToAdd.add(CodeMarkInfo(file.path, lineNumber, description, suffix))
+                // Store the URL instead of the path to ensure we can find the file later
+                // Make sure the URL uses the file:// protocol
+                val fileUrl = if (file.url.startsWith("temp://")) {
+                    "file://" + file.path
+                } else {
+                    file.url
+                }
+                LOG.info("Using URL: $fileUrl for file: ${file.path}")
+                bookmarksToAdd.add(CodeMarkInfo(fileUrl, lineNumber, description, suffix))
             }
         } catch (e: Exception) {
             LOG.error("Error in scanFileForBookmarks for ${file.path}", e)

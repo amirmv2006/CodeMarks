@@ -83,7 +83,7 @@ class CodeMarksIndex : FileBasedIndexExtension<String, List<CodeMarkInfo>>() {
                 val suffix = matcher.group(1)
                 val description = matcher.group(2).trim()
 
-                codeMarks.add(CodeMarkInfo(file.path, lineNumber, description, suffix))
+                codeMarks.add(CodeMarkInfo(file.url, lineNumber, description, suffix))
             }
 
             if (codeMarks.isNotEmpty()) {
@@ -136,7 +136,7 @@ class CodeMarksIndex : FileBasedIndexExtension<String, List<CodeMarkInfo>>() {
  * Data class to store information about a CodeMark comment.
  */
 data class CodeMarkInfo(
-    val filePath: String,
+    val filePath: String, // This is actually a file URL, not a path
     val lineNumber: Int,
     val description: String,
     val suffix: String?
