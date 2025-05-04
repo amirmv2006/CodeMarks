@@ -662,18 +662,18 @@ val file: VirtualFile,
                     val bookmarks = group.getBookmarks().toList()
 
                     if (bookmarks.isEmpty()) {
-                        // For empty groups, we can't remove the group itself,
-                        // but we can ensure it stays empty
-                        LOG.info("Found empty group: ${group.name}")
+                        // Remove empty groups
+                        LOG.info("Removing empty group: ${group.name}")
+                        manager.groups.remove(group)
                     } else {
                         // Store descriptions before sorting and removing
                         val bookmarkDescriptions = bookmarks.associateWith { bookmark ->
                             group.getDescription(bookmark) ?: ""
                         }
 
-                        // Sort bookmarks within the group by description
+                        // Sort bookmarks within the group by description (case-insensitive)
                         val sortedBookmarks = bookmarks.sortedBy { bookmark -> 
-                            bookmarkDescriptions[bookmark] ?: "" 
+                            (bookmarkDescriptions[bookmark] ?: "").lowercase()
                         }
 
                         // Reorder bookmarks in the group
@@ -699,10 +699,8 @@ val file: VirtualFile,
                     }
                 }
 
-                // For now, we can't directly sort groups or remove empty ones
-                // This would require more complex manipulation of the BookmarksManager API
-                // The current implementation sorts bookmarks within groups by description
-                // and logs empty groups for debugging
+                // The implementation sorts bookmarks within groups by description
+                // and removes empty groups
             }
         }
     }
