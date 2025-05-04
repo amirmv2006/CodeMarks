@@ -120,7 +120,10 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
 
         // Check if file belongs to the project
         val fileIndex = ProjectFileIndex.getInstance(project)
-        if (!fileIndex.isInContent(file)) {
+        val isInContent = com.intellij.openapi.application.ReadAction.compute<Boolean, RuntimeException> {
+            fileIndex.isInContent(file)
+        }
+        if (!isInContent) {
             return false
         }
 
