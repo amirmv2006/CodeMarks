@@ -177,8 +177,15 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
             return
         }
 
+        // Check if application is available
+        val application = ApplicationManager.getApplication()
+        if (application == null) {
+            LOG.warn("Application is not available, skipping CodeMarks scan")
+            return
+        }
+
         // Check if we're in unit test mode
-        val isTestMode = ApplicationManager.getApplication().isUnitTestMode
+        val isTestMode = application.isUnitTestMode
 
         // Define a function to handle scanning and applying changes
         fun performScanAndApplyChanges() {
@@ -453,6 +460,13 @@ val file: VirtualFile,
     )
 
     private fun scanDirectoryForBookmarks(dir: VirtualFile, bookmarksToAdd: MutableList<BookmarkData>) {
+        // Check if application is available before using ReadAction
+        val application = ApplicationManager.getApplication()
+        if (application == null) {
+            LOG.warn("Application is not available, skipping directory scan for ${dir.path}")
+            return
+        }
+
         val children = ReadAction.compute<Array<VirtualFile>, RuntimeException> {
             dir.children
         } ?: return
@@ -471,6 +485,13 @@ val file: VirtualFile,
 
         // Skip if file hasn't changed since last scan
         if (lastScanned != null && lastScanned == lastModified) {
+            return
+        }
+
+        // Check if application is available before using ReadAction
+        val application = ApplicationManager.getApplication()
+        if (application == null) {
+            LOG.warn("Application is not available, skipping document retrieval for ${file.path}")
             return
         }
 
@@ -526,6 +547,13 @@ val file: VirtualFile,
 
         val file = VirtualFileManager.getInstance().findFileByUrl("file://$filePath") ?: return false
         if (!shouldScanFile(file)) return false
+
+        // Check if application is available before using ReadAction
+        val application = ApplicationManager.getApplication()
+        if (application == null) {
+            LOG.warn("Application is not available, skipping document retrieval for ${file.path}")
+            return false
+        }
 
         val document = ReadAction.compute<Document?, RuntimeException> {
             fileDocumentManager.getDocument(file)
