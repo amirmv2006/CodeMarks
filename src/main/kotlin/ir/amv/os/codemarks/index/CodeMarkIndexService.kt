@@ -740,4 +740,10 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
         alarm.cancelAllRequests()
         alarm.dispose()
     }
+
+    override fun organizeGroups() {
+        LOG.info("organizeGroups called in CodeMarkIndexService - this is a no-op implementation")
+        // This is a no-op implementation as the index service doesn't manage groups directly
+        // The actual organization is handled by the main CodeMarkServiceImpl
+    }
 }

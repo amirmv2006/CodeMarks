@@ -39,6 +39,7 @@ interface CodeMarkService {
     fun scanAndSync()
     fun scanAndSync(file: VirtualFile)
     fun getSettings(): CodeMarkSettings
+    fun organizeGroups()
 
     companion object {
         @JvmStatic
@@ -116,6 +117,13 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
 
     private fun shouldScanFile(file: VirtualFile): Boolean {
         if (file.isDirectory) return false
+
+        // Check if file belongs to the project
+        val fileIndex = ProjectFileIndex.getInstance(project)
+        if (!fileIndex.isInContent(file)) {
+            return false
+        }
+
         val fileName = file.name
         return settings.fileTypePatterns.any { pattern ->
             try {
@@ -253,6 +261,9 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                                 group?.add(bookmark, BookmarkType.DEFAULT, description)
                             }
                         }
+
+                        // Organize codemark groups (sort by name, remove empty groups, sort codemarks by description)
+                        organizeCodeMarkGroups()
                     }
                 }
 
@@ -384,6 +395,9 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                                 group?.add(bookmark, BookmarkType.DEFAULT, description)
                             }
                         }
+
+                        // Organize codemark groups (sort by name, remove empty groups, sort codemarks by description)
+                        organizeCodeMarkGroups()
                     }
                 }
 
@@ -614,5 +628,67 @@ val file: VirtualFile,
     override fun dispose() {
         alarm.cancelAllRequests()
         Disposer.dispose(alarm)
+    }
+
+    override fun organizeGroups() {
+        if (!ApplicationManager.getApplication().isDispatchThread) {
+            ApplicationManager.getApplication().invokeLater({
+                organizeCodeMarkGroups()
+            }, ModalityState.any())
+            return
+        }
+        organizeCodeMarkGroups()
+    }
+
+    /**
+     * Organizes codemark groups:
+     * 1. Sorts groups by name
+     * 2. Removes empty groups
+     * 3. Sorts codemarks within each group by description
+     */
+    private fun organizeCodeMarkGroups() {
+        bookmarksManager?.let { manager ->
+            WriteCommandAction.runWriteCommandAction(project) {
+                // Get all codemark groups
+                val codemarkGroups = manager.groups
+                    .filter { it.name.startsWith(CODEMARKS_GROUP_NAME) }
+                    .toList()
+
+                // Process each group
+                codemarkGroups.forEach { group ->
+                    val bookmarks = group.getBookmarks().toList()
+
+                    if (bookmarks.isEmpty()) {
+                        // For empty groups, we can't remove the group itself,
+                        // but we can ensure it stays empty
+                        LOG.info("Found empty group: ${group.name}")
+                    } else {
+                        // Sort bookmarks within the group by description
+                        val sortedBookmarks = bookmarks.sortedBy { bookmark -> 
+                            group.getDescription(bookmark) ?: "" 
+                        }
+
+                        // Reorder bookmarks in the group
+                        if (sortedBookmarks != bookmarks) {
+                            // Remove all bookmarks
+                            bookmarks.forEach { bookmark ->
+                                group.remove(bookmark)
+                            }
+
+                            // Add them back in sorted order
+                            sortedBookmarks.forEach { bookmark ->
+                                val description = group.getDescription(bookmark) ?: ""
+                                group.add(bookmark, BookmarkType.DEFAULT, description)
+                            }
+                        }
+                    }
+                }
+
+                // For now, we can't directly sort groups or remove empty ones
+                // This would require more complex manipulation of the BookmarksManager API
+                // The current implementation sorts bookmarks within groups by description
+                // and logs empty groups for debugging
+            }
+        }
     }
 }

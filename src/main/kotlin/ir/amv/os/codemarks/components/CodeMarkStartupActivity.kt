@@ -37,6 +37,8 @@ class CodeMarkStartupActivity : ProjectActivity, DumbAware {
                 withContext(Dispatchers.Main) {
                     WriteCommandAction.runWriteCommandAction(project) {
                         codeMarkService.scanAndSync()
+                        // Ensure groups are organized even if no changes were made
+                        codeMarkService.organizeGroups()
                     }
                 }
                 // Make sure we wait for any background tasks to complete
@@ -48,6 +50,8 @@ class CodeMarkStartupActivity : ProjectActivity, DumbAware {
                 // Check if project is disposed before running scan
                 if (!project.isDisposed) {
                     codeMarkService.scanAndSync()
+                    // Ensure groups are organized even if no changes were made
+                    codeMarkService.organizeGroups()
                 } else {
                     LOG.warn("Project is disposed, skipping initial CodeMarks scan")
                 }
