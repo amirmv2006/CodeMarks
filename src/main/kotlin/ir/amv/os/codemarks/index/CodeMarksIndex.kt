@@ -44,13 +44,24 @@ class CodeMarksIndex : FileBasedIndexExtension<String, List<CodeMarkInfo>>() {
         fun shouldIndexFile(file: VirtualFile, project: Project): Boolean {
             if (file.isDirectory) return false
             val fileName = file.name
-            val settings = CodeMarkSettings.getInstance(project)
-            return settings.fileTypePatterns.any { pattern ->
-                try {
-                    matchesGlob(fileName, pattern)
-                } catch (e: Exception) {
-                    false
+
+            // Check if project is disposed before accessing services
+            if (project.isDisposed) {
+                return false
+            }
+
+            try {
+                val settings = CodeMarkSettings.getInstance(project)
+                return settings.fileTypePatterns.any { pattern ->
+                    try {
+                        matchesGlob(fileName, pattern)
+                    } catch (e: Exception) {
+                        false
+                    }
                 }
+            } catch (e: Exception) {
+                // If we can't access settings (e.g., project is disposed), return false
+                return false
             }
         }
     }
