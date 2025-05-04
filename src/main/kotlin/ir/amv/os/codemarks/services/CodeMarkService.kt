@@ -460,7 +460,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
                     }
                 }, ModalityState.any())
             }
-} else {
+        } else {
             // In normal mode, run in background
             ApplicationManager.getApplication().executeOnPooledThread {
                 performScanAndApplyChanges()
@@ -469,7 +469,7 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
     }
 
     private data class BookmarkData(
-val file: VirtualFile,
+        val file: VirtualFile,
         val suffix: String?,
         val description: String,
         val line: Int
@@ -664,7 +664,7 @@ val file: VirtualFile,
                     if (bookmarks.isEmpty()) {
                         // Remove empty groups
                         LOG.info("Removing empty group: ${group.name}")
-                        manager.groups.remove(group)
+                        group.remove()
                     } else {
                         // Store descriptions before sorting and removing
                         val bookmarkDescriptions = bookmarks.associateWith { bookmark ->

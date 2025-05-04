@@ -773,7 +773,7 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                     if (bookmarks.isEmpty()) {
                         // Remove empty groups
                         LOG.info("Removing empty group: ${group.name}")
-                        manager.groups.remove(group)
+                        group.remove()
                     } else {
                         // Store descriptions before sorting and removing
                         val bookmarkDescriptions = bookmarks.associateWith { bookmark ->
