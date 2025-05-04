@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+    <category name="ir.amv.os.codemarks" level="TRACE"/>
+</log> 

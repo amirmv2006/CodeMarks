@@ -772,8 +772,37 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                     .filter { it.name.startsWith(CODEMARKS_GROUP_NAME) }
                     .toList()
 
+                // Sort groups by name
+                val sortedGroups = codemarkGroups.sortedBy { it.name }
+
+                // If groups are not in the correct order, reorder them
+                if (sortedGroups != codemarkGroups) {
+                    // Remove all groups
+                    codemarkGroups.forEach { group ->
+                        group.remove()
+                    }
+
+                    // Add them back in the correct order
+                    sortedGroups.forEach { group ->
+                        val newGroup = manager.addGroup(group.name, false)
+                        if (newGroup != null) {
+                            // Add all bookmarks from the old group to the new one
+                            group.getBookmarks().forEach { bookmark ->
+                                val description = group.getDescription(bookmark) ?: ""
+                                val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
+                                bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
+                                bookmarkState.attributes.putAll(bookmark.attributes)
+                                val newBookmark = manager.createBookmark(bookmarkState)
+                                if (newBookmark != null) {
+                                    newGroup.add(newBookmark, BookmarkType.DEFAULT, description)
+                                }
+                            }
+                        }
+                    }
+                }
+
                 // Process each group
-                codemarkGroups.forEach { group ->
+                sortedGroups.forEach { group ->
                     val bookmarks = group.getBookmarks().toList()
 
                     if (bookmarks.isEmpty()) {
@@ -813,9 +842,6 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                         }
                     }
                 }
-
-                // The implementation sorts bookmarks within groups by description
-                // and removes empty groups
             }
         }
     }
