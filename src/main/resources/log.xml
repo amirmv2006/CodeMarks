@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+    <category name="ir.amv.os.codemarks.services.CodeMarkService" level="TRACE"/>
+    <category name="ir.amv.os.codemarks.services.CodeMarkServiceImpl" level="TRACE"/>
+    <category name="ir.amv.os.codemarks.index.CodeMarkIndexService" level="TRACE"/>
+    <category name="ir.amv.os.codemarks.index.CodeMarksIndex" level="TRACE"/>
+</log> 

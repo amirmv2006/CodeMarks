@@ -26,6 +26,7 @@ import com.intellij.util.Alarm
 import com.intellij.util.indexing.FileBasedIndex
 import com.intellij.util.messages.Topic
 import com.intellij.openapi.application.ModalityState
+import com.intellij.openapi.diagnostic.LogLevel
 import com.intellij.psi.search.GlobalSearchScope
 import ir.amv.os.codemarks.services.CodeMarkService
 import ir.amv.os.codemarks.services.CodeMarkSettings
@@ -39,7 +40,9 @@ import java.util.regex.Pattern
 @Service(Service.Level.PROJECT)
 class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disposable {
     companion object {
-        private val LOG = Logger.getInstance(CodeMarkIndexService::class.java)
+        private val LOG = Logger.getInstance(CodeMarkIndexService::class.java).apply {
+            setLevel(LogLevel.TRACE)
+        }
         private const val CODEMARKS_GROUP_NAME = "CodeMarks"
         private val BOOKMARK_PATTERN = Pattern.compile("CodeMarks(?:\\[(\\w+)\\])?:\\s*(.*)", Pattern.CASE_INSENSITIVE)
     }
@@ -269,6 +272,9 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                             }
                         }
 
+                        // Organize codemark groups (sort by name, remove empty groups, sort codemarks by description)
+                        organizeCodeMarkGroups()
+
                         // Verify bookmarks were added
                         val bookmarks = bookmarksManager?.bookmarks ?: emptyList()
                         LOG.info("After adding, bookmarks count: ${bookmarks.size}")
@@ -441,6 +447,9 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                                 LOG.error("File not found for URL: ${fileUrl} or path: ${filePathFromUrl}")
                             }
                         }
+
+                        // Organize codemark groups (sort by name, remove empty groups, sort codemarks by description)
+                        organizeCodeMarkGroups()
 
                         // Verify bookmarks were added
                         val bookmarks = bookmarksManager?.bookmarks ?: emptyList()
@@ -739,5 +748,104 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
     override fun dispose() {
         alarm.cancelAllRequests()
         alarm.dispose()
+    }
+
+    override fun organizeGroups() {
+        LOG.info("organizeGroups called in CodeMarkIndexService")
+        if (!ApplicationManager.getApplication().isDispatchThread) {
+            ApplicationManager.getApplication().invokeLater({
+                organizeCodeMarkGroups()
+            }, ModalityState.any())
+            return
+        }
+        organizeCodeMarkGroups()
+    }
+
+    /**
+     * Organizes codemark groups:
+     * 1. Sorts groups by name
+     * 2. Removes empty groups
+     * 3. Sorts codemarks within each group by description
+     */
+    private fun organizeCodeMarkGroups() {
+        bookmarksManager?.let { manager ->
+            WriteCommandAction.runWriteCommandAction(project) {
+                // Get all codemark groups
+                val codemarkGroups = manager.groups
+                    .filter { it.name.startsWith(CODEMARKS_GROUP_NAME) }
+                    .toList()
+
+                // Sort groups by name
+                val sortedGroups = codemarkGroups.sortedBy { it.name }
+
+                // If groups are not in the correct order, reorder them
+                if (sortedGroups != codemarkGroups) {
+                    // Remove all groups
+                    codemarkGroups.forEach { group ->
+                        group.remove()
+                    }
+
+                    // Add them back in the correct order
+                    sortedGroups.forEach { group ->
+                        val newGroup = manager.addGroup(group.name, false)
+                        if (newGroup != null) {
+                            // Add all bookmarks from the old group to the new one
+                            group.getBookmarks().forEach { bookmark ->
+                                val description = group.getDescription(bookmark) ?: ""
+                                val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
+                                bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
+                                bookmarkState.attributes.putAll(bookmark.attributes)
+                                val newBookmark = manager.createBookmark(bookmarkState)
+                                if (newBookmark != null) {
+                                    newGroup.add(newBookmark, BookmarkType.DEFAULT, description)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Process each group
+                sortedGroups.forEach { group ->
+                    val bookmarks = group.getBookmarks().toList()
+
+                    if (bookmarks.isEmpty()) {
+                        // Remove empty groups
+                        LOG.info("Removing empty group: ${group.name}")
+                        group.remove()
+                    } else {
+                        // Store descriptions before sorting and removing
+                        val bookmarkDescriptions = bookmarks.associateWith { bookmark ->
+                            group.getDescription(bookmark) ?: ""
+                        }
+
+                        // Sort bookmarks within the group by description (case-insensitive)
+                        val sortedBookmarks = bookmarks.sortedBy { bookmark -> 
+                            (bookmarkDescriptions[bookmark] ?: "").lowercase()
+                        }
+
+                        // Reorder bookmarks in the group
+                        if (sortedBookmarks != bookmarks) {
+                            // Remove all bookmarks
+                            bookmarks.forEach { bookmark ->
+                                group.remove(bookmark)
+                            }
+
+                            // Add them back in reverse order so they appear in ascending order in the UI
+                            sortedBookmarks.reversed().forEach { bookmark ->
+                                val description = bookmarkDescriptions[bookmark] ?: ""
+                                // Create a new bookmark with the same attributes
+                                val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
+                                bookmarkState.provider = "com.intellij.ide.bookmark.providers.LineBookmarkProvider"
+                                bookmarkState.attributes.putAll(bookmark.attributes)
+                                val newBookmark = bookmarksManager.createBookmark(bookmarkState)
+                                if (newBookmark != null) {
+                                    group.add(newBookmark, BookmarkType.DEFAULT, description)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

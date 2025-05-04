@@ -11,6 +11,7 @@ import com.intellij.openapi.fileTypes.FileTypeRegistry
 import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.editor.Document
+import com.intellij.openapi.roots.ProjectFileIndex
 import ir.amv.os.codemarks.services.CodeMarkSettings
 import java.io.DataInput
 import java.io.DataOutput
@@ -43,13 +44,22 @@ class CodeMarksIndex : FileBasedIndexExtension<String, List<CodeMarkInfo>>() {
         // Helper method to check if a file should be indexed based on glob patterns
         fun shouldIndexFile(file: VirtualFile, project: Project): Boolean {
             if (file.isDirectory) return false
-            val fileName = file.name
 
             // Check if project is disposed before accessing services
             if (project.isDisposed) {
                 return false
             }
 
+            // Check if file belongs to the project
+            val fileIndex = ProjectFileIndex.getInstance(project)
+            val isInContent = com.intellij.openapi.application.ReadAction.compute<Boolean, RuntimeException> {
+                fileIndex.isInContent(file)
+            }
+            if (!isInContent) {
+                return false
+            }
+
+            val fileName = file.name
             try {
                 val settings = CodeMarkSettings.getInstance(project)
                 return settings.fileTypePatterns.any { pattern ->
