@@ -269,6 +269,9 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                             }
                         }
 
+                        // Organize codemark groups (sort by name, remove empty groups, sort codemarks by description)
+                        organizeCodeMarkGroups()
+
                         // Verify bookmarks were added
                         val bookmarks = bookmarksManager?.bookmarks ?: emptyList()
                         LOG.info("After adding, bookmarks count: ${bookmarks.size}")
@@ -441,6 +444,9 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                                 LOG.error("File not found for URL: ${fileUrl} or path: ${filePathFromUrl}")
                             }
                         }
+
+                        // Organize codemark groups (sort by name, remove empty groups, sort codemarks by description)
+                        organizeCodeMarkGroups()
 
                         // Verify bookmarks were added
                         val bookmarks = bookmarksManager?.bookmarks ?: emptyList()
