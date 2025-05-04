@@ -26,6 +26,7 @@ import com.intellij.util.Alarm
 import com.intellij.util.indexing.FileBasedIndex
 import com.intellij.util.messages.Topic
 import com.intellij.openapi.application.ModalityState
+import com.intellij.openapi.diagnostic.LogLevel
 import com.intellij.psi.search.GlobalSearchScope
 import ir.amv.os.codemarks.services.CodeMarkService
 import ir.amv.os.codemarks.services.CodeMarkSettings
@@ -39,7 +40,9 @@ import java.util.regex.Pattern
 @Service(Service.Level.PROJECT)
 class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disposable {
     companion object {
-        private val LOG = Logger.getInstance(CodeMarkIndexService::class.java)
+        private val LOG = Logger.getInstance(CodeMarkIndexService::class.java).apply {
+            setLevel(LogLevel.TRACE)
+        }
         private const val CODEMARKS_GROUP_NAME = "CodeMarks"
         private val BOOKMARK_PATTERN = Pattern.compile("CodeMarks(?:\\[(\\w+)\\])?:\\s*(.*)", Pattern.CASE_INSENSITIVE)
     }

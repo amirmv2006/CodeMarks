@@ -58,3 +58,7 @@ tasks {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
 }
+
+tasks.runIde {
+    systemProperty("idea.log.debug.categories", "ir.amv.os.codemarks")
+}

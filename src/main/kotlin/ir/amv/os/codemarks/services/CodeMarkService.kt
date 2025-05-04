@@ -72,6 +72,10 @@ class CodeMarkServiceImpl(private val project: Project) : CodeMarkService, Dispo
 
     init {
         LOG.info("Initializing CodeMarkService for project: ${project.name}")
+        LOG.debug("Debug log test")
+        LOG.trace("Trace log test")
+        LOG.error("Error log test")
+        LOG.warn("Warn log test")
         setupListeners()
     }
 
