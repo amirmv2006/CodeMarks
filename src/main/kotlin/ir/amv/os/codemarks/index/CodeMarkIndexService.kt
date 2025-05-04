@@ -792,8 +792,8 @@ class CodeMarkIndexService(private val project: Project) : CodeMarkService, Disp
                                 group.remove(bookmark)
                             }
 
-                            // Add them back in sorted order with new bookmark instances
-                            sortedBookmarks.forEach { bookmark ->
+                            // Add them back in reverse order so they appear in ascending order in the UI
+                            sortedBookmarks.reversed().forEach { bookmark ->
                                 val description = bookmarkDescriptions[bookmark] ?: ""
                                 // Create a new bookmark with the same attributes
                                 val bookmarkState = com.intellij.ide.bookmark.BookmarkState()
